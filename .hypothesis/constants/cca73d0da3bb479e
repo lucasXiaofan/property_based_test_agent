@@ -1,0 +1,4 @@
+# file: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/example_hypothesis_only.py
+# hypothesis_version: 6.151.2
+
+[365, '__main__', 'pop from empty stack']
