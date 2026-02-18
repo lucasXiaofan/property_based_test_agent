@@ -387,7 +387,7 @@ On this page
 
 
 
-utilize pytest and hypothesis to test emw aggregate function
+utilize pytest and hypothesis to test 
 - **Basic tutorial**: https://hypothesis.readthedocs.io/en/latest/quickstart.html
 - **Strategies reference**: https://hypothesis.readthedocs.io/en/latest/reference/strategies.html
 - **NumPy strategies**: https://hypothesis.readthedocs.io/en/latest/reference/strategies.html#numpy

@@ -1,0 +1,94 @@
+{
+  "generated_at_utc": "2026-02-18T13:33:21.407275+00:00",
+  "target_symbol": "pandas.core.window.ewm.ExponentialMovingWindow.aggregate",
+  "mutants": [
+    {
+      "mutant_id": "M1_SUM_TO_MEAN",
+      "description": "If func == 'sum', force func='mean' before delegation."
+    },
+    {
+      "mutant_id": "M2_TRUNCATE_LIST_FUNCS",
+      "description": "If func is a list, keep only the first function."
+    },
+    {
+      "mutant_id": "M3_CALLABLE_TYPEERROR",
+      "description": "Raise TypeError for callable funcs instead of pandas behavior."
+    }
+  ],
+  "evaluations": [
+    {
+      "test_file": "pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py",
+      "baseline": {
+        "passed": false,
+        "returncode": 1,
+        "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py -q --hypothesis-seed=0",
+        "failures": [],
+        "stdout_tail": "......FF.............................F.......................F......     [100%]\n=================================== FAILURES ===================================\n______________ TestExplicitProperties.test_callable_func_accepted ______________\n\nself = <test_ewm_aggregate_hypothesis.TestExplicitProperties object at 0x10de68310>\n\n    @given(df=numeric_dataframes(), params=ewm_decay_params())\n>   @settings(max_examples=80, suppress_health_check=[HealthCheck.too_slow])\n               ^^^^^^^\n\npandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py:252: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py:255: in test_callable_func_accepted\n    result = df.ewm(**params).aggregate(np.mean)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv/lib/python3.11/site-packages/pandas/core/window/ewm.py:524: in aggregate\n    return super().aggregate(func, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv/lib/python3.11/site-packages/pandas/core/window/rolling.py:654: in aggregate\n    return self.apply(func, raw=False, args=args, kwargs=kwargs)\n           ^^^^^^^... [truncated]",
+        "stderr_tail": ""
+      },
+      "mutants": [
+        {
+          "mutant_id": "M1_SUM_TO_MEAN",
+          "outcome": "invalid",
+          "reason": "baseline_failed",
+          "command": null,
+          "returncode": null,
+          "failures": []
+        },
+        {
+          "mutant_id": "M2_TRUNCATE_LIST_FUNCS",
+          "outcome": "invalid",
+          "reason": "baseline_failed",
+          "command": null,
+          "returncode": null,
+          "failures": []
+        },
+        {
+          "mutant_id": "M3_CALLABLE_TYPEERROR",
+          "outcome": "invalid",
+          "reason": "baseline_failed",
+          "command": null,
+          "returncode": null,
+          "failures": []
+        }
+      ]
+    },
+    {
+      "test_file": "pandas_bug_finding/ir_test/test_ewm_aggregate.py",
+      "baseline": {
+        "passed": false,
+        "returncode": 1,
+        "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py -q --hypothesis-seed=0",
+        "failures": [],
+        "stdout_tail": "........................F..                                              [100%]\n=================================== FAILURES ===================================\n_ TestImplicit.test_implicit__p20__adjustfalse_produces_numerically_different_results_from _\n\nself = <test_ewm_aggregate.TestImplicit object at 0x10b5ee010>\n\n    @given(\n>       df=data_frames(\n               ^^^^^^^\n            columns=[column(\"A\", dtype=float), column(\"B\", dtype=float)],\n            index=range_indexes(min_size=3, max_size=20),\n        ).filter(lambda d: not d.isnull().any().any()),\n        alpha=st.floats(min_value=0.1, max_value=0.9, allow_nan=False),\n    )\n\npandas_bug_finding/ir_test/test_ewm_aggregate.py:367: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <test_ewm_aggregate.TestImplicit object at 0x10b5ee010>\ndf =      A    B\n0  0.0  0.0\n1  0.0  0.0\n2  0.0  0.0, alpha = 0.5\n\n    @given(\n        df=data_frames(\n            columns=[column(\"A\", dtype=float), column(\"B\", dtype=float)],\n            index=range_indexes(min_size=3, max_size=20),\n        ).filter(lambda d: not d.isnull().any().any()),\n        alpha=st.floats(min_value=0.1, max_value=0.9, allow_nan=... [truncated]",
+        "stderr_tail": ""
+      },
+      "mutants": [
+        {
+          "mutant_id": "M1_SUM_TO_MEAN",
+          "outcome": "invalid",
+          "reason": "baseline_failed",
+          "command": null,
+          "returncode": null,
+          "failures": []
+        },
+        {
+          "mutant_id": "M2_TRUNCATE_LIST_FUNCS",
+          "outcome": "invalid",
+          "reason": "baseline_failed",
+          "command": null,
+          "returncode": null,
+          "failures": []
+        },
+        {
+          "mutant_id": "M3_CALLABLE_TYPEERROR",
+          "outcome": "invalid",
+          "reason": "baseline_failed",
+          "command": null,
+          "returncode": null,
+          "failures": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "metadata": {
+    "function": "pd.DataFrame.ewm().aggregate",
+    "library": "pandas",
+    "version": "3.0.0",
+    "signature": "ExponentialMovingWindow.aggregate(func=None, *args, **kwargs)"
+  },
+  "logical_errors": [
+    {
+      "id": "E1",
+      "description": "The docstring states 'scalar: when Series.agg is called with single function'. Empirically, Series.ewm().agg('mean') always returns a Series of length n_rows, never a scalar. EWM operations are time-series window ops that produce one value per row — reduction to a single scalar is impossible by definition.",
+      "severity": "severe",
+      "affects_properties": ["P5"]
+    },
+    {
+      "id": "E2",
+      "description": "The docstring lists 'function' and 'list of functions and/or function names' as accepted func inputs, implying arbitrary callables work. Empirically, every callable tested (np.mean, np.sum, np.std, pd.Series.mean, lambda x: x.iloc[-1]) raises AttributeError: 'ExponentialMovingWindow' object has no attribute 'apply'. Callables are NOT supported by ewm.aggregate in pandas 3.0.0. This is a copy-paste error from the generic .agg() docstring that does not apply to the EWM window context.",
+      "severity": "severe",
+      "affects_properties": ["P11"]
+    },
+    {
+      "id": "E3",
+      "description": "The docstring states 'Series: when DataFrame.agg is called with a single function'. Empirically, DataFrame.ewm().agg('mean') returns a DataFrame with shape (n_rows, n_cols) — the same shape as the input. A Series is never returned for DataFrame input. This appears to be copied from the standard non-windowed .agg() docstring where the operation reduces along the time axis.",
+      "severity": "severe",
+      "affects_properties": ["P4"]
+    },
+    {
+      "id": "E4",
+      "description": "The docstring example shows 'df.ewm(alpha=0.5).mean()' — which demonstrates the mean() method, not aggregate(). The example never actually calls .aggregate() or .agg(), making it useless as a usage demonstration for the function being documented.",
+      "severity": "minor",
+      "affects_properties": []
+    }
+  ],
+  "input_domain": {
+    "df_or_series": "pandas DataFrame or Series with numeric dtype columns/values; may be empty (0 rows), contain NaN, have any Index type (RangeIndex, string, DatetimeIndex, MultiIndex)",
+    "ewm_params": "ExponentialMovingWindow created from df.ewm() or s.ewm(); requires exactly one of com/span/halflife/alpha (or halflife+times with adjust=True); min_periods defaults to 0; adjust and ignore_na are booleans",
+    "func_string": "one of the supported string names: 'mean', 'std', 'var', 'sum'. Note: 'min', 'max', 'median', 'count', 'kurt', 'skew', 'sem', 'first', 'last' raise AttributeError (not valid for ExponentialMovingWindow)",
+    "func_list": "list of 2+ supported string names, e.g. ['mean', 'std']; all elements must be valid string function names",
+    "func_dict": "dict mapping column label -> string name or list of string names; all keys must be present in the DataFrame columns; for Series input this form is not applicable",
+    "args_kwargs": "positional and keyword arguments forwarded to func; only relevant for callables, which are NOT supported (see E2) — passing args/kwargs with string func names has no effect",
+    "constraints": [
+      "func=None raises TypeError: 'Must provide func or tuples of (column, aggfunc)'",
+      "Callable func values (functions, lambdas, np.ufuncs) always raise AttributeError — only string names are valid (see E2)",
+      "dict keys must be existing column labels; missing keys raise KeyError",
+      "String func names are restricted to EWM-native methods: 'mean', 'std', 'var', 'sum' (and 'cov', 'corr' with non-standard MultiIndex output — see unresolved_ambiguities A1)",
+      "EWM parent must have exactly one decay parameter (com/span/halflife/alpha) unless times is provided",
+      "dict func form is not applicable to Series input"
+    ],
+    "invalid_inputs": [
+      "func=None → TypeError: 'Must provide func'",
+      "func=<any callable> → AttributeError: 'ExponentialMovingWindow' object has no attribute 'apply'",
+      "func='min' or 'max' or 'median' or other non-EWM names → AttributeError: not a valid function for ExponentialMovingWindow",
+      "func={'Z': 'mean'} where 'Z' not in columns → KeyError",
+      "ewm() with no decay parameter → TypeError",
+      "ewm() with more than one decay parameter → TypeError"
+    ]
+  },
+  "properties": [
+    {
+      "id": "P1",
+      "type": "explicit",
+      "claim": "agg is an alias for aggregate and produces identical results",
+      "expression": "df.ewm(alpha=0.5).agg(func).equals(df.ewm(alpha=0.5).aggregate(func))",
+      "when": "any valid func input",
+      "strategy": "Generate DataFrames with float columns and 2+ rows. Call both .agg() and .aggregate() with the same valid string func ('mean', 'std', 'var', 'sum'). Assert the results are equal via .equals(). Repeat for list func ['mean', 'std'].",
+      "source": "docstring Notes: 'agg is an alias for aggregate. Use the alias.'"
+    },
+    {
+      "id": "P2",
+      "type": "explicit",
+      "claim": "func=None raises TypeError",
+      "expression": "pytest.raises(TypeError): df.ewm(alpha=0.5).aggregate(None)",
+      "when": null,
+      "strategy": "Generate any non-empty DataFrame with numeric columns. Call .aggregate(None). Assert TypeError is raised. Do not parametrize further — the error is deterministic regardless of DataFrame shape.",
+      "source": "empirical: raises TypeError: 'Must provide func or tuples of (column, aggfunc)'"
+    },
+    {
+      "id": "P3",
+      "type": "explicit",
+      "claim": "list of string func names returns a DataFrame for both DataFrame and Series input",
+      "expression": "isinstance(result, pd.DataFrame)",
+      "when": "func is a list of 2+ valid string names",
+      "strategy": "Generate DataFrames and Series with float values and 2+ rows. Call .aggregate(['mean', 'std']). Assert isinstance(result, pd.DataFrame) for both. For DataFrame input verify shape is (n_rows, n_cols * n_funcs) with MultiIndex columns of (col_name, func_name) tuples. For Series input verify shape is (n_rows, n_funcs) with func names as columns.",
+      "source": "docstring Returns: 'DataFrame: when DataFrame.agg is called with several functions'"
+    },
+    {
+      "id": "P4",
+      "type": "indirect",
+      "claim": "DataFrame with single string func returns a DataFrame with the same shape and columns as the input (NOT a Series as the docstring incorrectly states)",
+      "expression": "isinstance(result, pd.DataFrame) and result.shape == df.shape and list(result.columns) == list(df.columns)",
+      "when": "input is a DataFrame, func is a single valid string name",
+      "strategy": "Generate DataFrames with 1+ numeric columns and 1+ rows. Call .aggregate('mean'). Assert result is a DataFrame (not Series), result.shape == df.shape, and result.columns matches df.columns. This directly tests against E3 — the docstring's incorrect 'Series' claim.",
+      "source": "E3: docstring incorrectly says 'Series'; empirically returns DataFrame of same shape"
+    },
+    {
+      "id": "P5",
+      "type": "indirect",
+      "claim": "Series with single string func returns a Series of the same length (NOT a scalar as the docstring incorrectly states)",
+      "expression": "isinstance(result, pd.Series) and len(result) == len(s)",
+      "when": "input is a Series, func is a single valid string name",
+      "strategy": "Generate Series with float values and length >= 1. Call .aggregate('mean'). Assert isinstance(result, pd.Series) is True (not a scalar, not a DataFrame). Assert len(result) == len(s). This directly tests against E1 — the docstring's incorrect 'scalar' claim.",
+      "source": "E1: docstring incorrectly says 'scalar'; empirically returns Series of same length"
+    },
+    {
+      "id": "P6",
+      "type": "explicit",
+      "claim": "dict func applies different functions to different columns; result contains only the dict-specified columns",
+      "expression": "set(result.columns) == set(func_dict.keys()) when each dict value is a single string",
+      "when": "func is a dict mapping column names to single string func names, all keys exist in df.columns",
+      "strategy": "Generate DataFrames with at least 2 numeric columns. Build a dict assigning 'mean' to one column and 'std' to another. Call .aggregate(dict). Assert result.columns contains exactly the dict keys. Assert no extra columns appear from un-keyed columns.",
+      "source": "docstring: 'dict of axis labels -> functions, function names or list of such'"
+    },
+    {
+      "id": "P7",
+      "type": "explicit",
+      "claim": "dict with a column mapped to a list of funcs produces MultiIndex columns for that column",
+      "expression": "isinstance(result.columns, pd.MultiIndex) when any dict value is a list",
+      "when": "func is a dict where at least one value is a list of string names",
+      "strategy": "Generate DataFrame with 2 numeric columns A and B. Call .aggregate({'A': ['mean', 'std'], 'B': 'mean'}). Assert isinstance(result.columns, pd.MultiIndex). Assert result contains columns ('A','mean'), ('A','std'), ('B','mean').",
+      "source": "docstring: 'dict of axis labels -> functions, function names or list of such'"
+    },
+    {
+      "id": "P8",
+      "type": "explicit",
+      "claim": "dict with a non-existent column key raises KeyError",
+      "expression": "pytest.raises(KeyError): df.ewm(alpha=0.5).aggregate({'NONEXISTENT': 'mean'})",
+      "when": "dict key is not in df.columns",
+      "strategy": "Generate DataFrames and pass a dict key guaranteed not in the frame (e.g., 'NONEXISTENT_COL'). Assert KeyError is raised.",
+      "source": "empirical: raises KeyError for missing column labels"
+    },
+    {
+      "id": "P9",
+      "type": "implicit",
+      "claim": "the original DataFrame is not mutated by aggregate",
+      "expression": "df_before.equals(df_after) where df_after is df checked after calling .aggregate()",
+      "when": null,
+      "strategy": "Generate a DataFrame. Snapshot it with df.copy(). Call .ewm(alpha=0.5).aggregate('mean'). Assert the original DataFrame still equals the snapshot. Test with string, list, and dict func types.",
+      "source": null
+    },
+    {
+      "id": "P10",
+      "type": "implicit",
+      "claim": "aggregate is deterministic: identical calls return equal results",
+      "expression": "r1.equals(r2) where r1 and r2 are results of two identical calls",
+      "when": null,
+      "strategy": "Generate a DataFrame and valid EWM config. Call .aggregate(func) twice with the same func. Assert r1.equals(r2). Use hypothesis to vary DataFrame contents and ewm decay parameters.",
+      "source": null
+    },
+    {
+      "id": "P11",
+      "type": "implicit",
+      "claim": "any callable func raises AttributeError (EWM does not support apply-based aggregation)",
+      "expression": "pytest.raises(AttributeError): df.ewm(alpha=0.5).aggregate(callable_func)",
+      "when": "func is any Python callable (lambda, np.ufunc, function reference)",
+      "strategy": "Pass several callable types: a lambda, np.mean, np.sum, pd.Series.mean, and a custom def function. Assert each raises AttributeError. This verifies the undocumented restriction (E2 — the docstring incorrectly implies callables are supported).",
+      "source": "E2: AttributeError: 'ExponentialMovingWindow' object has no attribute 'apply'"
+    },
+    {
+      "id": "P12",
+      "type": "implicit",
+      "claim": "result index is identical to the original DataFrame/Series index",
+      "expression": "result.index.equals(df.index)",
+      "when": null,
+      "strategy": "Generate DataFrames with varied index types: RangeIndex, string index (['a','b','c']), DatetimeIndex, and arbitrary integer index. Call .aggregate('mean'). Assert result.index equals the input index for all cases.",
+      "source": "notes/pandas.md: Index preservation — most operations (round, ewm, agg) preserve the original index unchanged"
+    },
+    {
+      "id": "P13",
+      "type": "implicit",
+      "claim": "result is always a new object, not the original DataFrame",
+      "expression": "result is not df",
+      "when": null,
+      "strategy": "Create a DataFrame. Call .aggregate('mean'). Assert result is not df (identity check). Use hypothesis to vary input shape.",
+      "source": "notes/pandas.md: Identity — pandas operations consistently return a new object"
+    },
+    {
+      "id": "P14",
+      "type": "implicit",
+      "claim": "empty DataFrame input returns an empty DataFrame with the same columns",
+      "expression": "result.shape == (0, n_cols) and list(result.columns) == list(df.columns)",
+      "when": "df has 0 rows but 1+ numeric columns",
+      "strategy": "Construct DataFrames with 0 rows and 1–4 numeric columns. Call .aggregate('mean'). Assert result is a DataFrame with the same column names and 0 rows. Test also with 'std' and 'var'.",
+      "source": null
+    },
+    {
+      "id": "P15",
+      "type": "implicit",
+      "claim": "NaN-only column produces all-NaN output column (NaN is not silently replaced or dropped)",
+      "expression": "result['A'].isna().all() when df['A'].isna().all()",
+      "when": "a column contains only NaN values",
+      "strategy": "Generate DataFrames where at least one column is entirely NaN (pd.Series([np.nan]*n)). Call .aggregate('mean'). Assert the corresponding result column is entirely NaN. Verify no ValueError or silent dropping occurs.",
+      "source": null
+    },
+    {
+      "id": "P16",
+      "type": "implicit",
+      "claim": "min_periods=N causes the first N-1 output positions to be NaN regardless of EWM decay parameters",
+      "expression": "result.iloc[:min_periods-1].isna().all().all() when min_periods >= 2",
+      "when": "min_periods >= 2 and the DataFrame has >= min_periods non-NaN rows",
+      "strategy": "Generate DataFrames with non-NaN float data and n_rows >= 3. Set min_periods=2 on the ewm() call. Call .aggregate('mean'). Assert result.iloc[0] is NaN and result.iloc[1:] are non-NaN. Also test min_periods > n_rows: all result rows should be NaN.",
+      "source": "ewm() docstring: 'min_periods: Minimum number of observations in window required to have a value; otherwise result is np.nan'"
+    },
+    {
+      "id": "P17",
+      "type": "implicit",
+      "claim": "std aggregation of a single observation returns NaN (insufficient data for standard deviation)",
+      "expression": "result.isna().all().all() when df has exactly 1 row and func='std'",
+      "when": "func='std' and DataFrame has exactly 1 row",
+      "strategy": "Create a single-row DataFrame with numeric values. Call .ewm(alpha=0.5).aggregate('std'). Assert the result is NaN (not 0.0). Confirm min_periods=0 does not override this — the NaN is inherent to std with N-1 degrees of freedom.",
+      "source": "notes/pandas.md: std of single obs is NaN — consistent with N-1 degrees of freedom"
+    },
+    {
+      "id": "P18",
+      "type": "convention",
+      "claim": "EWM parameters com, span, halflife, alpha produce mathematically equivalent results when using their corresponding parameterizations",
+      "expression": "np.allclose(df.ewm(com=c).agg('mean').values, df.ewm(alpha=1/(1+c)).agg('mean').values)",
+      "when": "non-NaN numeric DataFrame, adjust=True (default), c > 0",
+      "strategy": "Generate a non-NaN float DataFrame and a positive float c in (0.1, 10). Compute alpha = 1/(1+c). Assert df.ewm(com=c).agg('mean') equals df.ewm(alpha=alpha).agg('mean') using np.allclose for floating-point tolerance. Also test span equivalence: alpha = 2/(span+1), so span=2 ↔ alpha=2/3.",
+      "source": "notes/pandas.md: Decay parameter equivalence — com=c ↔ alpha=1/(1+c); span=s ↔ alpha=2/(s+1)"
+    },
+    {
+      "id": "P19",
+      "type": "implicit",
+      "claim": "invalid string func name (non-EWM method) raises AttributeError",
+      "expression": "pytest.raises(AttributeError): df.ewm(alpha=0.5).aggregate(invalid_name)",
+      "when": "func is a string not in {'mean', 'std', 'var', 'sum'}",
+      "strategy": "Pass common but non-EWM-native string names: 'min', 'max', 'median', 'count', 'kurt', 'skew', 'sem', 'first', 'last'. Assert each raises AttributeError. Also assert that passing a random non-existent string (e.g. 'foobar') raises AttributeError, not NameError or ValueError.",
+      "source": "notes/pandas.md: Valid string names (EWM-native only): mean, std, var, sum"
+    },
+    {
+      "id": "P20",
+      "type": "implicit",
+      "claim": "adjust=False produces numerically different results from adjust=True for the same input and decay parameter",
+      "expression": "not df.ewm(alpha=a, adjust=True).agg('mean').equals(df.ewm(alpha=a, adjust=False).agg('mean'))",
+      "when": "non-NaN DataFrame with >= 2 rows, 0 < alpha < 1",
+      "strategy": "Generate a non-NaN float DataFrame with 3+ rows and an alpha in (0.1, 0.9). Call .agg('mean') with adjust=True and adjust=False. Assert the results are NOT equal (except possibly for first row which is always x_0). This verifies that the adjust parameter meaningfully alters the EWM calculation, distinguishing the two formulas from the ewm() docstring.",
+      "source": "ewm() docstring: adjust=True uses weighted sum formula; adjust=False uses recursive formula"
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "id": "A1",
+      "description": "cov and corr as string func names succeed but return a DataFrame with MultiIndex rows of shape (n_rows * n_cols, n_cols), which is qualitatively different from 'mean'/'std'/'var'/'sum' that return (n_rows, n_cols). The docstring provides no guidance on this return shape difference.",
+      "maintainer_note": "ewm.agg('cov') and ewm.agg('corr') produce MultiIndex row results [(row_idx, col_name), ...] rather than the shape-preserving output of other aggregators. This is undocumented and likely unexpected behavior. Recommend adding a note to the docstring or Raises section clarifying that cov/corr produce pairwise results with different index structure."
+    },
+    {
+      "id": "A2",
+      "description": "The docstring says 'A passed user-defined-function will be passed a Series for evaluation.' This implies UDFs should work, but they uniformly fail with AttributeError in pandas 3.0.0. It is unclear whether this note was ever accurate for EWM windows or is entirely inherited from rolling.aggregate docs.",
+      "maintainer_note": "The UDF behavior note should be removed from ewm.aggregate or clarified as not applicable. The EWM window type does not implement .apply(), making all callable func arguments non-functional. See E2."
+    },
+    {
+      "id": "A3",
+      "description": "The docstring states 'If func defines an index relabeling, axis must be 0 or index.' It is unclear how an EWM aggregate function could relabel an index given that the output preserves the input row index. This clause may be a copy-paste artifact that has no meaningful effect in the EWM context.",
+      "maintainer_note": "This sentence from the Notes section appears to be copied from the general DataFrame.agg() docstring and is not applicable to ewm.aggregate() where the output index is always the input index. Recommend removing or clarifying."
+    }
+  ]
+}
