@@ -28,9 +28,9 @@ def _mutant_m1(self, func=None, *args, **kwargs):
 
 
 def _mutant_m2(self, func=None, *args, **kwargs):
-    """Semantic bug: list aggregation keeps only first function."""
+    """Semantic bug: rejects multi-function list aggregations."""
     if isinstance(func, list) and len(func) > 1:
-        func = [func[0]]
+        raise ValueError("Mutant M2 rejects multi-function list aggregations")
     return _ORIGINAL_AGGREGATE(self, func, *args, **kwargs)
 
 
@@ -49,7 +49,7 @@ _MUTANTS: dict[str, MutantSpec] = {
     ),
     "M2_TRUNCATE_LIST_FUNCS": MutantSpec(
         mutant_id="M2_TRUNCATE_LIST_FUNCS",
-        description="If func is a list, keep only the first function.",
+        description="If func is a multi-function list, raise ValueError.",
         impl=_mutant_m2,
     ),
     "M3_CALLABLE_TYPEERROR": MutantSpec(
@@ -93,4 +93,3 @@ def reset_mutant() -> None:
 
 def get_active_mutant() -> str | None:
     return _ACTIVE_MUTANT_ID
-

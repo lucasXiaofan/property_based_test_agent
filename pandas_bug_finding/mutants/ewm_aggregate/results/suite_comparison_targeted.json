@@ -1,0 +1,57 @@
+{
+  "generated_at_utc": "2026-02-18T13:42:06.791389+00:00",
+  "target_symbol": "pandas.core.window.ewm.ExponentialMovingWindow.aggregate",
+  "mutant_ids": [
+    "M1_SUM_TO_MEAN",
+    "M2_TRUNCATE_LIST_FUNCS",
+    "M3_CALLABLE_TYPEERROR"
+  ],
+  "winner_by_unique_kills": "ir_test",
+  "both_suites_baseline_failed": false,
+  "suite_stats": {
+    "baseline_testing": {
+      "test_targets": [
+        "pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py::TestConsistencyProperties::test_aggregate_sum_matches_ewm_sum"
+      ],
+      "baseline_pass_count": 1,
+      "baseline_fail_count": 0,
+      "killed_ids": [
+        "M1_SUM_TO_MEAN"
+      ],
+      "survived_ids": [
+        "M2_TRUNCATE_LIST_FUNCS",
+        "M3_CALLABLE_TYPEERROR"
+      ],
+      "invalid_ids": []
+    },
+    "ir_test": {
+      "test_targets": [
+        "pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestExplicit::test_explicit__p3__list_of_string_func_names_returns",
+        "pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestImplicit::test_implicit__p11__any_callable_func_raises_attributeerror_ewm"
+      ],
+      "baseline_pass_count": 2,
+      "baseline_fail_count": 0,
+      "killed_ids": [
+        "M2_TRUNCATE_LIST_FUNCS",
+        "M3_CALLABLE_TYPEERROR"
+      ],
+      "survived_ids": [
+        "M1_SUM_TO_MEAN",
+        "M2_TRUNCATE_LIST_FUNCS",
+        "M3_CALLABLE_TYPEERROR"
+      ],
+      "invalid_ids": []
+    }
+  },
+  "cross_suite": {
+    "killed_by_both_ids": [],
+    "killed_only_by_baseline_testing_ids": [
+      "M1_SUM_TO_MEAN"
+    ],
+    "killed_only_by_ir_test_ids": [
+      "M2_TRUNCATE_LIST_FUNCS",
+      "M3_CALLABLE_TYPEERROR"
+    ],
+    "invalid_in_both_ids": []
+  }
+}

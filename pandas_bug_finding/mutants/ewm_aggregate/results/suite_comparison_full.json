@@ -1,0 +1,51 @@
+{
+  "generated_at_utc": "2026-02-18T13:33:21.407275+00:00",
+  "target_symbol": "pandas.core.window.ewm.ExponentialMovingWindow.aggregate",
+  "mutant_ids": [
+    "M1_SUM_TO_MEAN",
+    "M2_TRUNCATE_LIST_FUNCS",
+    "M3_CALLABLE_TYPEERROR"
+  ],
+  "winner_by_unique_kills": "tie",
+  "both_suites_baseline_failed": true,
+  "suite_stats": {
+    "baseline_testing": {
+      "test_targets": [
+        "pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py"
+      ],
+      "baseline_pass_count": 0,
+      "baseline_fail_count": 1,
+      "killed_ids": [],
+      "survived_ids": [],
+      "invalid_ids": [
+        "M1_SUM_TO_MEAN",
+        "M2_TRUNCATE_LIST_FUNCS",
+        "M3_CALLABLE_TYPEERROR"
+      ]
+    },
+    "ir_test": {
+      "test_targets": [
+        "pandas_bug_finding/ir_test/test_ewm_aggregate.py"
+      ],
+      "baseline_pass_count": 0,
+      "baseline_fail_count": 1,
+      "killed_ids": [],
+      "survived_ids": [],
+      "invalid_ids": [
+        "M1_SUM_TO_MEAN",
+        "M2_TRUNCATE_LIST_FUNCS",
+        "M3_CALLABLE_TYPEERROR"
+      ]
+    }
+  },
+  "cross_suite": {
+    "killed_by_both_ids": [],
+    "killed_only_by_baseline_testing_ids": [],
+    "killed_only_by_ir_test_ids": [],
+    "invalid_in_both_ids": [
+      "M1_SUM_TO_MEAN",
+      "M2_TRUNCATE_LIST_FUNCS",
+      "M3_CALLABLE_TYPEERROR"
+    ]
+  }
+}

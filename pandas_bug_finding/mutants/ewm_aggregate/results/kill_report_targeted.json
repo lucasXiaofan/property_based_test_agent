@@ -1,0 +1,140 @@
+{
+  "generated_at_utc": "2026-02-18T13:42:06.791389+00:00",
+  "target_symbol": "pandas.core.window.ewm.ExponentialMovingWindow.aggregate",
+  "mutants": [
+    {
+      "mutant_id": "M1_SUM_TO_MEAN",
+      "description": "If func == 'sum', force func='mean' before delegation."
+    },
+    {
+      "mutant_id": "M2_TRUNCATE_LIST_FUNCS",
+      "description": "If func is a multi-function list, raise ValueError."
+    },
+    {
+      "mutant_id": "M3_CALLABLE_TYPEERROR",
+      "description": "Raise TypeError for callable funcs instead of pandas behavior."
+    }
+  ],
+  "evaluations": [
+    {
+      "test_file": "pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py::TestConsistencyProperties::test_aggregate_sum_matches_ewm_sum",
+      "baseline": {
+        "passed": true,
+        "returncode": 0,
+        "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py::TestConsistencyProperties::test_aggregate_sum_matches_ewm_sum -q --hypothesis-seed=0",
+        "failures": [],
+        "stdout_tail": ".                                                                        [100%]\n1 passed in 0.17s",
+        "stderr_tail": ""
+      },
+      "mutants": [
+        {
+          "mutant_id": "M1_SUM_TO_MEAN",
+          "outcome": "killed",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py::TestConsistencyProperties::test_aggregate_sum_matches_ewm_sum -q --hypothesis-seed=0",
+          "returncode": 1,
+          "failures": [],
+          "stdout_tail": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_________ TestConsistencyProperties.test_aggregate_sum_matches_ewm_sum _________\n\nself = <test_ewm_aggregate_hypothesis.TestConsistencyProperties object at 0x10d9cae50>\n\n    @given(df=numeric_dataframes(), params=ewm_decay_params())\n>   @settings(max_examples=100, suppress_health_check=[HealthCheck.too_slow])\n               ^^^^^^^\n\npandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py:464: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py:470: in test_aggregate_sum_matches_ewm_sum\n    pd.testing.assert_frame_equal(result_agg, result_direct)\npandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n>   ???\nE   AssertionError: DataFrame.iloc[:, 0] (column name=\"col_0\") are different\nE   \nE   DataFrame.iloc[:, 0] (column name=\"col_0\") values are different (50.0 %)\nE   [index]: [0, 1]\nE   [left]:  [0.0, 0.6666... [truncated]",
+          "stderr_tail": ""
+        },
+        {
+          "mutant_id": "M2_TRUNCATE_LIST_FUNCS",
+          "outcome": "survived",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py::TestConsistencyProperties::test_aggregate_sum_matches_ewm_sum -q --hypothesis-seed=0",
+          "returncode": 0,
+          "failures": [],
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.16s",
+          "stderr_tail": ""
+        },
+        {
+          "mutant_id": "M3_CALLABLE_TYPEERROR",
+          "outcome": "survived",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/baseline_testing/test_ewm_aggregate_hypothesis.py::TestConsistencyProperties::test_aggregate_sum_matches_ewm_sum -q --hypothesis-seed=0",
+          "returncode": 0,
+          "failures": [],
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.17s",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "test_file": "pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestExplicit::test_explicit__p3__list_of_string_func_names_returns",
+      "baseline": {
+        "passed": true,
+        "returncode": 0,
+        "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestExplicit::test_explicit__p3__list_of_string_func_names_returns -q --hypothesis-seed=0",
+        "failures": [],
+        "stdout_tail": ".                                                                        [100%]\n1 passed in 0.24s",
+        "stderr_tail": ""
+      },
+      "mutants": [
+        {
+          "mutant_id": "M1_SUM_TO_MEAN",
+          "outcome": "survived",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestExplicit::test_explicit__p3__list_of_string_func_names_returns -q --hypothesis-seed=0",
+          "returncode": 0,
+          "failures": [],
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.21s",
+          "stderr_tail": ""
+        },
+        {
+          "mutant_id": "M2_TRUNCATE_LIST_FUNCS",
+          "outcome": "killed",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestExplicit::test_explicit__p3__list_of_string_func_names_returns -q --hypothesis-seed=0",
+          "returncode": 1,
+          "failures": [],
+          "stdout_tail": "F                                                                        [100%]\n=================================== FAILURES ===================================\n______ TestExplicit.test_explicit__p3__list_of_string_func_names_returns _______\n\nself = <test_ewm_aggregate.TestExplicit object at 0x10b9fbf10>\n\n    @given(df=numeric_dataframe(), alpha=valid_alpha)\n>   @settings(max_examples=30)\n               ^^^^^^^\n\npandas_bug_finding/ir_test/test_ewm_aggregate.py:90: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas_bug_finding/ir_test/test_ewm_aggregate.py:96: in test_explicit__p3__list_of_string_func_names_returns\n    result = df.ewm(alpha=alpha).aggregate([\"mean\", \"std\"])\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = ExponentialMovingWindow [alpha=0.5,min_periods=1,adjust=True,ignore_na=False,method=single]\nfunc = ['mean', 'std'], args = (), kwargs = {}\n\n    def _mutant_m2(self, func=None, *args, **kwargs):\n        \"\"\"Semantic bug: rejects multi-function list aggregations.\"\"\"\n        if isinstance(func, list) and len(func) > 1:\n>           ra... [truncated]",
+          "stderr_tail": ""
+        },
+        {
+          "mutant_id": "M3_CALLABLE_TYPEERROR",
+          "outcome": "survived",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestExplicit::test_explicit__p3__list_of_string_func_names_returns -q --hypothesis-seed=0",
+          "returncode": 0,
+          "failures": [],
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.21s",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "test_file": "pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestImplicit::test_implicit__p11__any_callable_func_raises_attributeerror_ewm",
+      "baseline": {
+        "passed": true,
+        "returncode": 0,
+        "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestImplicit::test_implicit__p11__any_callable_func_raises_attributeerror_ewm -q --hypothesis-seed=0",
+        "failures": [],
+        "stdout_tail": ".                                                                        [100%]\n1 passed in 0.01s",
+        "stderr_tail": ""
+      },
+      "mutants": [
+        {
+          "mutant_id": "M1_SUM_TO_MEAN",
+          "outcome": "survived",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestImplicit::test_implicit__p11__any_callable_func_raises_attributeerror_ewm -q --hypothesis-seed=0",
+          "returncode": 0,
+          "failures": [],
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.01s",
+          "stderr_tail": ""
+        },
+        {
+          "mutant_id": "M2_TRUNCATE_LIST_FUNCS",
+          "outcome": "survived",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestImplicit::test_implicit__p11__any_callable_func_raises_attributeerror_ewm -q --hypothesis-seed=0",
+          "returncode": 0,
+          "failures": [],
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.01s",
+          "stderr_tail": ""
+        },
+        {
+          "mutant_id": "M3_CALLABLE_TYPEERROR",
+          "outcome": "killed",
+          "command": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python3 -m pytest pandas_bug_finding/ir_test/test_ewm_aggregate.py::TestImplicit::test_implicit__p11__any_callable_func_raises_attributeerror_ewm -q --hypothesis-seed=0",
+          "returncode": 1,
+          "failures": [],
+          "stdout_tail": "F                                                                        [100%]\n=================================== FAILURES ===================================\n_ TestImplicit.test_implicit__p11__any_callable_func_raises_attributeerror_ewm _\n\nself = <test_ewm_aggregate.TestImplicit object at 0x10dbffbd0>\n\n    def test_implicit__p11__any_callable_func_raises_attributeerror_ewm(self):\n        \"\"\"\n        Any callable func raises AttributeError \u2014 EWM does not support apply-based aggregation.\n        Source: E2: AttributeError: 'ExponentialMovingWindow' object has no attribute 'apply'.\n        \"\"\"\n        df = pd.DataFrame({\"A\": [1.0, 2.0, 3.0]})\n    \n        def custom_func(x):\n            return x.sum()\n    \n        callables = [\n            lambda x: x.mean(),\n            np.mean,\n            np.sum,\n            pd.Series.mean,\n            custom_func,\n        ]\n        for func in callables:\n            with pytest.raises(AttributeError):\n>               df.ewm(alpha=0.5).aggregate(func)\n\npandas_bug_finding/ir_test/test_ewm_aggregate.py:246: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = ExponentialMovingWindow [alpha=0.5,min_periods=1,adj... [truncated]",
+          "stderr_tail": ""
+        }
+      ]
+    }
+  ]
+}
