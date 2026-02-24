@@ -1,0 +1,61 @@
+{
+  "target_api": "pandas.DataFrame.reindex",
+  "pytest_exit_code": 1,
+  "methods": [
+    {
+      "label": "pandas.DataFrame.reindex",
+      "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/frame.py",
+      "start_line": 5843,
+      "end_line": 6089,
+      "covered_lines": 1,
+      "num_statements": 1,
+      "line_coverage_percent": 100.0,
+      "missing_lines": []
+    },
+    {
+      "label": "pandas.core.generic.NDFrame.reindex",
+      "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/generic.py",
+      "start_line": 5201,
+      "end_line": 5478,
+      "covered_lines": 16,
+      "num_statements": 22,
+      "line_coverage_percent": 72.73,
+      "missing_lines": [
+        5437,
+        5441,
+        5444,
+        5448,
+        5449,
+        5451
+      ]
+    }
+  ],
+  "files": [
+    {
+      "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/frame.py",
+      "covered_lines": 103,
+      "num_statements": 2281,
+      "line_coverage_percent": 4.52,
+      "covered_branches": 34,
+      "num_branches": 1048,
+      "branch_coverage_percent": 3.24
+    },
+    {
+      "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/generic.py",
+      "covered_lines": 136,
+      "num_statements": 2106,
+      "line_coverage_percent": 6.46,
+      "covered_branches": 54,
+      "num_branches": 912,
+      "branch_coverage_percent": 5.92
+    }
+  ],
+  "totals": {
+    "covered_lines": 239,
+    "num_statements": 4387,
+    "line_coverage_percent": 5.45,
+    "covered_branches": 88,
+    "num_branches": 1960,
+    "branch_coverage_percent": 4.49
+  }
+}

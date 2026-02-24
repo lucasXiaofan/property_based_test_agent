@@ -1,0 +1,61 @@
+{
+  "library": "pandas",
+  "object": "DataFrame",
+  "doc_index_url": "https://pandas.pydata.org/pandas-docs/version/3.0.0/reference/frame.html",
+  "retrieved_date": "2026-02-24",
+  "selection_rule": "One function per high-value behavior type, up to 5 total",
+  "valuable_function_types": [
+    {
+      "type": "Label alignment and missing-label semantics",
+      "why_valuable": "High regression risk due to index/column alignment and NA introduction rules.",
+      "candidate_functions": ["reindex", "reindex_like", "align", "set_index", "reset_index"],
+      "selected_function": "reindex"
+    },
+    {
+      "type": "Relational joins and key matching",
+      "why_valuable": "Join behavior can silently corrupt data when key handling is wrong.",
+      "candidate_functions": ["merge", "join"],
+      "selected_function": "merge"
+    },
+    {
+      "type": "Split-apply-combine aggregation",
+      "why_valuable": "Complex behavior surface: grouping keys, NA handling, and output shape.",
+      "candidate_functions": ["groupby", "pivot_table", "aggregate", "transform"],
+      "selected_function": "groupby"
+    },
+    {
+      "type": "Time-series frequency conversion",
+      "why_valuable": "Boundary rules (binning, origin, offsets) are error-prone and domain-critical.",
+      "candidate_functions": ["resample", "asfreq", "shift", "tshift"],
+      "selected_function": "resample"
+    },
+    {
+      "type": "Dtype conversion and coercion",
+      "why_valuable": "Incorrect casting can lose information or change test assumptions.",
+      "candidate_functions": ["astype", "convert_dtypes", "infer_objects"],
+      "selected_function": "astype"
+    }
+  ],
+  "broad_dataframe_function_list": {
+    "Attributes and metadata": ["index", "columns", "dtypes", "shape", "size", "T"],
+    "Conversion": ["astype", "convert_dtypes", "to_numpy", "to_dict", "to_records"],
+    "Indexing and label ops": ["loc", "iloc", "at", "iat", "reindex", "reindex_like", "rename"],
+    "Missing data": ["isna", "notna", "fillna", "dropna", "interpolate"],
+    "Reshaping": ["pivot", "pivot_table", "stack", "unstack", "melt", "explode"],
+    "Combining and joining": ["merge", "join", "concat", "combine", "combine_first", "update"],
+    "GroupBy": ["groupby", "agg", "transform", "filter", "apply"],
+    "Window": ["rolling", "expanding", "ewm"],
+    "Time series": ["resample", "asfreq", "shift"],
+    "Computation": ["sum", "mean", "median", "min", "max", "std", "var", "quantile"],
+    "Comparison and ranking": ["compare", "equals", "rank", "nlargest", "nsmallest"],
+    "Sorting": ["sort_values", "sort_index"],
+    "Output and IO-style": ["to_csv", "to_json", "to_parquet", "to_markdown", "to_string"]
+  },
+  "selected_functions": [
+    "pandas.DataFrame.reindex",
+    "pandas.DataFrame.merge",
+    "pandas.DataFrame.groupby",
+    "pandas.DataFrame.resample",
+    "pandas.DataFrame.astype"
+  ]
+}

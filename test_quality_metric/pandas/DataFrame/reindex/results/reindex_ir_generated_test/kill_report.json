@@ -1,0 +1,494 @@
+{
+  "generated_at_utc": "2026-02-24T22:30:40.146409+00:00",
+  "function": "pandas.DataFrame.reindex",
+  "pytest_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_not_conformed_return",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_missing_labels_not_nan",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_ignore_fill_value",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_fill_value_numeric_only",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_ffill_backward",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_bfill_forward",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_nearest_as_ffill",
+      "clause_id": "C7"
+    },
+    {
+      "mutant_id": "M_C8_method_without_monotonicity",
+      "clause_id": "C8"
+    },
+    {
+      "mutant_id": "M_C9_fill_existing_nan",
+      "clause_id": "C9"
+    },
+    {
+      "mutant_id": "M_C10_ignore_limit",
+      "clause_id": "C10"
+    },
+    {
+      "mutant_id": "M_C11_break_index_columns_convention",
+      "clause_id": "C11"
+    },
+    {
+      "mutant_id": "M_C12_break_labels_axis_convention",
+      "clause_id": "C12"
+    },
+    {
+      "mutant_id": "M_C13_axis_int_rejected",
+      "clause_id": "C13"
+    },
+    {
+      "mutant_id": "M_C14_columns_missing_not_nan",
+      "clause_id": "C14"
+    },
+    {
+      "mutant_id": "M_C15_scalar_tolerance_not_uniform",
+      "clause_id": "C15"
+    },
+    {
+      "mutant_id": "M_C16_list_tolerance_len_dtype_ignored",
+      "clause_id": "C16"
+    },
+    {
+      "mutant_id": "M_C17_tolerance_inequality_relaxed",
+      "clause_id": "C17"
+    },
+    {
+      "mutant_id": "M_C18_ignore_level_param",
+      "clause_id": "C18"
+    },
+    {
+      "mutant_id": "M_C19_copy_changes_behavior",
+      "clause_id": "C19"
+    },
+    {
+      "mutant_id": "M_C20_force_materialize_non_index",
+      "clause_id": "C20"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_not_conformed_return",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e10_tolerance_without_method_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e1_labels_positional_and_keyword_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e2_duplicate_source_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e3_duplicate_source_columns_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e4_axis_with_columns_style_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e5_too_many_positional_args_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e6_invalid_method_name_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p10_labels_with_axis_columns_targets_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p16_numeric_fill_value_applied_to_new_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p2_empty_target_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p7_empty_index_keeps_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p8_empty_columns_keeps_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e10_tolerance_without_method_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e1_labels_positional_and_keyword_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e2_duplicate_source_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e3_duplicate_source_columns_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e4_axis_with_columns_style_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e5_too_many_positional_args_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e6_invalid_method_name_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p10_labels_with_axis_columns_targets_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p16_numeric_fill_value_applied_to_new_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p2_empty_target_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p7_empty_index_keeps_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p8_empty_columns_keeps_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "stdout_tail": "ame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e1_labels_positional_and_keyword_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e2_duplicate_source_index_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e3_duplicate_source_columns_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e4_axis_with_columns_style_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e5_too_many_positional_args_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e6_invalid_method_name_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e10_tolerance_without_method_raises\n26 failed, 4 passed in 119.43s (0:01:59)\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_missing_labels_not_nan",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "stdout_tail": "ndex_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10bfb4bd0>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n9 failed, 21 passed in 18.60s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_ignore_fill_value",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p16_numeric_fill_value_applied_to_new_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p16_numeric_fill_value_applied_to_new_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows"
+      ],
+      "stdout_tail": "lied_to_new_rows(\nE           self=<reindex_ir_generated_test.TestValidContracts object at 0x10a46f6d0>,\nE           df=     0\nE           0  0.0,  # or any other generated value\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:259: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10a46c850>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10a46c850>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10a46c850>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p16_numeric_fill_value_applied_to_new_rows\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n3 failed, 27 passed in 6.71s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_fill_value_numeric_only",
+      "clause_id": "C4",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows"
+      ],
+      "stdout_tail": "utant C4 rejects non-numeric fill_value\")\nE           TypeError: Mutant C4 rejects non-numeric fill_value\nE           Falsifying example: test_p17_string_fill_value_applied_to_new_rows(\nE               self=<reindex_ir_generated_test.TestValidContracts object at 0x109727350>,\nE               df=     0\nE               0  0.0,\nE           )\n\ntest_quality_metric/pandas/DataFrame/reindex/mutants/reindex_mutants.py:40: TypeError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x109724c50>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x109724c50>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x109724c50>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p17_string_fill_value_applied_to_new_rows\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n2 failed, 28 passed in 2.12s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_ffill_backward",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills"
+      ],
+      "stdout_tail": "=[10, 20])\n        target = [10, 11, 12, 13, 20]\n    \n        result = df.reindex(index=target, method=\"ffill\", limit=1)\n>       assert result.loc[11, \"v\"] == 1.0\nE       assert np.float64(nan) == 1.0\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:266: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10d70cb90>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10d70cb90>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10d70cb90>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n3 failed, 27 passed in 2.96s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_bfill_forward",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index"
+      ],
+      "stdout_tail": "Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:695\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:124\nE                   (and 2 more with settings.verbosity >= verbose)\n\n.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:689: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10991cbd0>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10991cbd0>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10991cbd0>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n2 failed, 28 passed in 3.01s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_nearest_as_ffill",
+      "clause_id": "C7",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance"
+      ],
+      "stdout_tail": "a561a90>\n\n    def test_p13_nearest_respects_scalar_tolerance(self):\n        df = pd.DataFrame({\"v\": [10.0, 20.0]}, index=[0.0, 1.0])\n        result = df.reindex(index=[0.1, 0.9], method=\"nearest\", tolerance=0.15)\n        assert result.loc[0.1, \"v\"] == 10.0\n>       assert result.loc[0.9, \"v\"] == 20.0\nE       assert np.float64(nan) == 20.0\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:212: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10a560c10>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10a560c10>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10a560c10>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n2 failed, 28 passed in 2.18s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C8_method_without_monotonicity",
+      "clause_id": "C8",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e6_invalid_method_name_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e6_invalid_method_name_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise"
+      ],
+      "stdout_tail": "ling of the above exception, another exception occurred:\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x109625490>\n\n    def test_e9_list_tolerance_wrong_size_raises(self):\n        df = pd.DataFrame({\"v\": [10.0, 20.0, 30.0]}, index=[0.0, 1.0, 2.0])\n>       with pytest.raises(ValueError, match=\"tolerance size\"):\nE       AssertionError: Regex pattern did not match.\nE         Expected regex: 'tolerance size'\nE         Actual message: 'tolerance argument only valid if doing pad, backfill or nearest reindexing'\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:339: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p11_ffill_on_monotonic_index\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p12_bfill_on_monotonic_index\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e6_invalid_method_name_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises\n9 failed, 21 passed in 7.56s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C9_fill_existing_nan",
+      "clause_id": "C9",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "stdout_tail": "ndex_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10ba8cd50>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p3_disjoint_rows_default_to_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p4_partial_overlap_rows_preserve_matches_and_nan_for_new\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p20_disjoint_labels_axis_index_all_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n9 failed, 21 passed in 21.75s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C10_ignore_limit",
+      "clause_id": "C10",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills"
+      ],
+      "stdout_tail": "10, 11, 12, 13, 20]\n    \n        result = df.reindex(index=target, method=\"ffill\", limit=1)\n        assert result.loc[11, \"v\"] == 1.0\n>       assert pd.isna(result.loc[12, \"v\"])\nE       assert False\nE        +  where False = <function isna at 0x10a196520>(np.float64(1.0))\nE        +    where <function isna at 0x10a196520> = pd.isna\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:267: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10c550a50>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10c550a50>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10c550a50>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p18_ffill_with_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n2 failed, 28 passed in 2.59s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C11_break_index_columns_convention",
+      "clause_id": "C11",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................F...                                           [100%]\n=================================== FAILURES ===================================\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x109e74ad0>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x109e74ad0>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x109e74ad0>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n1 failed, 29 passed in 2.28s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C12_break_labels_axis_convention",
+      "clause_id": "C12",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................F...                                           [100%]\n=================================== FAILURES ===================================\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10d6b8dd0>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10d6b8dd0>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10d6b8dd0>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n1 failed, 29 passed in 2.42s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C13_axis_int_rejected",
+      "clause_id": "C13",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e4_axis_with_columns_style_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p1_identity_labels_preserve_data"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e4_axis_with_columns_style_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p1_identity_labels_preserve_data"
+      ],
+      "stdout_tail": "lumns_style_raises(\nE               self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10bed1f10>,\nE               df=     0\nE               0  0.0,  # or any other generated value\nE           )\n\ntest_quality_metric/pandas/DataFrame/reindex/mutants/reindex_mutants.py:99: ValueError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10bec0c50>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10bec0c50>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10bec0c50>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p1_identity_labels_preserve_data\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e4_axis_with_columns_style_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n3 failed, 27 passed in 7.60s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C14_columns_missing_not_nan",
+      "clause_id": "C14",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan"
+      ],
+      "stdout_tail": "test_p9_disjoint_columns_default_to_nan(\nE           self=<reindex_ir_generated_test.TestValidContracts object at 0x10a0909d0>,\nE           df=     0\nE           0  0.0,  # or any other generated value\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:173: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10a090bd0>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10a090bd0>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10a090bd0>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p5_partial_overlap_columns\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p9_disjoint_columns_default_to_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n3 failed, 27 passed in 8.40s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C15_scalar_tolerance_not_uniform",
+      "clause_id": "C15",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance"
+      ],
+      "stdout_tail": "rated_test.TestValidContracts object at 0x10be99950>\n\n    def test_p13_nearest_respects_scalar_tolerance(self):\n        df = pd.DataFrame({\"v\": [10.0, 20.0]}, index=[0.0, 1.0])\n        result = df.reindex(index=[0.1, 0.9], method=\"nearest\", tolerance=0.15)\n>       assert result.loc[0.1, \"v\"] == 10.0\nE       assert np.float64(nan) == 10.0\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:211: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10be98ad0>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10be98ad0>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10be98ad0>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n2 failed, 28 passed in 2.10s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C16_list_tolerance_len_dtype_ignored",
+      "clause_id": "C16",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise"
+      ],
+      "stdout_tail": "in_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10de00b90>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10de00b90>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n________ TestInvalidContracts.test_e9_list_tolerance_wrong_size_raises _________\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10de11450>\n\n    def test_e9_list_tolerance_wrong_size_raises(self):\n        df = pd.DataFrame({\"v\": [10.0, 20.0, 30.0]}, index=[0.0, 1.0, 2.0])\n>       with pytest.raises(ValueError, match=\"tolerance size\"):\nE       Failed: DID NOT RAISE <class 'ValueError'>\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:339: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p19_nearest_listlike_tolerance_is_elementwise\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e9_list_tolerance_wrong_size_raises\n3 failed, 27 passed in 2.09s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C17_tolerance_inequality_relaxed",
+      "clause_id": "C17",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance"
+      ],
+      "stdout_tail": "     assert result.loc[0.9, \"v\"] == 20.0\n    \n        result_tight = df.reindex(index=[0.1, 0.9], method=\"nearest\", tolerance=0.05)\n>       assert pd.isna(result_tight.loc[0.1, \"v\"])\nE       assert False\nE        +  where False = <function isna at 0x10748e520>(np.float64(10.0))\nE        +    where <function isna at 0x10748e520> = pd.isna\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:215: AssertionError\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10979ccd0>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10979ccd0>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10979ccd0>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p13_nearest_respects_scalar_tolerance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n2 failed, 28 passed in 2.02s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C18_ignore_level_param",
+      "clause_id": "C18",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p15_multiindex_level_reindex_preserves_structure"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises",
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p15_multiindex_level_reindex_preserves_structure"
+      ],
+      "stdout_tail": "te-packages/pandas/core/indexes/base.py:3792: in get_indexer\n    return this._get_indexer(\n.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:3809: in _get_indexer\n    indexer = self._get_fill_indexer(target, method, limit, tolerance)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:3926: in _get_fill_indexer\n    indexer = libalgos.pad(own_values, target_values, limit=limit)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n>   ???\nE   TypeError: '<' not supported between instances of 'str' and 'tuple'\n\npandas/_libs/algos.pyx:585: TypeError\n\nDuring handling of the above exception, another exception occurred:\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10e631e90>\n\n    def test_e8_method_with_level_raises(self):\n        mi = pd.MultiIndex.from_tuples([(\"a\", 1), (\"a\", 2), (\"b\", 1)])\n        df = pd.DataFrame({\"v\": [1, 2, 3]}, index=mi)\n>       with pytest.raises(TypeError, match=\"Fill method not supported if level passed\"):\nE       AssertionError: Regex pattern did not match.\nE         Expected regex: 'Fill method not supported if level passed'\nE         Actual message: \"'<' not supported between instances of 'str' and 'tuple'\"\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:334: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestValidContracts::test_p15_multiindex_level_reindex_preserves_structure\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e8_method_with_level_raises\n3 failed, 27 passed in 2.68s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C19_copy_changes_behavior",
+      "clause_id": "C19",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................F...                                           [100%]\n=================================== FAILURES ===================================\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10bc14b90>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10bc14b90>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10bc14b90>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n1 failed, 29 passed in 2.21s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C20_force_materialize_non_index",
+      "clause_id": "C20",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................F...                                           [100%]\n=================================== FAILURES ===================================\n_____ TestInvalidContracts.test_e7_method_with_non_monotonic_index_raises ______\n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x109a38c90>\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n>   @settings(max_examples=40)\n               ^^^^^^^\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x109a38c90>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x109a38c90>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n1 failed, 29 passed in 2.27s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": false,
+    "returncode": 1,
+    "failed_nodeids": [
+      "ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises"
+    ],
+    "stdout_tail": "e/reindex/reindex_ir_generated_test.py:325: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <reindex_ir_generated_test.TestInvalidContracts object at 0x10b6b4f50>\ndf =    c0\n2   0\n1   0\n0   0\n\n    @given(df=non_monotonic_int_index_dataframe(min_rows=3))\n    @settings(max_examples=40)\n    def test_e7_method_with_non_monotonic_index_raises(self, df):\n        target = list(df.index) + [999]\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\nE       Falsifying example: test_e7_method_with_non_monotonic_index_raises(\nE           self=<reindex_ir_generated_test.TestInvalidContracts object at 0x10b6b4f50>,\nE           df=   c0\nE           2   0\nE           1   0\nE           0   0,\nE       )\nE       Explanation:\nE           These lines were always and only run by failing examples:\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/_dtype.py:345\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/getlimits.py:439\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/algorithms.py:1277\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/algorithms.py:1289\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/base.py:1609\nE               (and 17 more with settings.verbosity >= verbose)\n\nir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py:328: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py::TestInvalidContracts::test_e7_method_with_non_monotonic_index_raises\n1 failed, 29 passed in 2.98s\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 16,
+    "survived": 4,
+    "invalid_baseline": 0,
+    "mutation_score": 0.8
+  }
+}

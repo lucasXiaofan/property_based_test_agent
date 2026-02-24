@@ -1,0 +1,948 @@
+{
+  "metadata": {
+    "function": "pandas.DataFrame.reindex",
+    "library": "pandas",
+    "version": "3.0.0",
+    "signature": "DataFrame.reindex(labels=None, *, index=None, columns=None, axis=None, method=None, copy=lib.no_default, level=None, fill_value=np.nan, limit=None, tolerance=None)",
+    "references": [
+      {
+        "id": "R1",
+        "type": "api_doc",
+        "url": "https://pandas.pydata.org/pandas-docs/version/3.0.0/reference/api/pandas.DataFrame.reindex.html",
+        "desc": "Official API page for parameters, fill semantics, axis conventions, and tolerance contract."
+      },
+      {
+        "id": "R2",
+        "type": "source_code",
+        "url": "https://github.com/pandas-dev/pandas/blob/v3.0.0/pandas/core/frame.py",
+        "desc": "DataFrame.reindex docstring/signature and examples used by the API page."
+      },
+      {
+        "id": "R3",
+        "type": "user_guide",
+        "url": "https://pandas.pydata.org/pandas-docs/version/3.0.0/user_guide/indexing.html",
+        "desc": "User guide states duplicated index raises for reindex."
+      },
+      {
+        "id": "R4",
+        "type": "source_code",
+        "url": "https://github.com/pandas-dev/pandas/blob/v3.0.0/pandas/tests/frame/methods/test_reindex.py",
+        "desc": "Behavioral and exception expectations for DataFrame.reindex in pandas test suite."
+      },
+      {
+        "id": "R5",
+        "type": "source_code",
+        "url": "https://github.com/pandas-dev/pandas/blob/v3.0.0/pandas/core/indexes/base.py",
+        "desc": "Core reindex/indexer validation paths for duplicate-label and tolerance errors."
+      }
+    ]
+  },
+  "pre_conditions": {
+    "labels": {
+      "type": "array-like | None",
+      "partitions": {
+        "LB0": {
+          "desc": "Not provided; use keyword style via index=/columns=.",
+          "example": "labels=None"
+        },
+        "LB1": {
+          "desc": "Identical labels to targeted axis.",
+          "example": "labels=[0,1,2] for axis='index' when original.index is [0,1,2]"
+        },
+        "LB2": {
+          "desc": "Empty target labels.",
+          "example": "labels=[]"
+        },
+        "LB3": {
+          "desc": "Partially overlapping labels with at least one missing label.",
+          "example": "labels=['Safari','Iceweasel']"
+        },
+        "LB4": {
+          "desc": "Fully disjoint labels from targeted axis.",
+          "example": "labels=['x','y'] when original axis has none of these"
+        }
+      },
+      "interaction_hints": [
+        "axis",
+        "index",
+        "columns",
+        "fill_value",
+        "method"
+      ],
+      "invalid_cases": [
+        {
+          "desc": "labels is supplied both positionally and by keyword",
+          "example": "df.reindex([0,1], labels=[0,1])",
+          "expected_exception": "TypeError",
+          "note": null,
+          "source_ref": "R4"
+        }
+      ]
+    },
+    "index": {
+      "type": "array-like | Index | None",
+      "partitions": {
+        "I0": {
+          "desc": "Not provided.",
+          "example": "index=None"
+        },
+        "I1": {
+          "desc": "Target index is identical to original index.",
+          "example": "index=original.index"
+        },
+        "I2": {
+          "desc": "Empty target index.",
+          "example": "index=[]"
+        },
+        "I3": {
+          "desc": "Partial overlap with new labels introduced.",
+          "example": "index=['Safari','Iceweasel','IE10']"
+        },
+        "I4": {
+          "desc": "Target index fully disjoint from original index.",
+          "example": "index=['u','v']"
+        }
+      },
+      "interaction_hints": [
+        "method",
+        "fill_value",
+        "limit",
+        "tolerance",
+        "level"
+      ],
+      "invalid_cases": [
+        {
+          "desc": "reindexing rows when original index has duplicate labels",
+          "example": "DataFrame(index=[1,2,1]).reindex(index=[0,1,2])",
+          "expected_exception": "ValueError",
+          "note": "message includes 'cannot reindex on an axis with duplicate labels'",
+          "source_ref": "R3"
+        }
+      ]
+    },
+    "columns": {
+      "type": "array-like | Index | None",
+      "partitions": {
+        "C0": {
+          "desc": "Not provided.",
+          "example": "columns=None"
+        },
+        "C1": {
+          "desc": "Identical to original columns.",
+          "example": "columns=original.columns"
+        },
+        "C2": {
+          "desc": "Empty target columns.",
+          "example": "columns=[]"
+        },
+        "C3": {
+          "desc": "Partial overlap plus newly introduced columns.",
+          "example": "columns=['http_status','user_agent']"
+        },
+        "C4": {
+          "desc": "Target columns fully disjoint from original.",
+          "example": "columns=['x','y']"
+        }
+      },
+      "interaction_hints": [
+        "fill_value",
+        "axis",
+        "labels"
+      ],
+      "invalid_cases": [
+        {
+          "desc": "reindexing columns when original columns contain duplicate labels",
+          "example": "DataFrame(columns=['a','a']).reindex(columns=['a'])",
+          "expected_exception": "ValueError",
+          "note": "message includes 'cannot reindex on an axis with duplicate labels'",
+          "source_ref": "R4"
+        }
+      ]
+    },
+    "axis": {
+      "type": "{0,1,'index','columns'} | None",
+      "partitions": {
+        "A0": {
+          "desc": "Not provided; default behavior with keyword form.",
+          "example": "axis=None"
+        },
+        "A1": {
+          "desc": "Index axis targeted.",
+          "example": "axis='index'"
+        },
+        "A2": {
+          "desc": "Columns axis targeted.",
+          "example": "axis='columns'"
+        }
+      },
+      "interaction_hints": [
+        "labels",
+        "index",
+        "columns"
+      ],
+      "invalid_cases": [
+        {
+          "desc": "axis is provided together with index= or columns= style arguments",
+          "example": "df.reindex([0,1], columns=['A'], axis=1)",
+          "expected_exception": "TypeError",
+          "note": "message includes Cannot specify both 'axis'",
+          "source_ref": "R4"
+        },
+        {
+          "desc": "too many positional arguments (second positional intended as columns)",
+          "example": "df.reindex([0,1], ['A','B'])",
+          "expected_exception": "TypeError",
+          "note": null,
+          "source_ref": "R4"
+        }
+      ]
+    },
+    "method": {
+      "type": "{None,'pad','ffill','backfill','bfill','nearest'}",
+      "partitions": {
+        "M0": {
+          "desc": "No inexact-fill method.",
+          "example": "method=None"
+        },
+        "M1": {
+          "desc": "Forward propagation on monotonic index.",
+          "example": "method='ffill'"
+        },
+        "M2": {
+          "desc": "Backward propagation on monotonic index.",
+          "example": "method='bfill'"
+        },
+        "M3": {
+          "desc": "Nearest-neighbor match on monotonic index.",
+          "example": "method='nearest'"
+        }
+      },
+      "interaction_hints": [
+        "index",
+        "tolerance",
+        "limit",
+        "level"
+      ],
+      "invalid_cases": [
+        {
+          "desc": "method value is not a supported fill method",
+          "example": "df.reindex([1,0,2], method='asfreq')",
+          "expected_exception": "ValueError",
+          "note": "message includes 'Invalid fill method'",
+          "source_ref": "R4"
+        },
+        {
+          "desc": "fill method used with non-monotonic index",
+          "example": "df_non_monotonic.reindex(target, method='ffill')",
+          "expected_exception": "ValueError",
+          "note": "method-based filling is only for monotonic index",
+          "source_ref": "R1"
+        },
+        {
+          "desc": "method is passed together with level on MultiIndex reindex",
+          "example": "df_mi.reindex(target, level=0, method='ffill')",
+          "expected_exception": "TypeError",
+          "note": "core index logic rejects fill method with level",
+          "source_ref": "R5"
+        }
+      ]
+    },
+    "copy": {
+      "type": "bool | lib.no_default",
+      "partitions": {
+        "K0": {
+          "desc": "Default sentinel value.",
+          "example": "copy=lib.no_default"
+        },
+        "K1": {
+          "desc": "Explicit True.",
+          "example": "copy=True"
+        },
+        "K2": {
+          "desc": "Explicit False.",
+          "example": "copy=False"
+        }
+      },
+      "interaction_hints": [],
+      "invalid_cases": []
+    },
+    "level": {
+      "type": "int | str | None",
+      "partitions": {
+        "V0": {
+          "desc": "No level broadcasting.",
+          "example": "level=None"
+        },
+        "V1": {
+          "desc": "Valid level-based broadcast over MultiIndex.",
+          "example": "level=0"
+        }
+      },
+      "interaction_hints": [
+        "index",
+        "method"
+      ],
+      "invalid_cases": []
+    },
+    "fill_value": {
+      "type": "scalar",
+      "partitions": {
+        "F0": {
+          "desc": "Default NaN fill for newly introduced labels.",
+          "example": "fill_value=np.nan"
+        },
+        "F1": {
+          "desc": "Numeric scalar fill.",
+          "example": "fill_value=0"
+        },
+        "F2": {
+          "desc": "String/object scalar fill.",
+          "example": "fill_value='missing'"
+        }
+      },
+      "interaction_hints": [
+        "index",
+        "columns",
+        "labels"
+      ],
+      "invalid_cases": []
+    },
+    "limit": {
+      "type": "int | None",
+      "partitions": {
+        "N0": {
+          "desc": "No cap on consecutive fills.",
+          "example": "limit=None"
+        },
+        "N1": {
+          "desc": "Positive cap on consecutive method fills.",
+          "example": "limit=1"
+        }
+      },
+      "interaction_hints": [
+        "method",
+        "index"
+      ],
+      "invalid_cases": []
+    },
+    "tolerance": {
+      "type": "scalar | list-like | None",
+      "partitions": {
+        "T0": {
+          "desc": "No tolerance restriction.",
+          "example": "tolerance=None"
+        },
+        "T1": {
+          "desc": "Scalar tolerance applied to all target labels.",
+          "example": "tolerance=0.2"
+        },
+        "T2": {
+          "desc": "List-like tolerance matching target size and dtype requirements.",
+          "example": "tolerance=[0.5,0.01,0.4,0.1]"
+        }
+      },
+      "interaction_hints": [
+        "method",
+        "index"
+      ],
+      "invalid_cases": [
+        {
+          "desc": "list-like tolerance length does not match target index size",
+          "example": "df.reindex(target, method='nearest', tolerance=[1,1]) when len(target)!=2",
+          "expected_exception": "ValueError",
+          "note": "message includes 'list-like tolerance size must match target index size'",
+          "source_ref": "R5"
+        },
+        {
+          "desc": "tolerance supplied when method is exact-match (None)",
+          "example": "df.reindex(target, method=None, tolerance=1)",
+          "expected_exception": "ValueError",
+          "note": "tolerance valid only with pad/backfill/nearest style indexing",
+          "source_ref": "R5"
+        }
+      ]
+    }
+  },
+  "post_conditions": [
+    {
+      "id": "P1",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Identity reindex is a baseline invariant; bugs here indicate wrong index alignment even without missing labels. Trigger is minimal because only axis-targeting and identical labels matter.",
+      "claim": "When target labels equal the current targeted axis labels, output keeps the same data values and axis labels in the same order.",
+      "formal": [
+        "result = original.reindex(labels=params.labels, axis=params.axis)",
+        "assert list(result.axes[0 if params.axis in ['index',0] else 1]) == list(params.labels)",
+        "assert result.equals(original if params.axis in ['index',0] else original.reindex(columns=params.labels))"
+      ],
+      "trigger": {
+        "labels": ["LB1"],
+        "axis": ["A1"],
+        "method": ["M0"],
+        "fill_value": ["F0"],
+        "tolerance": ["T0"],
+        "copy": ["K0"],
+        "level": ["V0"],
+        "limit": ["N0"],
+        "index": ["I0"],
+        "columns": ["C0"]
+      }
+    },
+    {
+      "id": "P2",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Empty-target boundary catches shape bugs and incorrect retention of old labels. It is distinct from disjoint labels because result length is zero, not full-length missing rows.",
+      "claim": "Reindexing with an empty target axis returns an empty axis while preserving the non-target axis.",
+      "formal": [
+        "result = original.reindex(labels=params.labels, axis='index')",
+        "assert len(result.index) == 0",
+        "assert list(result.columns) == list(original.columns)"
+      ],
+      "trigger": {
+        "labels": ["LB2"],
+        "axis": ["A1"],
+        "method": ["M0"],
+        "fill_value": ["F0"],
+        "index": ["I0"],
+        "columns": ["C0"]
+      }
+    },
+    {
+      "id": "P3",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Fully disjoint-target boundary catches incorrect carry-over of values from unmatched labels. It isolates the missing-label path without overlap ambiguity.",
+      "claim": "When target labels are fully disjoint, all data on the targeted axis are newly introduced and thus filled with NaN by default.",
+      "formal": [
+        "new_labels = params.index",
+        "result = original.reindex(index=new_labels)",
+        "assert list(result.index) == list(new_labels)",
+        "assert result.isna().all().all()"
+      ],
+      "trigger": {
+        "index": ["I4"],
+        "labels": ["LB0"],
+        "method": ["M0"],
+        "fill_value": ["F0"],
+        "axis": ["A0"],
+        "columns": ["C0"]
+      }
+    },
+    {
+      "id": "P4",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Partial-overlap reindex is the core behavior; this catches indexer alignment bugs where matched rows shift or unmatched rows are not NaN.",
+      "claim": "For partially overlapping row targets, matched labels keep original values and unmatched labels become NaN when fill_value is default.",
+      "formal": [
+        "result = original.reindex(index=new_labels)",
+        "for lbl in new_labels:",
+        "    if lbl in original.index: assert result.loc[lbl].equals(original.loc[lbl])",
+        "    else: assert result.loc[lbl].isna().all()"
+      ],
+      "trigger": {
+        "index": ["I3"],
+        "labels": ["LB0"],
+        "method": ["M0"],
+        "fill_value": ["F0"],
+        "axis": ["A0"],
+        "columns": ["C0"]
+      }
+    },
+    {
+      "id": "P5",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Column reindex partial overlap catches axis-mix bugs where row logic is incorrectly reused for columns.",
+      "claim": "Column reindex keeps existing columns and introduces missing columns with NaN by default.",
+      "formal": [
+        "result = original.reindex(columns=params.columns)",
+        "assert list(result.columns) == list(params.columns)",
+        "for c in params.columns:",
+        "    if c in original.columns: assert result[c].equals(original[c])",
+        "    else: assert result[c].isna().all()"
+      ],
+      "trigger": {
+        "columns": ["C3"],
+        "labels": ["LB0"],
+        "axis": ["A0"],
+        "method": ["M0"],
+        "fill_value": ["F0"],
+        "index": ["I0"]
+      }
+    },
+    {
+      "id": "P6",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Keyword-style (index/columns) contract is the preferred API surface; this catches parser/regression bugs in argument routing.",
+      "claim": "Keyword-style reindex with identical index and columns is behaviorally equivalent to identity.",
+      "formal": [
+        "result = original.reindex(index=original.index, columns=original.columns)",
+        "assert result.equals(original)"
+      ],
+      "trigger": {
+        "labels": ["LB0"],
+        "index": ["I1"],
+        "columns": ["C1"],
+        "axis": ["A0"],
+        "method": ["M0"],
+        "copy": ["K0"],
+        "level": ["V0"],
+        "limit": ["N0"],
+        "tolerance": ["T0"]
+      }
+    },
+    {
+      "id": "P7",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Empty-index boundary validates that rows are fully dropped while columns remain intact; this often breaks in block-manager edge cases.",
+      "claim": "Reindex with empty index yields zero rows and unchanged column labels.",
+      "formal": [
+        "result = original.reindex(index=[])",
+        "assert result.shape[0] == 0",
+        "assert list(result.columns) == list(original.columns)"
+      ],
+      "trigger": {
+        "index": ["I2"],
+        "labels": ["LB0"],
+        "axis": ["A0"],
+        "columns": ["C0"],
+        "method": ["M0"]
+      }
+    },
+    {
+      "id": "P8",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Empty-columns boundary validates that schema can be intentionally emptied without affecting row index order.",
+      "claim": "Reindex with empty columns yields zero columns and unchanged row index.",
+      "formal": [
+        "result = original.reindex(columns=[])",
+        "assert result.shape[1] == 0",
+        "assert list(result.index) == list(original.index)"
+      ],
+      "trigger": {
+        "columns": ["C2"],
+        "labels": ["LB0"],
+        "axis": ["A0"],
+        "index": ["I0"],
+        "method": ["M0"]
+      }
+    },
+    {
+      "id": "P9",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Disjoint columns catches wrong default fill semantics and wrong column-order materialization.",
+      "claim": "When requested columns are fully disjoint and fill_value is default, all resulting column values are NaN.",
+      "formal": [
+        "result = original.reindex(columns=params.columns)",
+        "assert list(result.columns) == list(params.columns)",
+        "assert result.isna().all().all()"
+      ],
+      "trigger": {
+        "columns": ["C4"],
+        "labels": ["LB0"],
+        "axis": ["A0"],
+        "index": ["I0"],
+        "method": ["M0"],
+        "fill_value": ["F0"]
+      }
+    },
+    {
+      "id": "P10",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Axis-style column reindex verifies that labels+axis convention targets columns, not rows; this catches axis dispatch bugs.",
+      "claim": "Using labels with axis='columns' reindexes columns and preserves row index order.",
+      "formal": [
+        "result = original.reindex(labels=params.labels, axis='columns')",
+        "assert list(result.columns) == list(params.labels)",
+        "assert list(result.index) == list(original.index)"
+      ],
+      "trigger": {
+        "labels": ["LB3"],
+        "axis": ["A2"],
+        "method": ["M0"],
+        "index": ["I0"],
+        "columns": ["C0"]
+      }
+    },
+    {
+      "id": "P11",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Forward fill behavior is distinct from default NaN insertion and catches regressions in order-aware fill logic.",
+      "claim": "With monotonic index and method='ffill' (or 'pad'), missing target labels are filled from the previous valid observation, subject to limit.",
+      "formal": [
+        "result = original.reindex(index=new_labels, method='ffill')",
+        "assert result.loc[label_between_i_and_j].equals(original.loc[i])"
+      ],
+      "trigger": {
+        "method": ["M1"],
+        "index": ["I3"],
+        "limit": ["N0"],
+        "tolerance": ["T0"],
+        "level": ["V0"]
+      }
+    },
+    {
+      "id": "P12",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Backward fill is a separate directional contract and catches reversed-fill bugs not exposed by forward fill tests.",
+      "claim": "With monotonic index and method='bfill' (or 'backfill'), missing target labels are filled from the next valid observation.",
+      "formal": [
+        "result = original.reindex(index=new_labels, method='bfill')",
+        "assert result.loc[label_between_i_and_j].equals(original.loc[j])"
+      ],
+      "trigger": {
+        "method": ["M2"],
+        "index": ["I3"],
+        "limit": ["N0"],
+        "tolerance": ["T0"],
+        "level": ["V0"]
+      }
+    },
+    {
+      "id": "P13",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Nearest matching with tolerance is unique and catches distance-computation and tie-selection bugs.",
+      "claim": "With method='nearest', each target label is matched to the nearest original label, and matches beyond tolerance are treated as missing.",
+      "formal": [
+        "result = original.reindex(index=new_labels, method='nearest', tolerance=params.tolerance)",
+        "assert for_each_target(abs(original.index[indexer] - new_labels) <= params.tolerance or result_row_is_missing)"
+      ],
+      "trigger": {
+        "method": ["M3"],
+        "index": ["I3"],
+        "tolerance": ["T1"],
+        "limit": ["N0"],
+        "level": ["V0"]
+      }
+    },
+    {
+      "id": "P14",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "copy keyword is deprecated/ignored in 3.0; this catches accidental behavior branching on copy parameter.",
+      "claim": "Changing copy between True and False does not change the logical reindex result values/labels in pandas 3.0.",
+      "formal": [
+        "r_true = original.reindex(index=new_labels, copy=True)",
+        "r_false = original.reindex(index=new_labels, copy=False)",
+        "assert r_true.equals(r_false)"
+      ],
+      "trigger": {
+        "copy": ["K1", "K2"],
+        "index": ["I3"],
+        "method": ["M0"],
+        "fill_value": ["F0"],
+        "axis": ["A0"]
+      }
+    },
+    {
+      "id": "P15",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "MultiIndex level broadcast is a specialized path with distinct index-join logic, historically bug-prone.",
+      "claim": "When level is provided on MultiIndex reindex, matching/broadcast occurs on that level while preserving MultiIndex structure.",
+      "formal": [
+        "result = original.reindex(index=new_labels, level=params.level)",
+        "assert result.index.nlevels == original.index.nlevels",
+        "assert projected_level_values_match_requested_level(result.index, new_labels, params.level)"
+      ],
+      "trigger": {
+        "level": ["V1"],
+        "index": ["I3"],
+        "method": ["M0"],
+        "axis": ["A0"],
+        "tolerance": ["T0"]
+      }
+    },
+    {
+      "id": "P16",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Numeric fill_value behavior catches wrong default NaN usage and type-casting regressions in introduced rows/columns.",
+      "claim": "When fill_value is numeric scalar, newly introduced labels are filled with that scalar instead of NaN.",
+      "formal": [
+        "result = original.reindex(index=new_labels, fill_value=params.fill_value)",
+        "for lbl in new_labels:",
+        "    if lbl not in original.index: assert (result.loc[lbl] == params.fill_value).all()"
+      ],
+      "trigger": {
+        "fill_value": ["F1"],
+        "index": ["I3"],
+        "method": ["M0"],
+        "axis": ["A0"]
+      }
+    },
+    {
+      "id": "P17",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "String/object fill_value has separate dtype paths and catches object-cast handling regressions.",
+      "claim": "When fill_value is a string/object scalar, newly introduced labels are filled with that scalar.",
+      "formal": [
+        "result = original.reindex(index=new_labels, fill_value=params.fill_value)",
+        "for lbl in new_labels:",
+        "    if lbl not in original.index: assert (result.loc[lbl] == params.fill_value).all()"
+      ],
+      "trigger": {
+        "fill_value": ["F2"],
+        "index": ["I3"],
+        "method": ["M0"],
+        "axis": ["A0"]
+      }
+    },
+    {
+      "id": "P18",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "limit-based truncation is a separate contract from method fill and catches over-propagation bugs.",
+      "claim": "With method fill and limit=N, at most N consecutive newly introduced positions are filled from neighbors.",
+      "formal": [
+        "result = original.reindex(index=new_labels, method='ffill', limit=params.limit)",
+        "assert max_consecutive_filled_from_method(result, new_labels, original.index) <= params.limit"
+      ],
+      "trigger": {
+        "method": ["M1"],
+        "limit": ["N1"],
+        "index": ["I3"],
+        "tolerance": ["T0"]
+      }
+    },
+    {
+      "id": "P19",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "List-like tolerance path differs from scalar and catches element-wise tolerance alignment bugs.",
+      "claim": "List-like tolerance applies per target element and must drive per-label acceptance/rejection under nearest matching.",
+      "formal": [
+        "result = original.reindex(index=new_labels, method='nearest', tolerance=params.tolerance)",
+        "assert elementwise_tolerance_applied(result, new_labels, params.tolerance)"
+      ],
+      "trigger": {
+        "method": ["M3"],
+        "tolerance": ["T2"],
+        "index": ["I3"],
+        "limit": ["N0"],
+        "level": ["V0"]
+      }
+    },
+    {
+      "id": "P20",
+      "track": "valid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Disjoint labels via labels+axis path validates the second calling convention and catches routing bugs that bypass missing-label fill rules.",
+      "claim": "When labels are fully disjoint on axis='index', result index equals labels and all values are NaN under default fill_value.",
+      "formal": [
+        "result = original.reindex(labels=params.labels, axis='index')",
+        "assert list(result.index) == list(params.labels)",
+        "assert result.isna().all().all()"
+      ],
+      "trigger": {
+        "labels": ["LB4"],
+        "axis": ["A1"],
+        "method": ["M0"],
+        "fill_value": ["F0"],
+        "index": ["I0"],
+        "columns": ["C0"]
+      }
+    },
+    {
+      "id": "E1",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R4",
+      "why": "Duplicate specification of labels is a call-signature error and should fail early before alignment logic.",
+      "claim": "Supplying labels both positionally and by keyword raises TypeError.",
+      "formal": [
+        "with pytest.raises(TypeError):",
+        "    original.reindex([0,1], labels=[0,1])"
+      ],
+      "trigger": {
+        "labels": [
+          "labels is supplied both positionally and by keyword"
+        ]
+      }
+    },
+    {
+      "id": "E2",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R3",
+      "why": "Duplicate source index makes one-to-one alignment ambiguous and must be rejected.",
+      "claim": "Reindexing rows on a DataFrame with duplicate index labels raises ValueError.",
+      "formal": [
+        "with pytest.raises(ValueError):",
+        "    original_with_duplicate_index.reindex(index=[0,1,2])"
+      ],
+      "trigger": {
+        "index": [
+          "reindexing rows when original index has duplicate labels"
+        ]
+      }
+    },
+    {
+      "id": "E3",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R4",
+      "why": "Duplicate source columns also make alignment ambiguous and are independently validated.",
+      "claim": "Reindexing columns when original columns are duplicated raises ValueError.",
+      "formal": [
+        "with pytest.raises(ValueError):",
+        "    original_with_duplicate_columns.reindex(columns=['bar'])"
+      ],
+      "trigger": {
+        "columns": [
+          "reindexing columns when original columns contain duplicate labels"
+        ]
+      }
+    },
+    {
+      "id": "E4",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R4",
+      "why": "Mixing axis-style and keyword-style targeting is ambiguous; parser-level guard must remain stable.",
+      "claim": "Providing axis together with index=/columns= style arguments raises TypeError.",
+      "formal": [
+        "with pytest.raises(TypeError):",
+        "    original.reindex([0,1], columns=['A'], axis=1)"
+      ],
+      "trigger": {
+        "axis": [
+          "axis is provided together with index= or columns= style arguments"
+        ]
+      }
+    },
+    {
+      "id": "E5",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R4",
+      "why": "Positional-argument guard prevents old calling conventions from silently mis-targeting columns.",
+      "claim": "Passing too many positional arguments to reindex raises TypeError.",
+      "formal": [
+        "with pytest.raises(TypeError):",
+        "    original.reindex([0,1], ['A','B'])"
+      ],
+      "trigger": {
+        "axis": [
+          "too many positional arguments (second positional intended as columns)"
+        ]
+      }
+    },
+    {
+      "id": "E6",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R4",
+      "why": "Method validation must reject unsupported names to avoid silent fallback bugs.",
+      "claim": "Unsupported method string raises ValueError.",
+      "formal": [
+        "with pytest.raises(ValueError):",
+        "    original.reindex([1,0,2], method='asfreq')"
+      ],
+      "trigger": {
+        "method": [
+          "method value is not a supported fill method"
+        ]
+      }
+    },
+    {
+      "id": "E7",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R1",
+      "why": "Fill methods depend on sorted index semantics; allowing non-monotonic inputs would produce unstable matches.",
+      "claim": "Using method-based fill with non-monotonic index raises ValueError.",
+      "formal": [
+        "with pytest.raises(ValueError):",
+        "    original_non_monotonic.reindex(new_labels, method='ffill')"
+      ],
+      "trigger": {
+        "method": [
+          "fill method used with non-monotonic index"
+        ]
+      }
+    },
+    {
+      "id": "E8",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R5",
+      "why": "Method+level is disallowed in core index logic; this catches regressions in argument validation sequencing.",
+      "claim": "Passing method together with level on MultiIndex reindex raises TypeError.",
+      "formal": [
+        "with pytest.raises(TypeError):",
+        "    original_mi.reindex(new_labels, level=0, method='ffill')"
+      ],
+      "trigger": {
+        "method": [
+          "method is passed together with level on MultiIndex reindex"
+        ]
+      }
+    },
+    {
+      "id": "E9",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R5",
+      "why": "Tolerance vector shape is structural and must match target size; mismatch indicates invalid contract usage.",
+      "claim": "List-like tolerance with length different from target index length raises ValueError.",
+      "formal": [
+        "with pytest.raises(ValueError):",
+        "    original.reindex(new_labels, method='nearest', tolerance=[1,1])"
+      ],
+      "trigger": {
+        "tolerance": [
+          "list-like tolerance length does not match target index size"
+        ]
+      }
+    },
+    {
+      "id": "E10",
+      "track": "invalid",
+      "evidence": "explicit",
+      "source_ref": "R5",
+      "why": "Tolerance only has meaning for inexact match methods; exact-match mode must reject it.",
+      "claim": "Supplying tolerance while method is None raises ValueError.",
+      "formal": [
+        "with pytest.raises(ValueError):",
+        "    original.reindex(new_labels, method=None, tolerance=1)"
+      ],
+      "trigger": {
+        "tolerance": [
+          "tolerance supplied when method is exact-match (None)"
+        ]
+      }
+    }
+  ]
+}

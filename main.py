@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 
-# df = pd.DataFrame(data={"a": [0],"b": [0]})
-# print(df)
-# print("...")
-# print(df.reindex(columns=["a", "b", "c",'d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'], fill_value="missing"))
+df = pd.DataFrame(data={"a": [0],"b": [0]})
+print(df)
+print("...")
+print(df.reindex(columns=["a", "b", "c",'D']))
 
 # df = pd.DataFrame(data={"a": [0],"b": [0]})
 # print(df)
@@ -48,8 +48,8 @@ import numpy as np
 # # pandas 3.0.0: AttributeError: 'ArrowStringArray' object has no attribute 'item'
 
 
-df = pd.DataFrame({"A": [1.0, 2.0, 3.0]})
+# df = pd.DataFrame({"A": [1.0, 2.0, 3.0]})
 
 
 
-print(df.ewm(alpha=0.5).aggregate(np.mean))
+# print(df.ewm(alpha=0.5).aggregate(np.mean))

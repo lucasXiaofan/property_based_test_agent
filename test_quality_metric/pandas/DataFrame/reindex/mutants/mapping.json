@@ -1,0 +1,25 @@
+{
+  "function": "pandas.DataFrame.reindex",
+  "mutants": [
+    {"mutant_id": "M_C1_not_conformed_return", "clause_id": "C1"},
+    {"mutant_id": "M_C2_missing_labels_not_nan", "clause_id": "C2"},
+    {"mutant_id": "M_C3_ignore_fill_value", "clause_id": "C3"},
+    {"mutant_id": "M_C4_fill_value_numeric_only", "clause_id": "C4"},
+    {"mutant_id": "M_C5_ffill_backward", "clause_id": "C5"},
+    {"mutant_id": "M_C6_bfill_forward", "clause_id": "C6"},
+    {"mutant_id": "M_C7_nearest_as_ffill", "clause_id": "C7"},
+    {"mutant_id": "M_C8_method_without_monotonicity", "clause_id": "C8"},
+    {"mutant_id": "M_C9_fill_existing_nan", "clause_id": "C9"},
+    {"mutant_id": "M_C10_ignore_limit", "clause_id": "C10"},
+    {"mutant_id": "M_C11_break_index_columns_convention", "clause_id": "C11"},
+    {"mutant_id": "M_C12_break_labels_axis_convention", "clause_id": "C12"},
+    {"mutant_id": "M_C13_axis_int_rejected", "clause_id": "C13"},
+    {"mutant_id": "M_C14_columns_missing_not_nan", "clause_id": "C14"},
+    {"mutant_id": "M_C15_scalar_tolerance_not_uniform", "clause_id": "C15"},
+    {"mutant_id": "M_C16_list_tolerance_len_dtype_ignored", "clause_id": "C16"},
+    {"mutant_id": "M_C17_tolerance_inequality_relaxed", "clause_id": "C17"},
+    {"mutant_id": "M_C18_ignore_level_param", "clause_id": "C18"},
+    {"mutant_id": "M_C19_copy_changes_behavior", "clause_id": "C19"},
+    {"mutant_id": "M_C20_force_materialize_non_index", "clause_id": "C20"}
+  ]
+}

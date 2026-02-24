@@ -1,0 +1,122 @@
+[
+  {
+    "id": "C1",
+    "description": "reindex returns a DataFrame conformed to the requested labels.",
+    "quote": "Conform DataFrame to new index with optional filling logic.",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C2",
+    "description": "Labels introduced by reindex are NaN by default when values are missing.",
+    "quote": "Places NA/NaN in locations having no value in the previous index.",
+    "category": "NaN / Missing Label Behavior"
+  },
+  {
+    "id": "C3",
+    "description": "fill_value replaces missing values introduced by reindex.",
+    "quote": "Value to use for missing values. Defaults to NaN, but can be any 'compatible' value.",
+    "category": "NaN / Missing Label Behavior"
+  },
+  {
+    "id": "C4",
+    "description": "fill_value supports non-numeric compatible values.",
+    "quote": "df.reindex(new_index, fill_value='missing')",
+    "category": "NaN / Missing Label Behavior"
+  },
+  {
+    "id": "C5",
+    "description": "method='ffill'/'pad' propagates last valid observation forward.",
+    "quote": "pad / ffill: Propagate last valid observation forward to next valid.",
+    "category": "Method / Fill Logic"
+  },
+  {
+    "id": "C6",
+    "description": "method='bfill'/'backfill' propagates next valid observation backward.",
+    "quote": "backfill / bfill: Use next valid observation to fill gap.",
+    "category": "Method / Fill Logic"
+  },
+  {
+    "id": "C7",
+    "description": "method='nearest' fills gaps using nearest valid observation.",
+    "quote": "nearest: Use nearest valid observations to fill gap.",
+    "category": "Method / Fill Logic"
+  },
+  {
+    "id": "C8",
+    "description": "method-based filling applies only to monotonic indexes.",
+    "quote": "this is only applicable to DataFrames/Series with a monotonically increasing/decreasing index",
+    "category": "Method / Fill Logic"
+  },
+  {
+    "id": "C9",
+    "description": "method-based filling does not fill pre-existing NaN values in the original DataFrame.",
+    "quote": "filling while reindexing does not look at DataFrame values, but only compares the original and desired indexes.",
+    "category": "Method / Fill Logic"
+  },
+  {
+    "id": "C10",
+    "description": "limit caps the maximum number of consecutive forward/backward fills.",
+    "quote": "Maximum number of consecutive elements to forward or backward fill.",
+    "category": "Method / Fill Logic"
+  },
+  {
+    "id": "C11",
+    "description": "DataFrame.reindex supports keyword convention using index= and columns=.",
+    "quote": "(index=index_labels, columns=column_labels, ...)",
+    "category": "Axis / Label Targeting"
+  },
+  {
+    "id": "C12",
+    "description": "DataFrame.reindex supports labels with explicit axis convention.",
+    "quote": "(labels, axis={'index', 'columns'}, ...)",
+    "category": "Axis / Label Targeting"
+  },
+  {
+    "id": "C13",
+    "description": "axis accepts both axis names and numeric selectors.",
+    "quote": "Can be either the axis name ('index', 'columns') or number (0, 1).",
+    "category": "Axis / Label Targeting"
+  },
+  {
+    "id": "C14",
+    "description": "columns reindexing may introduce NaN for missing columns.",
+    "quote": "df.reindex(columns=['http_status', 'user_agent'])",
+    "category": "Axis / Label Targeting"
+  },
+  {
+    "id": "C15",
+    "description": "Scalar tolerance applies uniformly to all values.",
+    "quote": "Tolerance may be a scalar value, which applies the same tolerance to all values.",
+    "category": "Tolerance"
+  },
+  {
+    "id": "C16",
+    "description": "List-like tolerance must match index size and exact index dtype.",
+    "quote": "must be the same size as the index and its dtype must exactly match the index's type.",
+    "category": "Tolerance"
+  },
+  {
+    "id": "C17",
+    "description": "Tolerance matching follows the absolute-distance inequality.",
+    "quote": "abs(index[indexer] - target) <= tolerance",
+    "category": "Tolerance"
+  },
+  {
+    "id": "C18",
+    "description": "level performs matching across the specified MultiIndex level.",
+    "quote": "Broadcast across a level, matching Index values on the passed MultiIndex level.",
+    "category": "Level"
+  },
+  {
+    "id": "C19",
+    "description": "copy keyword is ignored and has no effect on method behavior.",
+    "quote": "This keyword is now ignored; changing its value will have no impact on the method.",
+    "category": "Deprecated"
+  },
+  {
+    "id": "C20",
+    "description": "Using Index objects for labels/index/columns is preferred to avoid data duplication.",
+    "quote": "Preferably an Index object to avoid duplicating data.",
+    "category": "Performance / Input Shape"
+  }
+]
