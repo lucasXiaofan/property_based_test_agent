@@ -1,0 +1,204 @@
+{
+  "generated_at_utc": "2026-02-25T03:43:21.696271+00:00",
+  "function": "pandas.DataFrame.reindex",
+  "model": "deepseek-chat",
+  "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py",
+  "clauses": [
+    {
+      "clause_id": "C1",
+      "description": "reindex returns a DataFrame conformed to the requested labels.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_reindex_same_index_reproduces_values",
+        "test_result_shape_matches_new_index_and_columns"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C2",
+      "description": "Labels introduced by reindex are NaN by default when values are missing.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_missing_row_labels_get_nan",
+        "test_new_column_label_gets_nan"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C3",
+      "description": "fill_value replaces missing values introduced by reindex.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_fill_value_used_for_missing_row_labels"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C4",
+      "description": "fill_value supports non-numeric compatible values.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies fill_value with non-numeric compatible values like 'missing'",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C5",
+      "description": "method='ffill'/'pad' propagates last valid observation forward.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_ffill_propagates_last_valid_observation",
+        "test_pad_is_alias_for_ffill"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C6",
+      "description": "method='bfill'/'backfill' propagates next valid observation backward.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_bfill_uses_next_valid_observation",
+        "test_backfill_is_alias_for_bfill"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C7",
+      "description": "method='nearest' fills gaps using nearest valid observation.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_nearest_fill_selects_closer_neighbor"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C8",
+      "description": "method-based filling applies only to monotonic indexes.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_method_raises_on_non_monotonic_index"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C9",
+      "description": "method-based filling does not fill pre-existing NaN values in the original DataFrame.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_method_does_not_fill_preexisting_nan"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C10",
+      "description": "limit caps the maximum number of consecutive forward/backward fills.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_limit_caps_consecutive_fills"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C11",
+      "description": "DataFrame.reindex supports keyword convention using index= and columns=.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_labels_axis_0_equals_index_kwarg"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C12",
+      "description": "DataFrame.reindex supports labels with explicit axis convention.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_labels_axis_columns_equals_columns_kwarg"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C13",
+      "description": "axis accepts both axis names and numeric selectors.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies axis accepts numeric selectors (0, 1)",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C14",
+      "description": "columns reindexing may introduce NaN for missing columns.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_new_column_label_gets_nan"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C15",
+      "description": "Scalar tolerance applies uniformly to all values.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies scalar tolerance applies uniformly to all values",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C16",
+      "description": "List-like tolerance must match index size and exact index dtype.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies list-like tolerance requirements",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C17",
+      "description": "Tolerance matching follows the absolute-distance inequality.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies tolerance matching inequality",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C18",
+      "description": "level performs matching across the specified MultiIndex level.",
+      "satisfied": true,
+      "satisfied_by": [
+        "test_multiindex_level_reindex_preserves_matching_rows"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C19",
+      "description": "copy keyword is ignored and has no effect on method behavior.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies copy keyword is ignored",
+      "confidence": 1.0
+    },
+    {
+      "clause_id": "C20",
+      "description": "Using Index objects for labels/index/columns is preferred to avoid data duplication.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies Index objects are preferred to avoid data duplication",
+      "confidence": 1.0
+    }
+  ],
+  "summary": {
+    "total_clauses": 20,
+    "satisfied_clauses": 13,
+    "unsatisfied_clauses": 7,
+    "clause_coverage": 0.65
+  }
+}

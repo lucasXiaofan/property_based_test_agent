@@ -1,5 +1,8 @@
-# IR Generation Guideline
+# Prompt: Generate Test IR as JSON
 
+You are generating a Test IR (Intermediate Representation) from API documentation.
+The goal is to identify inputs and expected behaviors that catch real bugs — not just
+the happy path. Output valid JSON only. No prose outside the JSON.
 ## Folder Structure Rule (Added)
 To align with `test_quality_metric`, every IR target must use:
 
@@ -11,138 +14,105 @@ ir2test_pipeline/
         ir.json
 ```
 
-Example:
-
-```text
-ir2test_pipeline/pandas/DataFrame/reindex/ir.json
-```
-
-## Output Artifact Rule (Added)
-IR generation step writes only one file in the function folder:
-- `ir.json`
-
-Do not generate extra files (`*.md`, notes, debug dumps) in this step.
-
----
-
-# Task: Generate a Test IR from API Documentation
-You are generating a Test IR (Intermediate Representation) from API documentation.
-The goal is to identify reasonable inputs and expected behaviors that catch real bugs —
-not just the happy path shown in the docs. Output structured markdown exactly matching
-the format below.
-
-## Input
+## Inputs
 - doc_url: {URL}
 - function: {FULLY_QUALIFIED_NAME}
 
-## Output Format
+## Output JSON Structure
+```json
+{
+  "metadata": {
+    "library": "string",
+    "version": "string",
+    "function": "string — fully qualified e.g. pd.DataFrame.reindex",
+    "references": [
+      { "id": "R1", "type": "api_doc | docstring | user_guide", "url": "string" }
+    ]
+  },
+  "pre_conditions": {
+    "{param_name}": {
+      "type": "accepted Python types",
+      "partitions": {
+        "{ID e.g. L0, M1}": {
+          "desc": "what makes this region semantically distinct",
+          "example": "concrete value or expression"
+        }
+      },
+      "interaction_hints": ["other param names whose behavior changes with this one"],
+      "invalid_cases": [
+        {
+          "desc": "why this input is invalid",
+          "example": "concrete invalid input",
+          "expected_exception": "ValueError | TypeError | KeyError etc.",
+          "note": "null or clarification if doc is ambiguous",
+          "source_ref": "R1"
+        }
+      ]
+    }
+  },
+  "post_conditions": [
+    {
+      "id": "P1",
+      "track": "valid | invalid",
+      "evidence": "explicit | indirect | implicit",
+      "source_ref": "R1 — null only when evidence=implicit",
+      "why": "(1) what real usage scenario this represents, (2) what specific bug this catches that other post-conditions would not, (3) why this trigger scope is right — not too broad, not too narrow",
+      "claim": "one NL sentence of expected behavior",
+      "formal": [
+        "pseudo-Python assertion lines using symbols:",
+        "  original = input df before the call",
+        "  result   = returned value",
+        "  params.* = parameter values e.g. params.method",
+        "valid track:  assert result.something == expected",
+        "invalid track: with pytest.raises(XError): original.fn(bad_input)"
+      ],
+      "trigger": {
+        "{param_name}": ["partition IDs for valid track, or invalid_case desc for invalid track"]
+      }
+    }
+  ]
+}
 ```
-# Test IR: {function}
-- library: {library}
-- version: {version}
-- function: {function}
-- doc: {url}
 
----
+## Evidence Types
 
-## Post Conditions
+- **explicit**: doc directly states this behavior. `source_ref` must point to a
+  reference that contains a direct quote supporting the claim.
+- **indirect**: doc implies the behavior through examples or parameter descriptions
+  but does not state it outright. Quote the relevant text and explain the implication.
+- **implicit**: standard convention not mentioned in the doc at all — e.g. no mutation,
+  column preservation, return type. `source_ref` is str. Justify why this is expected.
 
-### {P1 or E1}
-- track: valid | invalid
-- type: explicit | indirect | implicit
-- reason: {why this input combination is worth testing, what bug it catches,
-           why it is unique from other post-conditions}
-- input: {specific values with types and ranges, 1-3 parameter combination}
-- assertion:
-```
-  {pseudo-Python, close to runnable}
-```
-- source: {for explicit: direct quote from doc.
-           for indirect: quote + one sentence why it implies this behavior.
-           for implicit: explain the convention and why it is expected.}
-```
+## Rules for pre_conditions
 
-## Rules
-- P-ids for valid behavior checks, E-ids for exception checks.
-- explicit: doc directly states the behavior.
-- indirect: doc implies it but does not state it outright.
-- implicit: not in doc but is a standard convention (e.g. no mutation, column preservation).
-- Each post-condition must catch a unique failure mode — if two post-conditions would
-  catch the same bug, merge them or narrow the input.
-- Prefer input combinations that sit at partition boundaries or interact across 2-3
-  parameters — most real bugs live there, not in simple single-parameter cases.
-- For invalid track: input must be a concrete bad value, assertion must use pytest.raises.
-- source field is required for all three types — never leave it empty.
+- Partitions must be **mutually exclusive** and **collectively cover** the full valid
+  input space for that parameter.
+- A partition boundary is where observable behavior changes — not just where the value
+  changes. Two inputs that produce identical behavior belong in the same partition.
+- `interaction_hints` drives covering array priority — if A lists B, at least one
+  post-condition must have both in its trigger.
+- `invalid_cases` are tested 1-way independently — never cross two invalid cases.
 
----
+## Rules for post_conditions
 
-## Example
+**Be exhaustive. For every function, ensure you cover:**
+- Core output shape/structure (index, columns, length)
+- Value preservation for matched inputs
+- Fill/default behavior for unmatched inputs
+- Each fill method variant if applicable (ffill, bfill, nearest etc.)
+- Boundary partitions: empty input, identical input, fully disjoint input
+- Limit/threshold stopping conditions and their off-by-one boundary
+- Interaction between 2–3 parameters where behavior is non-obvious
+- No mutation of the original input
+- Return type and object identity
+- One E-id per invalid_case in pre_conditions — no more, no less
 
-Given: pd.DataFrame.fillna(value=None, method=None, axis=None, inplace=False, limit=None)
-
-### P1
-- track: valid
-- type: explicit
-- reason: Tests that scalar fill_value replaces all NaN cells. The basic contract of
-  fillna — if this is wrong every downstream use is broken. Unique because other
-  post-conditions test method-based fill or limit; this isolates the scalar path.
-- input: df with NaN in multiple columns, value=0 (int scalar), method=None
-- assertion:
-```
-  assert result.isna().sum().sum() == 0
-  assert (result[original.isna()] == 0).all().all()
-```
-- source: "Fill NA/NaN values using the specified method. value: Value to use to fill
-  holes."
-
-### P2
-- track: valid
-- type: explicit
-- reason: Tests ffill across a gap of 2 NaNs with limit=1 — only the first NaN in
-  each run should be filled, the second must stay NaN. Classic off-by-one bug site.
-  Unique from P1 because this tests propagation logic and the stopping condition, not
-  scalar replacement.
-- input: df with consecutive NaNs e.g. [1, NaN, NaN, 2], method='ffill', limit=1
-- assertion:
-```
-  assert result.iloc[1] == 1     # first NaN filled
-  assert result.iloc[2].isna()   # second NaN exceeds limit, stays NaN
-```
-- source: "limit: If method is specified, this is the maximum number of consecutive
-  NaN values to forward/backward fill."
-
-### P3
-- track: valid
-- type: implicit
-- reason: fillna with inplace=False must not modify the original DataFrame. Any code
-  that reuses the original after fillna would silently operate on wrong data if mutation
-  occurs. Unique because no other post-condition checks the input side.
-- input: df with NaN values, value=0, inplace=False
-- assertion:
-```
-  snapshot = original.copy(deep=True)
-  _ = original.fillna(value=0)
-  assert original.equals(snapshot)
-```
-- source: Convention — pandas operations with inplace=False return a new object and
-  leave the caller unchanged. Consistent across all DataFrame methods.
-
-### E1
-- track: invalid
-- type: explicit
-- reason: Providing both value and method is undefined — the two filling strategies
-  are mutually exclusive. Without this check a typo or copy-paste error would silently
-  use one and ignore the other with no warning.
-- input: value=0, method='ffill' (both set simultaneously)
-- assertion:
-```
-  with pytest.raises(ValueError):
-      original.fillna(value=0, method='ffill')
-```
-- source: "TypeError: Cannot specify both 'value' and 'method'."
-
----
-
-Now generate the same for:
-doc_url: {URL}
-function: {FULLY_QUALIFIED_NAME}
+**Post-condition quality checks:**
+- P-ids for valid behavior, E-ids for exception checks
+- Each post-condition must catch a **unique** failure mode — if two would catch the
+  same bug, merge them or narrow the trigger
+- Prefer triggers that combine 2–3 parameters — most real bugs live in interactions,
+  not in single-parameter cases
+- Every partition ID must appear in at least one valid-track trigger
+- Every invalid_case must map to exactly one E-id
+- No two post-conditions should share identical formal assertions

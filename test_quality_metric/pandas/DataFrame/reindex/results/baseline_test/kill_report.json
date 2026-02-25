@@ -1,0 +1,498 @@
+{
+  "generated_at_utc": "2026-02-25T03:41:22.018441+00:00",
+  "function": "pandas.DataFrame.reindex",
+  "pytest_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_not_conformed_return",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_missing_labels_not_nan",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_ignore_fill_value",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_fill_value_numeric_only",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_ffill_backward",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_bfill_forward",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_nearest_as_ffill",
+      "clause_id": "C7"
+    },
+    {
+      "mutant_id": "M_C8_method_without_monotonicity",
+      "clause_id": "C8"
+    },
+    {
+      "mutant_id": "M_C9_fill_existing_nan",
+      "clause_id": "C9"
+    },
+    {
+      "mutant_id": "M_C10_ignore_limit",
+      "clause_id": "C10"
+    },
+    {
+      "mutant_id": "M_C11_break_index_columns_convention",
+      "clause_id": "C11"
+    },
+    {
+      "mutant_id": "M_C12_break_labels_axis_convention",
+      "clause_id": "C12"
+    },
+    {
+      "mutant_id": "M_C13_axis_int_rejected",
+      "clause_id": "C13"
+    },
+    {
+      "mutant_id": "M_C14_columns_missing_not_nan",
+      "clause_id": "C14"
+    },
+    {
+      "mutant_id": "M_C15_scalar_tolerance_not_uniform",
+      "clause_id": "C15"
+    },
+    {
+      "mutant_id": "M_C16_list_tolerance_len_dtype_ignored",
+      "clause_id": "C16"
+    },
+    {
+      "mutant_id": "M_C17_tolerance_inequality_relaxed",
+      "clause_id": "C17"
+    },
+    {
+      "mutant_id": "M_C18_ignore_level_param",
+      "clause_id": "C18"
+    },
+    {
+      "mutant_id": "M_C19_copy_changes_behavior",
+      "clause_id": "C19"
+    },
+    {
+      "mutant_id": "M_C20_force_materialize_non_index",
+      "clause_id": "C20"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_not_conformed_return",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_applies_to_new_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_raises_on_non_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_nearest_fill_selects_closer_neighbor",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_removed_column_absent_from_result",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_result_shape_matches_new_index_and_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_within_limit_matches"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_applies_to_new_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_raises_on_non_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_nearest_fill_selects_closer_neighbor",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_removed_column_absent_from_result",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_result_shape_matches_new_index_and_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_within_limit_matches"
+      ],
+      "stdout_tail": "f isinstance(casted_key, slice) or (\n                isinstance(casted_key, abc.Iterable)\n                and any(isinstance(x, slice) for x in casted_key)\n            ):\n                raise InvalidIndexError(key) from err\n>           raise KeyError(key) from err\nE           KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:3648: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_removed_column_absent_from_result\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_result_shape_matches_new_index_and_columns\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_applies_to_new_columns\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_nearest_fill_selects_closer_neighbor\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_raises_on_non_monotonic_index\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_within_limit_matches\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n14 failed, 10 passed in 83.01s (0:01:23)\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_missing_labels_not_nan",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_existing_labels_preserve_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_does_not_fill_preexisting_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_reindex_same_index_reproduces_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_existing_labels_preserve_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_does_not_fill_preexisting_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_reindex_same_index_reproduces_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan"
+      ],
+      "stdout_tail": "idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_existing_labels_preserve_values\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_reindex_same_index_reproduces_values\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_does_not_fill_preexisting_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n11 failed, 13 passed in 8.74s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_ignore_fill_value",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_applies_to_new_columns",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_applies_to_new_columns"
+      ],
+      "stdout_tail": "el_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_applies_to_new_columns\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n5 failed, 19 passed in 9.83s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_fill_value_numeric_only",
+      "clause_id": "C4",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 4.22s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_ffill_backward",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation"
+      ],
+      "stdout_tail": "ex(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n5 failed, 19 passed in 4.23s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_bfill_forward",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation"
+      ],
+      "stdout_tail": "el_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n5 failed, 19 passed in 4.22s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_nearest_as_ffill",
+      "clause_id": "C7",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 4.30s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C8_method_without_monotonicity",
+      "clause_id": "C8",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_raises_on_non_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_nearest_fill_selects_closer_neighbor",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_within_limit_matches"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_raises_on_non_monotonic_index",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_nearest_fill_selects_closer_neighbor",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_within_limit_matches"
+      ],
+      "stdout_tail": "                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_nearest_fill_selects_closer_neighbor\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_raises_on_non_monotonic_index\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_within_limit_matches\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n10 failed, 14 passed in 4.92s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C9_fill_existing_nan",
+      "clause_id": "C9",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_existing_labels_preserve_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_does_not_fill_preexisting_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_reindex_same_index_reproduces_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_existing_labels_preserve_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_does_not_fill_preexisting_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_reindex_same_index_reproduces_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan"
+      ],
+      "stdout_tail": "idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_existing_labels_preserve_values\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_reindex_same_index_reproduces_values\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_ffill_propagates_last_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_bfill_uses_next_valid_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_method_does_not_fill_preexisting_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_tolerance_outside_limit_gives_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n11 failed, 13 passed in 4.27s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C10_ignore_limit",
+      "clause_id": "C10",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 4.41s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C11_break_index_columns_convention",
+      "clause_id": "C11",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_result_shape_matches_new_index_and_columns"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_result_shape_matches_new_index_and_columns"
+      ],
+      "stdout_tail": "evel_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_result_shape_matches_new_index_and_columns\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n5 failed, 19 passed in 12.42s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C12_break_labels_axis_convention",
+      "clause_id": "C12",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_columns_equals_columns_kwarg",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_columns_equals_columns_kwarg"
+      ],
+      "stdout_tail": "x(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_columns_equals_columns_kwarg\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n5 failed, 19 passed in 7.28s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C13_axis_int_rejected",
+      "clause_id": "C13",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_0_equals_index_kwarg",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_0_equals_index_kwarg"
+      ],
+      "stdout_tail": "el_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_0_equals_index_kwarg\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n5 failed, 19 passed in 12.45s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C14_columns_missing_not_nan",
+      "clause_id": "C14",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_columns_equals_columns_kwarg",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_columns_equals_columns_kwarg",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan"
+      ],
+      "stdout_tail": "esired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_new_column_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_labels_axis_columns_equals_columns_kwarg\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n6 failed, 18 passed in 9.00s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C15_scalar_tolerance_not_uniform",
+      "clause_id": "C15",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 4.31s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C16_list_tolerance_len_dtype_ignored",
+      "clause_id": "C16",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 4.29s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C17_tolerance_inequality_relaxed",
+      "clause_id": "C17",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 4.37s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C18_ignore_level_param",
+      "clause_id": "C18",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_preserves_matching_rows"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_preserves_matching_rows"
+      ],
+      "stdout_tail": "     4\n        num_wings    0\n        Name: (mammal, dog, walks), dtype: int64\n    \n        Get values at specified index and level\n    \n        >>> df.xs(\"cat\", level=1)\n                           num_legs  num_wings\n        class  locomotion\n        mammal walks              4          0\n    \n        Get values at several indexes and levels\n    \n        >>> df.xs((\"bird\", \"walks\"), level=[0, \"locomotion\"])\n                 num_legs  num_wings\n        animal\n        penguin         2          2\n    \n        Get values at specified column and axis\n    \n        >>> df.xs(\"num_wings\", axis=1)\n        class   animal   locomotion\n        mammal  cat      walks         0\n                dog      walks         0\n                bat      flies         2\n        bird    penguin  walks         2\n        Name: num_wings, dtype: int64\n        \"\"\"\n        axis = self._get_axis_number(axis)\n        labels = self._get_axis(axis)\n    \n        if isinstance(key, list):\n            raise TypeError(\"list keys are not supported in xs, pass a tuple instead\")\n    \n        if level is not None:\n            if not isinstance(labels, MultiIndex):\n>               raise TypeError(\"Index must be a MultiIndex\")\nE               TypeError: Index must be a MultiIndex\n\n.venv/lib/python3.11/site-packages/pandas/core/generic.py:4225: TypeError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_preserves_matching_rows\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n5 failed, 19 passed in 4.23s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C19_copy_changes_behavior",
+      "clause_id": "C19",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 3.78s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C20_force_materialize_non_index",
+      "clause_id": "C20",
+      "status": "survived",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+      ],
+      "new_failed_nodeids": [],
+      "stdout_tail": "t\")\n                return slice(i, j, step)\n    \n        else:\n            idx = self._get_loc_single_level_index(level_index, key)\n    \n            if level > 0 or self._lexsort_depth == 0:\n                # Desired level is not sorted\n                if isinstance(idx, slice):\n                    # test_get_loc_partial_timestamp_multiindex\n                    locs = (level_codes >= idx.start) & (level_codes < idx.stop)\n                    return locs\n    \n                locs = np.asarray(level_codes == idx, dtype=bool)\n    \n                if not locs.any():\n                    # The label is present in self.levels[level] but unused:\n                    raise KeyError(key)\n                return locs\n    \n            if isinstance(idx, slice):\n                # e.g. test_partial_string_timestamp_multiindex\n                start = algos.searchsorted(level_codes, idx.start, side=\"left\")\n                # NB: \"left\" here bc of slice semantics\n                end = algos.searchsorted(level_codes, idx.stop, side=\"left\")\n            else:\n                start = algos.searchsorted(level_codes, idx, side=\"left\")\n                end = algos.searchsorted(level_codes, idx, side=\"right\")\n    \n            if start == end:\n                # The label is present in self.levels[level] but unused:\n>               raise KeyError(key)\nE               KeyError: 'c'\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/multi.py:3912: KeyError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n4 failed, 20 passed in 3.84s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": false,
+    "returncode": 1,
+    "failed_nodeids": [
+      "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels",
+      "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills",
+      "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan",
+      "ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value"
+    ],
+    "xfail_nodeids": [],
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0\nrootdir: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent\nconfigfile: pyproject.toml\nplugins: hypothesis-6.151.2\ncollected 24 items\n\nir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py F...F........ [ 54%]\n.....F....F                                                              [100%]\n\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_missing_row_labels_get_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing_row_labels\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_limit_caps_consecutive_fills\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py::test_multiindex_level_reindex_adds_nan_for_new_level_value\n========================= 4 failed, 20 passed in 2.26s =========================\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 12,
+    "survived": 8,
+    "invalid_baseline": 0,
+    "mutation_score": 0.6
+  }
+}

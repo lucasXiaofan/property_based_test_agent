@@ -7,7 +7,7 @@ Given `ir2test_pipeline/<library>/<module_or_class>/<function>/ir.json`, generat
 Write tests to:
 
 ```text
-pandas_bug_finding/ir_test/<library>/<module_or_class>/<function>/test_<function>_hypothesis.py
+pandas_bug_finding/ir_test/<library>/<module_or_class>/<function>/ir_generated_test.py
 ```
 
 Example:

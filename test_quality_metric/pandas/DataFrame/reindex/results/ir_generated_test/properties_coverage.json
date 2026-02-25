@@ -1,0 +1,18 @@
+{
+  "function": "pandas.DataFrame.reindex",
+  "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py",
+  "total_clauses": 20,
+  "satisfied_clauses": 14,
+  "unsatisfied_clauses": 6,
+  "properties_coverage": 0.7,
+  "avg_confidence_satisfied": 0.9000000000000002,
+  "avg_confidence_unsatisfied": 0.9,
+  "unsatisfied_clause_ids": [
+    "C4",
+    "C12",
+    "C13",
+    "C16",
+    "C18",
+    "C20"
+  ]
+}

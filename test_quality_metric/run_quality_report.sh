@@ -1,4 +1,83 @@
 #!/usr/bin/env bash
+# run_quality_report.sh — end-to-end test-quality pipeline for a single API target
+#
+# USAGE
+#   bash test_quality_metric/run_quality_report.sh <target_dir> [test_file] [--use_baseline] [--workers N] [...]
+#
+# POSITIONAL ARGUMENTS
+#   target_dir   Path to the quality-metric directory for the API under test.
+#                Must contain:
+#                  metadata.json       — at least {"qualified_name": "pandas.DataFrame.reindex"}
+#                  mutants/mapping.json
+#                  mutants/*_mutants.py
+#                Example: test_quality_metric/pandas/DataFrame/reindex
+#
+#   test_file    (Optional) Explicit path to a pytest file to run against mutants.
+#                If omitted, the script resolves it automatically from ir2test_pipeline/
+#                (see "AUTO-RESOLUTION" below).
+#
+# OPTIONS
+#   --use_baseline   Pick the baseline test file instead of the IR-generated one
+#                    during auto-resolution (see below).
+#   --workers N      Pass -n N to the mutant evaluation step (parallel workers).
+#   Any other flags  Forwarded verbatim to run_mutant_eval.py.
+#
+# AUTO-RESOLUTION (when test_file is omitted)
+#   The script mirrors the target_dir path under ir2test_pipeline/ and searches
+#   for a test file there:
+#
+#     Default (IR-generated):
+#       ir2test_pipeline/<rel_path>/*ir_generated_test.py
+#       e.g. ir2test_pipeline/pandas/DataFrame/reindex/reindex_ir_generated_test.py
+#
+#     With --use_baseline:
+#       ir2test_pipeline/<rel_path>/*baseline_test.py
+#       e.g. ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py
+#
+# BASELINE TEST FILE FORMAT
+#   A baseline test must be a standard pytest file whose name ends with
+#   "baseline_test.py" (e.g. baseline_test.py or reindex_baseline_test.py).
+#   It should import pytest and hypothesis and define test_ functions.
+#   Example skeleton:
+#
+#     # ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py
+#     import pandas as pd
+#     import pytest
+#     from hypothesis import given, settings
+#     from hypothesis import strategies as st
+#
+#     @given(...)
+#     def test_reindex_returns_dataframe(...):
+#         ...
+#
+#   The file is located alongside the IR JSON and the IR-generated test inside
+#   ir2test_pipeline/<library>/<Class>/<method>/.
+#
+# OUTPUTS (written under <target_dir>/results/<test_stem>/)
+#   kill_report.json / kill_report.md     — mutant kill results
+#   coverage.json                         — line/branch coverage
+#   properties_llm_trace.json             — LLM property-clause trace
+#   properties_coverage.json              — aggregated properties coverage
+#   overall_report_<test_stem>.md         — combined quality report
+#
+# EXAMPLES
+#   # Default: run the IR-generated test
+#   bash test_quality_metric/run_quality_report.sh \
+#       test_quality_metric/pandas/DataFrame/reindex
+#
+#   # Baseline test (auto-resolved from ir2test_pipeline/)
+#   bash test_quality_metric/run_quality_report.sh \
+#       test_quality_metric/pandas/DataFrame/reindex --use_baseline
+#
+#   # Explicit test file path
+#   bash test_quality_metric/run_quality_report.sh \
+#       test_quality_metric/pandas/DataFrame/reindex \
+#       ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py
+#
+#   # Parallel mutant evaluation with 4 workers
+#   bash test_quality_metric/run_quality_report.sh \
+#       test_quality_metric/pandas/DataFrame/reindex --workers 4
+
 set -euo pipefail
 
 if [[ $# -lt 1 ]]; then
@@ -132,12 +211,17 @@ echo "[quality_report] api: $API_NAME"
 
 echo "[quality_report] running mutant evaluation..."
 set +e
-uv run python "$REPO_ROOT/test_quality_metric/run_mutant_eval.py" \
-  --mapping-file "$MAPPING_FILE" \
-  --mutants-file "$MUTANTS_FILE" \
-  --output-dir "$TARGET_DIR/results" \
-  --pytest-file "$TEST_FILE" \
-  "${EXTRA_MUTANT_ARGS[@]:-}"
+_mutant_eval_cmd=(
+  uv run python "$REPO_ROOT/test_quality_metric/run_mutant_eval.py"
+  --mapping-file "$MAPPING_FILE"
+  --mutants-file "$MUTANTS_FILE"
+  --output-dir "$TARGET_DIR/results"
+  --pytest-file "$TEST_FILE"
+)
+if [[ ${#EXTRA_MUTANT_ARGS[@]} -gt 0 ]]; then
+  _mutant_eval_cmd+=("${EXTRA_MUTANT_ARGS[@]}")
+fi
+"${_mutant_eval_cmd[@]}"
 MUT_EXIT=$?
 set -e
 
@@ -204,6 +288,25 @@ lines.append(f"- Mutant eval exit code: {mut_exit}")
 lines.append(f"- Coverage exit code: {cov_exit}")
 lines.append(f"- LLM trace exit code: {llm_exit}")
 lines.append(f"- Properties coverage exit code: {prop_exit}")
+lines.append("")
+
+lines.append("## Baseline Test Status")
+if kill is None:
+    lines.append("- kill_report.json not found")
+else:
+    baseline_info = kill.get("baseline", {})
+    failed_ids = baseline_info.get("failed_nodeids", [])
+    xfail_ids = baseline_info.get("xfail_nodeids", [])
+    if not failed_ids and not xfail_ids:
+        lines.append("- All tests passed (no failures or xfails)")
+    if failed_ids:
+        lines.append(f"- **Failed** ({len(failed_ids)}):")
+        for nid in failed_ids:
+            lines.append(f"  - `{nid}`")
+    if xfail_ids:
+        lines.append(f"- **Xfailed** ({len(xfail_ids)}):")
+        for nid in xfail_ids:
+            lines.append(f"  - `{nid}`")
 lines.append("")
 
 lines.append("## Mutant Kill Summary")

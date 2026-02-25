@@ -19,6 +19,7 @@ from pathlib import Path
 from types import ModuleType
 
 FAILED_LINE_RE = re.compile(r"^FAILED\s+([^\s]+)(?:\s+-\s+.+)?$", re.MULTILINE)
+XFAILED_LINE_RE = re.compile(r"^XFAILED\s+([^\s]+)", re.MULTILINE)
 
 
 @dataclass
@@ -47,14 +48,17 @@ def _run_pytest_subprocess(
     pytest_file: str,
     mutants_file: str | None,
     mutant_id: str | None,
+    extra_args: list[str] | None = None,
 ) -> RunResult:
     launcher = r"""
 import importlib.util
+import json as _json
 import sys
 
 mutants_file = sys.argv[1]
 pytest_file = sys.argv[2]
 mutant_id = sys.argv[3] if len(sys.argv) > 3 else ""
+extra_args = _json.loads(sys.argv[4]) if len(sys.argv) > 4 else ["-q"]
 
 if mutants_file and mutant_id:
     spec = importlib.util.spec_from_file_location("active_mutants_module", mutants_file)
@@ -68,16 +72,16 @@ else:
     module = None
 
 import pytest
-rc = pytest.main([pytest_file, "-q"])
+rc = pytest.main([pytest_file] + extra_args)
 
 if module is not None:
     module.reset_mutant()
 
 raise SystemExit(rc)
 """
-    cmd = [sys.executable, "-c", launcher, mutants_file or "", pytest_file]
-    if mutant_id:
-        cmd.append(mutant_id)
+    cmd = [sys.executable, "-c", launcher, mutants_file or "", pytest_file, mutant_id or ""]
+    if extra_args is not None:
+        cmd.append(json.dumps(extra_args))
     proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
     return RunResult(returncode=proc.returncode, stdout=proc.stdout, stderr=proc.stderr)
 
@@ -85,6 +89,11 @@ raise SystemExit(rc)
 def _extract_failed_nodeids(stdout: str, stderr: str) -> set[str]:
     text = f"{stdout}\n{stderr}"
     return set(FAILED_LINE_RE.findall(text))
+
+
+def _extract_xfail_nodeids(stdout: str, stderr: str) -> set[str]:
+    text = f"{stdout}\n{stderr}"
+    return set(XFAILED_LINE_RE.findall(text))
 
 
 def _default_workers() -> int:
@@ -219,15 +228,20 @@ def main() -> int:
         pytest_file=args.pytest_file,
         mutants_file=None,
         mutant_id=None,
+        extra_args=["--tb=no", "-rxf"],
     )
     baseline_failed_nodeids = _extract_failed_nodeids(baseline.stdout, baseline.stderr)
+    baseline_xfail_nodeids = _extract_xfail_nodeids(baseline.stdout, baseline.stderr)
     print(f"[run_mutant_eval] baseline passed: {baseline.passed}")
     if baseline_failed_nodeids:
         print(f"[run_mutant_eval] baseline failing nodeids: {len(baseline_failed_nodeids)}")
+    if baseline_xfail_nodeids:
+        print(f"[run_mutant_eval] baseline xfail nodeids: {len(baseline_xfail_nodeids)}")
     results["baseline"] = {
         "passed": baseline.passed,
         "returncode": baseline.returncode,
         "failed_nodeids": sorted(baseline_failed_nodeids),
+        "xfail_nodeids": sorted(baseline_xfail_nodeids),
         "stdout_tail": baseline.stdout[-2000:],
         "stderr_tail": baseline.stderr[-2000:],
     }

@@ -1,0 +1,439 @@
+{
+  "generated_at_utc": "2026-02-25T03:49:30.152075+00:00",
+  "function": "pandas.DataFrame.reindex",
+  "pytest_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_not_conformed_return",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_missing_labels_not_nan",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_ignore_fill_value",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_fill_value_numeric_only",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_ffill_backward",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_bfill_forward",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_nearest_as_ffill",
+      "clause_id": "C7"
+    },
+    {
+      "mutant_id": "M_C8_method_without_monotonicity",
+      "clause_id": "C8"
+    },
+    {
+      "mutant_id": "M_C9_fill_existing_nan",
+      "clause_id": "C9"
+    },
+    {
+      "mutant_id": "M_C10_ignore_limit",
+      "clause_id": "C10"
+    },
+    {
+      "mutant_id": "M_C11_break_index_columns_convention",
+      "clause_id": "C11"
+    },
+    {
+      "mutant_id": "M_C12_break_labels_axis_convention",
+      "clause_id": "C12"
+    },
+    {
+      "mutant_id": "M_C13_axis_int_rejected",
+      "clause_id": "C13"
+    },
+    {
+      "mutant_id": "M_C14_columns_missing_not_nan",
+      "clause_id": "C14"
+    },
+    {
+      "mutant_id": "M_C15_scalar_tolerance_not_uniform",
+      "clause_id": "C15"
+    },
+    {
+      "mutant_id": "M_C16_list_tolerance_len_dtype_ignored",
+      "clause_id": "C16"
+    },
+    {
+      "mutant_id": "M_C17_tolerance_inequality_relaxed",
+      "clause_id": "C17"
+    },
+    {
+      "mutant_id": "M_C18_ignore_level_param",
+      "clause_id": "C18"
+    },
+    {
+      "mutant_id": "M_C19_copy_changes_behavior",
+      "clause_id": "C19"
+    },
+    {
+      "mutant_id": "M_C20_force_materialize_non_index",
+      "clause_id": "C20"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_not_conformed_return",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e1_non_monotonic_index_with_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e2_unrecognised_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e4_limit_without_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e5_invalid_axis_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p15_result_index_matches_requested_order",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p18_int_columns_promoted_to_float64_on_nan_introduction",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p19_row_count_equals_new_index_length",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p23_both_axes_reindexed_simultaneously",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_false_raises_deprecation_warning",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_true_raises_deprecation_warning",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p9_fill_value_for_new_labels_only"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e1_non_monotonic_index_with_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e2_unrecognised_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e4_limit_without_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e5_invalid_axis_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p15_result_index_matches_requested_order",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p18_int_columns_promoted_to_float64_on_nan_introduction",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p19_row_count_equals_new_index_length",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p23_both_axes_reindexed_simultaneously",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_false_raises_deprecation_warning",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_true_raises_deprecation_warning",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p9_fill_value_for_new_labels_only"
+      ],
+      "stdout_tail": "following_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p9_fill_value_for_new_labels_only\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p15_result_index_matches_requested_order\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p18_int_columns_promoted_to_float64_on_nan_introduction\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p19_row_count_equals_new_index_length\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p23_both_axes_reindexed_simultaneously\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e1_non_monotonic_index_with_method_raises_value_error\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e2_unrecognised_method_raises_value_error\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e4_limit_without_method_raises_value_error\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e5_invalid_axis_raises_value_error\n19 failed, 9 passed, 1 xfailed in 24.25s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_missing_labels_not_nan",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p13_fill_method_preserves_preexisting_nan_in_retained_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p14_retained_labels_preserve_original_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p13_fill_method_preserves_preexisting_nan_in_retained_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p14_retained_labels_preserve_original_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "stdout_tail": "         0.0 NaN\nE               -5409565548105206944  0.0 NaN,\nE           )\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:160: AssertionError\n__ TestValidContracts.test_p21_column_reindex_new_cols_nan_retained_preserved __\n\nself = <ir_generated_test.TestValidContracts object at 0x1099a6690>\n\n    def test_p21_column_reindex_new_cols_nan_retained_preserved(self):\n        \"\"\"P21: column reindexing fills new column labels with NaN and preserves retained column values.\"\"\"\n        df = pd.DataFrame({\"a\": [1.0, 2.0], \"b\": [3.0, 4.0]})\n        result = df.reindex(columns=[\"a\", \"b\", \"c\", \"d\"])\n>       assert result[\"c\"].isna().all()\nE       assert np.False_\nE        +  where np.False_ = all()\nE        +    where all = 0    False\\n1    False\\nName: c, dtype: bool.all\nE        +      where 0    False\\n1    False\\nName: c, dtype: bool = isna()\nE        +        where isna = 0    0.0\\n1    0.0\\nName: c, dtype: float64.isna\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:221: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p13_fill_method_preserves_preexisting_nan_in_retained_rows\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p14_retained_labels_preserve_original_values\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved\n6 failed, 22 passed, 1 xfailed in 5.10s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_ignore_fill_value",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p9_fill_value_for_new_labels_only"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p9_fill_value_for_new_labels_only"
+      ],
+      "stdout_tail": ".........F................x..                                            [100%]\n=================================== FAILURES ===================================\n__________ TestValidContracts.test_p9_fill_value_for_new_labels_only ___________\n\nself = <ir_generated_test.TestValidContracts object at 0x10bcc5490>\n\n    def test_p9_fill_value_for_new_labels_only(self):\n        \"\"\"P9: fill_value replaces NaN for new labels while leaving existing label values unchanged.\"\"\"\n        df = pd.DataFrame({\"a\": [1.0, 2.0], \"b\": [3.0, 4.0]}, index=[0, 1])\n        result = df.reindex([0, 1, 2, 3], fill_value=0)\n>       assert (result.loc[2] == 0).all()\nE       assert np.False_\nE        +  where np.False_ = all()\nE        +    where all = a   NaN\\nb   NaN\\nName: 2, dtype: float64 == 0.all\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:112: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p9_fill_value_for_new_labels_only\n1 failed, 27 passed, 1 xfailed in 2.05s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_fill_value_numeric_only",
+      "clause_id": "C4",
+      "status": "survived",
+      "returncode": 0,
+      "failed_nodeids": [],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................x..                                            [100%]\n28 passed, 1 xfailed in 2.12s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_ffill_backward",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "stdout_tail": "....F...F.................x..                                            [100%]\n=================================== FAILURES ===================================\n_________ TestValidContracts.test_p4_ffill_uses_preceding_observation __________\n\nself = <ir_generated_test.TestValidContracts object at 0x10e067810>\n\n    def test_p4_ffill_uses_preceding_observation(self):\n        \"\"\"P4: method='ffill' fills each new label with last original observation preceding it.\"\"\"\n        df = pd.DataFrame({\"v\": [10.0, 20.0, 30.0]}, index=[1, 3, 5])\n        result = df.reindex([1, 2, 3, 4, 5], method=\"ffill\")\n>       assert result.loc[2, \"v\"] == 10.0  # preceding: row 1\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       assert np.float64(20.0) == 10.0\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:73: AssertionError\n____________ TestValidContracts.test_p8_limit_caps_consecutive_fill ____________\n\nself = <ir_generated_test.TestValidContracts object at 0x10e068fd0>\n\n    def test_p8_limit_caps_consecutive_fill(self):\n        \"\"\"P8: limit=N caps forward fill to at most N consecutive new positions; beyond N get NaN.\"\"\"\n        df = pd.DataFrame({\"v\": [10.0, 50.0]}, index=[0, 10])\n        # labels 1, 2, 3 are consecutive new rows after row 0\n        result = df.reindex([0, 1, 2, 3, 10], method=\"ffill\", limit=1)\n>       assert result.loc[1, \"v\"] == 10.0    # first consecutive: filled\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       assert np.float64(nan) == 10.0\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:104: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill\n2 failed, 26 passed, 1 xfailed in 1.98s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_bfill_forward",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation"
+      ],
+      "stdout_tail": ".....F....................x..                                            [100%]\n=================================== FAILURES ===================================\n_________ TestValidContracts.test_p5_bfill_uses_following_observation __________\n\nself = <ir_generated_test.TestValidContracts object at 0x10d66fb50>\n\n    def test_p5_bfill_uses_following_observation(self):\n        \"\"\"P5: method='bfill' fills each new label with next original observation following it.\"\"\"\n        df = pd.DataFrame({\"v\": [10.0, 20.0, 30.0]}, index=[1, 3, 5])\n        result = df.reindex([1, 2, 3, 4, 5], method=\"bfill\")\n>       assert result.loc[2, \"v\"] == 20.0  # following: row 3\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       assert np.float64(10.0) == 20.0\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:80: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation\n1 failed, 27 passed, 1 xfailed in 1.89s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_nearest_as_ffill",
+      "clause_id": "C7",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance"
+      ],
+      "stdout_tail": "............F.............x..                                            [100%]\n=================================== FAILURES ===================================\n_________ TestValidContracts.test_p12_nearest_picks_smallest_distance __________\n\nself = <ir_generated_test.TestValidContracts object at 0x10c502750>\n\n    def test_p12_nearest_picks_smallest_distance(self):\n        \"\"\"P12: method='nearest' selects the original label with smallest absolute distance.\"\"\"\n        df = pd.DataFrame({\"v\": [1.0, 3.0, 5.0]}, index=[0, 4, 10])\n        # label 3: dist to 0=3, dist to 4=1, dist to 10=7 \u2192 nearest is 4 \u2192 value 3.0\n        result = df.reindex([3], method=\"nearest\")\n>       assert result.loc[3, \"v\"] == 3.0\nE       assert np.float64(1.0) == 3.0\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:141: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance\n1 failed, 27 passed, 1 xfailed in 2.04s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C8_method_without_monotonicity",
+      "clause_id": "C8",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e1_non_monotonic_index_with_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e2_unrecognised_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e1_non_monotonic_index_with_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e2_unrecognised_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "stdout_tail": "dex raises ValueError.\"\"\"\n        df = pd.DataFrame({\"v\": [1.0, 3.0, 2.0, 4.0]}, index=[0, 2, 1, 3])\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:256: Failed\n_____ TestInvalidContracts.test_e2_unrecognised_method_raises_value_error ______\n\nself = <ir_generated_test.TestInvalidContracts object at 0x10baf57d0>\n\n    def test_e2_unrecognised_method_raises_value_error(self):\n        \"\"\"E2: passing an unrecognised string as method raises ValueError.\"\"\"\n        df = pd.DataFrame({\"v\": [1.0, 2.0]}, index=[0, 1])\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:262: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p4_ffill_uses_preceding_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p5_bfill_uses_following_observation\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p12_nearest_picks_smallest_distance\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e1_non_monotonic_index_with_method_raises_value_error\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e2_unrecognised_method_raises_value_error\n8 failed, 20 passed, 1 xfailed in 2.75s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C9_fill_existing_nan",
+      "clause_id": "C9",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p13_fill_method_preserves_preexisting_nan_in_retained_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p14_retained_labels_preserve_original_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p13_fill_method_preserves_preexisting_nan_in_retained_rows",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p14_retained_labels_preserve_original_values",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "stdout_tail": ".py:1649\nE                   (and 38 more with settings.verbosity >= verbose)\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:160: AssertionError\n__ TestValidContracts.test_p21_column_reindex_new_cols_nan_retained_preserved __\n\nself = <ir_generated_test.TestValidContracts object at 0x10beeea90>\n\n    def test_p21_column_reindex_new_cols_nan_retained_preserved(self):\n        \"\"\"P21: column reindexing fills new column labels with NaN and preserves retained column values.\"\"\"\n        df = pd.DataFrame({\"a\": [1.0, 2.0], \"b\": [3.0, 4.0]})\n        result = df.reindex(columns=[\"a\", \"b\", \"c\", \"d\"])\n>       assert result[\"c\"].isna().all()\nE       assert np.False_\nE        +  where np.False_ = all()\nE        +    where all = 0    False\\n1    False\\nName: c, dtype: bool.all\nE        +      where 0    False\\n1    False\\nName: c, dtype: bool = isna()\nE        +        where isna = 0    0.0\\n1    0.0\\nName: c, dtype: float64.isna\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:221: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p1_new_labels_get_nan_without_fill_value\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p13_fill_method_preserves_preexisting_nan_in_retained_rows\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p14_retained_labels_preserve_original_values\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved\n6 failed, 22 passed, 1 xfailed in 2.96s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C10_ignore_limit",
+      "clause_id": "C10",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e4_limit_without_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e4_limit_without_method_raises_value_error",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "stdout_tail": "........F.................xF.                                            [100%]\n=================================== FAILURES ===================================\n____________ TestValidContracts.test_p8_limit_caps_consecutive_fill ____________\n\nself = <ir_generated_test.TestValidContracts object at 0x10a130c50>\n\n    def test_p8_limit_caps_consecutive_fill(self):\n        \"\"\"P8: limit=N caps forward fill to at most N consecutive new positions; beyond N get NaN.\"\"\"\n        df = pd.DataFrame({\"v\": [10.0, 50.0]}, index=[0, 10])\n        # labels 1, 2, 3 are consecutive new rows after row 0\n        result = df.reindex([0, 1, 2, 3, 10], method=\"ffill\", limit=1)\n        assert result.loc[1, \"v\"] == 10.0    # first consecutive: filled\n>       assert np.isnan(result.loc[2, \"v\"])  # second consecutive: NaN\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       AssertionError: assert np.False_\nE        +  where np.False_ = <ufunc 'isnan'>(np.float64(10.0))\nE        +    where <ufunc 'isnan'> = np.isnan\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:105: AssertionError\n_____ TestInvalidContracts.test_e4_limit_without_method_raises_value_error _____\n\nself = <ir_generated_test.TestInvalidContracts object at 0x10a13a050>\n\n    def test_e4_limit_without_method_raises_value_error(self):\n        \"\"\"E4: setting limit without a fill method raises ValueError.\"\"\"\n        df = pd.DataFrame({\"v\": [1.0, 2.0]}, index=[0, 1])\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:279: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p8_limit_caps_consecutive_fill\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e4_limit_without_method_raises_value_error\n2 failed, 26 passed, 1 xfailed in 2.00s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C11_break_index_columns_convention",
+      "clause_id": "C11",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p23_both_axes_reindexed_simultaneously"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p23_both_axes_reindexed_simultaneously"
+      ],
+      "stdout_tail": ".......................F..x..                                            [100%]\n=================================== FAILURES ===================================\n________ TestValidContracts.test_p23_both_axes_reindexed_simultaneously ________\n\nself = <ir_generated_test.TestValidContracts object at 0x10c3d1290>\n\n    def test_p23_both_axes_reindexed_simultaneously(self):\n        \"\"\"P23: when both index and columns are provided, the result is reindexed on both axes.\"\"\"\n        df = pd.DataFrame({\"a\": [1.0, 2.0], \"b\": [3.0, 4.0]}, index=[0, 1])\n        new_index = [0, 1, 2]\n        new_columns = [\"a\", \"b\", \"c\"]\n        result = df.reindex(index=new_index, columns=new_columns)\n        assert result.index.tolist() == new_index\n>       assert result.columns.tolist() == new_columns\nE       AssertionError: assert ['a', 'b'] == ['a', 'b', 'c']\nE         \nE         Right contains one more item: 'c'\nE         Use -v to get more diff\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:243: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p23_both_axes_reindexed_simultaneously\n1 failed, 27 passed, 1 xfailed in 1.93s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C12_break_labels_axis_convention",
+      "clause_id": "C12",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e5_invalid_axis_raises_value_error"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e5_invalid_axis_raises_value_error"
+      ],
+      "stdout_tail": "..........................x.F                                            [100%]\n=================================== FAILURES ===================================\n_________ TestInvalidContracts.test_e5_invalid_axis_raises_value_error _________\n\nself = <ir_generated_test.TestInvalidContracts object at 0x10bb86710>\n\n    def test_e5_invalid_axis_raises_value_error(self):\n        \"\"\"E5: passing an invalid axis value raises ValueError.\"\"\"\n        df = pd.DataFrame({\"v\": [1.0, 2.0]}, index=[\"a\", \"b\"])\n>       with pytest.raises(ValueError):\nE       Failed: DID NOT RAISE <class 'ValueError'>\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:285: Failed\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e5_invalid_axis_raises_value_error\n1 failed, 27 passed, 1 xfailed in 1.90s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C13_axis_int_rejected",
+      "clause_id": "C13",
+      "status": "survived",
+      "returncode": 0,
+      "failed_nodeids": [],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................x..                                            [100%]\n28 passed, 1 xfailed in 1.92s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C14_columns_missing_not_nan",
+      "clause_id": "C14",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved"
+      ],
+      "stdout_tail": ".....................F....x..                                            [100%]\n=================================== FAILURES ===================================\n__ TestValidContracts.test_p21_column_reindex_new_cols_nan_retained_preserved __\n\nself = <ir_generated_test.TestValidContracts object at 0x10c49f350>\n\n    def test_p21_column_reindex_new_cols_nan_retained_preserved(self):\n        \"\"\"P21: column reindexing fills new column labels with NaN and preserves retained column values.\"\"\"\n        df = pd.DataFrame({\"a\": [1.0, 2.0], \"b\": [3.0, 4.0]})\n        result = df.reindex(columns=[\"a\", \"b\", \"c\", \"d\"])\n>       assert result[\"c\"].isna().all()\nE       assert np.False_\nE        +  where np.False_ = all()\nE        +    where all = 0    False\\n1    False\\nName: c, dtype: bool.all\nE        +      where 0    False\\n1    False\\nName: c, dtype: bool = isna()\nE        +        where isna = 0    0\\n1    0\\nName: c, dtype: int64.isna\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:221: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved\n1 failed, 27 passed, 1 xfailed in 1.97s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C15_scalar_tolerance_not_uniform",
+      "clause_id": "C15",
+      "status": "survived",
+      "returncode": 0,
+      "failed_nodeids": [],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................x..                                            [100%]\n28 passed, 1 xfailed in 1.82s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C16_list_tolerance_len_dtype_ignored",
+      "clause_id": "C16",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label"
+      ],
+      "stdout_tail": "...........F..............x..                                            [100%]\n=================================== FAILURES ===================================\n_________ TestValidContracts.test_p11_nearest_list_tolerance_per_label _________\n\nself = <ir_generated_test.TestValidContracts object at 0x10dcd5e90>\n\n    def test_p11_nearest_list_tolerance_per_label(self):\n        \"\"\"P11: list-like tolerance applies independently to each new label position.\"\"\"\n        df = pd.DataFrame({\"v\": [1.0, 2.0]}, index=[0.0, 10.0])\n        # tolerances [0.5, 6.0, 0.5] for new index [0.0, 4.5, 10.0]\n        # label 4.5: nearest=0.0 (dist=4.5), tol=6.0 \u2192 4.5 < 6.0 \u2192 filled with 1.0\n        result = df.reindex([0.0, 4.5, 10.0], method=\"nearest\", tolerance=[0.5, 6.0, 0.5])\n        assert result.loc[0.0, \"v\"] == 1.0\n>       assert result.loc[4.5, \"v\"] == 1.0  # within tolerance of nearest original (0.0)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       assert np.float64(nan) == 1.0\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:133: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p11_nearest_list_tolerance_per_label\n1 failed, 27 passed, 1 xfailed in 1.90s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C17_tolerance_inequality_relaxed",
+      "clause_id": "C17",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan"
+      ],
+      "stdout_tail": "..........F...............x..                                            [100%]\n=================================== FAILURES ===================================\n___ TestValidContracts.test_p10_nearest_scalar_tolerance_far_label_gets_nan ____\n\nself = <ir_generated_test.TestValidContracts object at 0x10a111650>\n\n    def test_p10_nearest_scalar_tolerance_far_label_gets_nan(self):\n        \"\"\"P10: when method='nearest' and scalar tolerance, labels farther than tolerance get NaN.\"\"\"\n        df = pd.DataFrame({\"v\": [1.0, 2.0]}, index=[0.0, 10.0])\n        # label 4.5: nearest original is 0.0 (dist=4.5), tolerance=3.0 \u2192 4.5 > 3.0 \u2192 NaN\n        result = df.reindex([0.0, 4.5, 10.0], method=\"nearest\", tolerance=3.0)\n>       assert np.isnan(result.loc[4.5, \"v\"])\nE       AssertionError: assert np.False_\nE        +  where np.False_ = <ufunc 'isnan'>(np.float64(1.0))\nE        +    where <ufunc 'isnan'> = np.isnan\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:122: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan\n1 failed, 27 passed, 1 xfailed in 1.89s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C18_ignore_level_param",
+      "clause_id": "C18",
+      "status": "survived",
+      "returncode": 0,
+      "failed_nodeids": [],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................x..                                            [100%]\n28 passed, 1 xfailed in 1.86s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C19_copy_changes_behavior",
+      "clause_id": "C19",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_false_raises_deprecation_warning",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_true_raises_deprecation_warning"
+      ],
+      "new_failed_nodeids": [
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_false_raises_deprecation_warning",
+        "ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_true_raises_deprecation_warning"
+      ],
+      "stdout_tail": "utureWarning; pandas 3.0.0 emits Pandas4Warning (DeprecationWarning subclass).\n        \"\"\"\n        df = pd.DataFrame({\"x\": [1.0, 2.0]}, index=[0, 1])\n        with warnings.catch_warnings(record=True) as w:\n            warnings.simplefilter(\"always\")\n            _ = df.reindex([0, 1, 2], copy=True)\n>           assert any(issubclass(warning.category, DeprecationWarning) for warning in w)\nE           assert False\nE            +  where False = any(<generator object TestValidContracts.test_p3_copy_true_raises_deprecation_warning.<locals>.<genexpr> at 0x10a64c580>)\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:57: AssertionError\n_______ TestValidContracts.test_p3_copy_false_raises_deprecation_warning _______\n\nself = <ir_generated_test.TestValidContracts object at 0x10a647650>\n\n    def test_p3_copy_false_raises_deprecation_warning(self):\n        \"\"\"P3: explicitly passing copy=False raises a deprecation warning.\n        IR claims FutureWarning; pandas 3.0.0 emits Pandas4Warning (DeprecationWarning subclass).\n        \"\"\"\n        df = pd.DataFrame({\"x\": [1.0, 2.0]}, index=[0, 1])\n        with warnings.catch_warnings(record=True) as w:\n            warnings.simplefilter(\"always\")\n            _ = df.reindex([0, 1, 2], copy=False)\n>           assert any(issubclass(warning.category, DeprecationWarning) for warning in w)\nE           assert False\nE            +  where False = any(<generator object TestValidContracts.test_p3_copy_false_raises_deprecation_warning.<locals>.<genexpr> at 0x10a78f4c0>)\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py:67: AssertionError\n=========================== short test summary info ============================\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_true_raises_deprecation_warning\nFAILED ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestValidContracts::test_p3_copy_false_raises_deprecation_warning\n2 failed, 26 passed, 1 xfailed in 1.71s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C20_force_materialize_non_index",
+      "clause_id": "C20",
+      "status": "survived",
+      "returncode": 0,
+      "failed_nodeids": [],
+      "new_failed_nodeids": [],
+      "stdout_tail": "..........................x..                                            [100%]\n28 passed, 1 xfailed in 1.66s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": true,
+    "returncode": 0,
+    "failed_nodeids": [],
+    "xfail_nodeids": [],
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0\nrootdir: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent\nconfigfile: pyproject.toml\nplugins: hypothesis-6.151.2\ncollected 29 items\n\nir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py ......... [ 31%]\n.................x..                                                     [100%]\n\n=========================== short test summary info ============================\nXFAIL ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py::TestInvalidContracts::test_e3_list_tolerance_wrong_length_raises_value_error - IR (E3) claims wrong-length list tolerance raises ValueError; pandas 3.0.0 does not enforce this and raises no exception.\n======================== 28 passed, 1 xfailed in 1.23s =========================\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 15,
+    "survived": 5,
+    "invalid_baseline": 0,
+    "mutation_score": 0.75
+  }
+}

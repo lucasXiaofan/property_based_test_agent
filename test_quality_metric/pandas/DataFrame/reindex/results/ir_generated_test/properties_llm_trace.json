@@ -1,0 +1,210 @@
+{
+  "generated_at_utc": "2026-02-25T03:50:32.185563+00:00",
+  "function": "pandas.DataFrame.reindex",
+  "model": "deepseek-chat",
+  "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/ir_generated_test.py",
+  "clauses": [
+    {
+      "clause_id": "C1",
+      "description": "reindex returns a DataFrame conformed to the requested labels.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p17_identity_reindex_equals_original",
+        "TestValidContracts::test_p20_return_type_is_dataframe"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C2",
+      "description": "Labels introduced by reindex are NaN by default when values are missing.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p1_new_labels_get_nan_without_fill_value"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C3",
+      "description": "fill_value replaces missing values introduced by reindex.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p9_fill_value_for_new_labels_only"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C4",
+      "description": "fill_value supports non-numeric compatible values.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies fill_value with non-numeric compatible values like 'missing'",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C5",
+      "description": "method='ffill'/'pad' propagates last valid observation forward.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p4_ffill_uses_preceding_observation",
+        "TestValidContracts::test_p6_pad_alias_for_ffill"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C6",
+      "description": "method='bfill'/'backfill' propagates next valid observation backward.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p5_bfill_uses_following_observation",
+        "TestValidContracts::test_p7_backfill_alias_for_bfill"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C7",
+      "description": "method='nearest' fills gaps using nearest valid observation.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "TestValidContracts::test_p11_nearest_list_tolerance_per_label",
+        "TestValidContracts::test_p12_nearest_picks_smallest_distance"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C8",
+      "description": "method-based filling applies only to monotonic indexes.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestInvalidContracts::test_e1_non_monotonic_index_with_method_raises_value_error"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C9",
+      "description": "method-based filling does not fill pre-existing NaN values in the original DataFrame.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p13_fill_method_preserves_preexisting_nan_in_retained_rows"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C10",
+      "description": "limit caps the maximum number of consecutive forward/backward fills.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p8_limit_caps_consecutive_fill"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C11",
+      "description": "DataFrame.reindex supports keyword convention using index= and columns=.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p23_both_axes_reindexed_simultaneously"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C12",
+      "description": "DataFrame.reindex supports labels with explicit axis convention.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies axis parameter with labels and axis={'index', 'columns'} convention",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C13",
+      "description": "axis accepts both axis names and numeric selectors.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies axis accepts both names and numeric selectors",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C14",
+      "description": "columns reindexing may introduce NaN for missing columns.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p21_column_reindex_new_cols_nan_retained_preserved"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C15",
+      "description": "Scalar tolerance applies uniformly to all values.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C16",
+      "description": "List-like tolerance must match index size and exact index dtype.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "TestInvalidContracts::test_e3_list_tolerance_wrong_length_raises_value_error is marked xfail and doesn't verify the clause",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C17",
+      "description": "Tolerance matching follows the absolute-distance inequality.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p10_nearest_scalar_tolerance_far_label_gets_nan",
+        "TestValidContracts::test_p11_nearest_list_tolerance_per_label",
+        "TestValidContracts::test_p12_nearest_picks_smallest_distance"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C18",
+      "description": "level performs matching across the specified MultiIndex level.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies level parameter for MultiIndex matching",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C19",
+      "description": "copy keyword is ignored and has no effect on method behavior.",
+      "satisfied": true,
+      "satisfied_by": [
+        "TestValidContracts::test_p3_copy_true_raises_deprecation_warning",
+        "TestValidContracts::test_p3_copy_false_raises_deprecation_warning"
+      ],
+      "unsatisfied_reason": "",
+      "confidence": 0.9
+    },
+    {
+      "clause_id": "C20",
+      "description": "Using Index objects for labels/index/columns is preferred to avoid data duplication.",
+      "satisfied": false,
+      "satisfied_by": [],
+      "unsatisfied_reason": "No test explicitly verifies Index objects are preferred to avoid data duplication",
+      "confidence": 0.9
+    }
+  ],
+  "summary": {
+    "total_clauses": 20,
+    "satisfied_clauses": 14,
+    "unsatisfied_clauses": 6,
+    "clause_coverage": 0.7
+  }
+}
