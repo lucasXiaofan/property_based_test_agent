@@ -1,0 +1,44 @@
+[
+  {
+    "id": "C1",
+    "description": "assign returns a new DataFrame with all original columns in addition to new ones.",
+    "quote": "A new object with all original columns in addition to new ones.",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C2",
+    "description": "Existing columns that are re-assigned will be overwritten.",
+    "quote": "Existing columns that are re-assigned will be overwritten.",
+    "category": "Assignment Behavior"
+  },
+  {
+    "id": "C3",
+    "description": "The original DataFrame is not modified; assign returns a new object.",
+    "quote": "Returns: DataFrame - A new object with all original columns in addition to new ones.",
+    "category": "Immutability"
+  },
+  {
+    "id": "C4",
+    "description": "Callable values are evaluated on the DataFrame to produce the assigned column.",
+    "quote": "Where the value is callable, evaluated on the DataFrame",
+    "category": "Callable Behavior"
+  },
+  {
+    "id": "C5",
+    "description": "Non-callable values are directly assigned as the new column.",
+    "quote": "Where the value is not callable, (e.g. a Series or a scalar), simply assigned.",
+    "category": "Non-callable Behavior"
+  },
+  {
+    "id": "C6",
+    "description": "Items are computed and assigned into df in order, so later items can use earlier results.",
+    "quote": "Items are computed and assigned into df in order.",
+    "category": "Ordering"
+  },
+  {
+    "id": "C7",
+    "description": "Later items in kwargs may refer to newly created or modified columns from earlier items.",
+    "quote": "Later items in **kwargs may refer to newly created or modified columns in 'df'",
+    "category": "Ordering"
+  }
+]

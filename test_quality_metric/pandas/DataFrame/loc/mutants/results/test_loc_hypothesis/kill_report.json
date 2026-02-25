@@ -1,0 +1,241 @@
+{
+  "generated_at_utc": "2026-02-25T13:49:53.292697+00:00",
+  "function": "pandas.DataFrame.loc",
+  "pytest_file": "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_use_iloc",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_int_as_position",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_slice_exclusive_stop",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_always_dataframe",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_list_squeeze",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_missing_returns_nan",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_bool_invert",
+      "clause_id": "C7"
+    },
+    {
+      "mutant_id": "M_C8_callable_no_call",
+      "clause_id": "C8"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_use_iloc",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_label_access_on_reversed_df",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_is_not_iloc",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_has_correct_name",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_index_is_columns",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_values_are_correct",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_single_row_label_returns_series",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_string_label_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_filters_by_condition",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_result_used_for_selection"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_label_access_on_reversed_df",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_is_not_iloc",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_has_correct_name",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_index_is_columns",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_values_are_correct",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_single_row_label_returns_series",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_string_label_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_filters_by_condition",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_result_used_for_selection"
+      ],
+      "stdout_tail": "key.index, Index):\n                if key.index.inferred_type == \"integer\":\n                    return\n>               raise ValueError(\n                    \"iLocation based boolean indexing cannot use an indexable as a mask\"\n                )\nE               ValueError: iLocation based boolean indexing cannot use an indexable as a mask\n\n.venv/lib/python3.11/site-packages/pandas/core/indexing.py:1597: ValueError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_returns_correct_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_label_access_on_reversed_df\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_is_not_iloc\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_single_row_label_returns_series\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_has_correct_name\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_index_is_columns\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_values_are_correct\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_string_label_raises_keyerror\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_filters_by_condition\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_result_used_for_selection\n14 failed, 16 passed in 0.47s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_int_as_position",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror"
+      ],
+      "stdout_tail": " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntest_quality_metric/pandas/DataFrame/loc/mutants/loc_mutants.py:121: in _patched_loc_getitem\n    return self.obj.iloc[int(key)]\n           ^^^^^^^^^^^^^^^^^^^^^^^\n.venv/lib/python3.11/site-packages/pandas/core/indexing.py:1207: in __getitem__\n    return self._getitem_axis(maybe_callable, axis=axis)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv/lib/python3.11/site-packages/pandas/core/indexing.py:1773: in _getitem_axis\n    self._validate_integer(key, axis)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <pandas.core.indexing._iLocIndexer object at 0x10983f4d0>, key = 99\naxis = 0\n\n    def _validate_integer(self, key: int | np.integer, axis: AxisInt) -> None:\n        \"\"\"\n        Check that 'key' is a valid position in the desired axis.\n    \n        Parameters\n        ----------\n        key : int\n            Requested position.\n        axis : int\n            Desired axis.\n    \n        Raises\n        ------\n        IndexError\n            If 'key' is not a valid position in axis 'axis'.\n        \"\"\"\n        len_axis = len(self.obj._get_axis(axis))\n        if key >= len_axis or key < -len_axis:\n>           raise IndexError(\"single positional indexer is out-of-bounds\")\nE           IndexError: single positional indexer is out-of-bounds\n\n.venv/lib/python3.11/site-packages/pandas/core/indexing.py:1706: IndexError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror\n4 failed, 26 passed in 0.25s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_slice_exclusive_stop",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_full_slice_returns_all_three_rows",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_slice_includes_stop_label",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_slice_length_two"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_full_slice_returns_all_three_rows",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_slice_includes_stop_label",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_slice_length_two"
+      ],
+      "stdout_tail": "ve).\"\"\"\n        result = string_df.loc[\"cobra\":\"viper\"]\n>       assert \"viper\" in result.index\nE       AssertionError: assert 'viper' in Index(['cobra'], dtype='str')\nE        +  where Index(['cobra'], dtype='str') =        max_speed  shield\\ncobra          1       2.index\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:96: AssertionError\n__________________ test_c3_full_slice_returns_all_three_rows ___________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c3_full_slice_returns_all_three_rows(string_df):\n        \"\"\"Slice 'cobra':'sidewinder' returns all 3 rows (both endpoints included).\"\"\"\n        result = string_df.loc[\"cobra\":\"sidewinder\"]\n>       assert len(result) == 3\nE       assert 2 == 3\nE        +  where 2 = len(       max_speed  shield\\ncobra          1       2\\nviper          4       5)\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:108: AssertionError\n___________________________ test_c3_slice_length_two ___________________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c3_slice_length_two(string_df):\n        \"\"\"Slice 'cobra':'viper' returns exactly 2 rows.\"\"\"\n        result = string_df.loc[\"cobra\":\"viper\"]\n>       assert len(result) == 2\nE       assert 1 == 2\nE        +  where 1 = len(       max_speed  shield\\ncobra          1       2)\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:115: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_slice_includes_stop_label\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_full_slice_returns_all_three_rows\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c3_slice_length_two\n3 failed, 27 passed in 0.14s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_always_dataframe",
+      "clause_id": "C4",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_label_access_on_reversed_df",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_is_not_iloc",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_has_correct_name",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_index_is_columns",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_values_are_correct",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_single_row_label_returns_series"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_label_access_on_reversed_df",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_is_not_iloc",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_has_correct_name",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_index_is_columns",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_values_are_correct",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_single_row_label_returns_series"
+      ],
+      "stdout_tail": "_____________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c4_series_values_are_correct(string_df):\n        \"\"\"Single label returns correct values.\"\"\"\n        result = string_df.loc[\"sidewinder\"]\n>       assert result[\"max_speed\"] == 7\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:143: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = sidewinder    True\nName: max_speed, dtype: bool\n\n    @final\n    def __bool__(self) -> NoReturn:\n>       raise ValueError(\n            f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\n.venv/lib/python3.11/site-packages/pandas/core/generic.py:1513: ValueError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_returns_correct_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_label_access_on_reversed_df\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c1_string_label_is_not_iloc\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_returns_correct_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_integer_label_second_row\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_single_row_label_returns_series\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_has_correct_name\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_index_is_columns\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c4_series_values_are_correct\n9 failed, 21 passed in 0.47s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_list_squeeze",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c5_single_item_list_returns_dataframe",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_inverted_mask_behavior"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c5_single_item_list_returns_dataframe",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_inverted_mask_behavior"
+      ],
+      "stdout_tail": "...............F.........F....                                           [100%]\n=================================== FAILURES ===================================\n__________________ test_c5_single_item_list_returns_dataframe __________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c5_single_item_list_returns_dataframe(string_df):\n        \"\"\"A single-item list still returns a DataFrame (not a Series).\"\"\"\n        result = string_df.loc[[\"cobra\"]]\n>       assert isinstance(result, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(max_speed    1\\nshield       2\\nName: cobra, dtype: int64, <class 'pandas.DataFrame'>)\nE        +    where <class 'pandas.DataFrame'> = pd.DataFrame\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:160: AssertionError\n_____________________ test_c7_bool_inverted_mask_behavior ______________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c7_bool_inverted_mask_behavior(string_df):\n        \"\"\"True rows are included, False rows are excluded (not inverted).\"\"\"\n        mask = [True, False, False]\n        result = string_df.loc[mask]\n>       assert list(result.index) == [\"cobra\"]\nE       AssertionError: assert ['max_speed', 'shield'] == ['cobra']\nE         \nE         At index 0 diff: 'max_speed' != 'cobra'\nE         Left contains one more item: 'shield'\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:233: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c5_single_item_list_returns_dataframe\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_inverted_mask_behavior\n2 failed, 28 passed in 0.12s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_missing_returns_nan",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_label_in_list_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_string_label_raises_keyerror"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_label_in_list_raises_keyerror",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_string_label_raises_keyerror"
+      ],
+      "stdout_tail": "(\n.venv/lib/python3.11/site-packages/pandas/core/series.py:420: in __init__\n    name = ibase.maybe_extract_name(name, data, type(self))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nname = ['cobra', 'missing_snake'], obj = [nan, nan]\ncls = <class 'pandas.Series'>\n\n    def maybe_extract_name(name, obj, cls) -> Hashable:\n        \"\"\"\n        If no name is passed, then extract it from data, validating hashability.\n        \"\"\"\n        if name is None and isinstance(obj, (Index, ABCSeries)):\n            # Note we don't just check for \"name\" attribute since that would\n            #  pick up e.g. dtype.name\n            name = obj.name\n    \n        # GH#29069\n        if not is_hashable(name):\n>           raise TypeError(f\"{cls.__name__}.name must be a hashable type\")\nE           TypeError: Series.name must be a hashable type\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:8014: TypeError\n________________ test_c6_missing_integer_label_raises_keyerror _________________\n\nint_label_df =     value\n10    100\n20    200\n30    300\n\n    def test_c6_missing_integer_label_raises_keyerror(int_label_df):\n        \"\"\"Accessing an integer label not in the index raises KeyError.\"\"\"\n>       with pytest.raises(KeyError):\nE       Failed: DID NOT RAISE <class 'KeyError'>\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:193: Failed\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c2_missing_integer_raises_keyerror\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_string_label_raises_keyerror\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_label_in_list_raises_keyerror\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c6_missing_integer_label_raises_keyerror\n4 failed, 26 passed in 0.31s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_bool_invert",
+      "clause_id": "C7",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_all_false_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_all_true_returns_all_rows",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_inverted_mask_behavior",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_list_selects_true_rows",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_series_filters_by_condition"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_all_false_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_all_true_returns_all_rows",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_inverted_mask_behavior",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_list_selects_true_rows",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_series_filters_by_condition"
+      ],
+      "stdout_tail": "___\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c7_bool_series_filters_by_condition(string_df):\n        \"\"\"Boolean Series from condition filters correctly.\"\"\"\n        result = string_df.loc[string_df[\"shield\"] > 4]\n>       assert \"viper\" in result.index\nE       AssertionError: assert 'viper' in Index(['cobra'], dtype='str')\nE        +  where Index(['cobra'], dtype='str') =        max_speed  shield\\ncobra          1       2.index\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:224: AssertionError\n_____________________ test_c7_bool_inverted_mask_behavior ______________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c7_bool_inverted_mask_behavior(string_df):\n        \"\"\"True rows are included, False rows are excluded (not inverted).\"\"\"\n        mask = [True, False, False]\n        result = string_df.loc[mask]\n>       assert list(result.index) == [\"cobra\"]\nE       AssertionError: assert ['viper', 'sidewinder'] == ['cobra']\nE         \nE         At index 0 diff: 'viper' != 'cobra'\nE         Left contains one more item: 'sidewinder'\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:233: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_list_selects_true_rows\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_all_false_returns_empty\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_all_true_returns_all_rows\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_series_filters_by_condition\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c7_bool_inverted_mask_behavior\n5 failed, 25 passed in 0.14s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C8_callable_no_call",
+      "clause_id": "C8",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_bool_list_result",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_filters_by_condition",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_receives_dataframe",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_result_used_for_selection"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_bool_list_result",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_filters_by_condition",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_receives_dataframe",
+        "pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_result_used_for_selection"
+      ],
+      "stdout_tail": "ng/test_loc_hypothesis.py:256: AssertionError\n__________________ test_c8_callable_result_used_for_selection __________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c8_callable_result_used_for_selection(string_df):\n        \"\"\"Rows selected match what the callable returns.\"\"\"\n        # Lambda returns mask selecting only sidewinder\n        result = string_df.loc[lambda df: df[\"max_speed\"] > 5]\n>       assert \"sidewinder\" in result.index\nE       AssertionError: assert 'sidewinder' in Index([], dtype='str')\nE        +  where Index([], dtype='str') = Empty DataFrame\\nColumns: [max_speed, shield]\\nIndex: [].index\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:265: AssertionError\n______________________ test_c8_callable_bool_list_result _______________________\n\nstring_df =             max_speed  shield\ncobra               1       2\nviper               4       5\nsidewinder          7       8\n\n    def test_c8_callable_bool_list_result(string_df):\n        \"\"\"Callable returning bool list selects the right rows.\"\"\"\n        result = string_df.loc[lambda df: [False, True, False]]\n>       assert list(result.index) == [\"viper\"]\nE       AssertionError: assert [] == ['viper']\nE         \nE         Right contains one more item: 'viper'\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py:273: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_filters_by_condition\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_receives_dataframe\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_result_used_for_selection\nFAILED pandas_bug_finding/baseline_testing/test_loc_hypothesis.py::test_c8_callable_bool_list_result\n4 failed, 26 passed in 0.15s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": true,
+    "returncode": 0,
+    "failed_nodeids": [],
+    "xfail_nodeids": [],
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0\nrootdir: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent\nconfigfile: pyproject.toml\nplugins: hypothesis-6.151.2\ncollected 30 items\n\npandas_bug_finding/baseline_testing/test_loc_hypothesis.py ............. [ 43%]\n.................                                                        [100%]\n\n============================== 30 passed in 0.09s ==============================\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 8,
+    "survived": 0,
+    "invalid_baseline": 0,
+    "mutation_score": 1.0
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "generated_at_utc": "2026-02-25T14:11:18.535337+00:00",
+  "function": "pandas.DataFrame.iloc",
+  "pytest_file": "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_use_loc",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_single_int_always_dataframe",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_list_squeeze_to_series",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_slice_drop_last",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_bool_invert",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_callable_no_call",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_tuple_ignore_cols",
+      "clause_id": "C7"
+    },
+    {
+      "mutant_id": "M_C8_no_indexerror",
+      "clause_id": "C8"
+    },
+    {
+      "mutant_id": "M_C9_slice_raises_indexerror",
+      "clause_id": "C9"
+    },
+    {
+      "mutant_id": "M_C10_scalar_returns_series",
+      "clause_id": "C10"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_use_loc",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_is_position_not_label",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_position_ignores_label_mismatch",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_last_position_via_negative_index",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_list_preserves_order",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_negative_out_of_bounds_raises_indexerror",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_out_of_bounds_raises_indexerror"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_is_position_not_label",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_position_ignores_label_mismatch",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_last_position_via_negative_index",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_list_preserves_order",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_negative_out_of_bounds_raises_indexerror",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_out_of_bounds_raises_indexerror"
+      ],
+      "stdout_tail": "xer and masks for new index given\n            the current index.\n        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.\n    \n        Examples\n        --------\n        >>> idx = pd.RangeIndex(5)\n        >>> idx.get_loc(3)\n        3\n    \n        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]\n        >>> idx.get_loc(6)\n        2\n        \"\"\"\n        if is_integer(key) or (is_float(key) and key.is_integer()):\n            new_key = int(key)\n            try:\n                return self._range.index(new_key)\n            except ValueError as err:\n>               raise KeyError(key) from err\nE               KeyError: -100\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/range.py:523: KeyError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_is_position_not_label\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_position_ignores_label_mismatch\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_last_position_via_negative_index\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_list_preserves_order\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_out_of_bounds_raises_indexerror\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_negative_out_of_bounds_raises_indexerror\n11 failed, 26 passed in 0.97s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_single_int_always_dataframe",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_is_position_not_label",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_position_ignores_label_mismatch",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_last_position_via_negative_index",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_series_index_is_columns",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_series_values_are_correct",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_single_int_middle_row",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_single_int_returns_series",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_list_preserves_order",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_slice_stop_is_exclusive",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_slice_rows_single_col",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_in_bounds_does_not_raise"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_is_position_not_label",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_position_ignores_label_mismatch",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_last_position_via_negative_index",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_series_index_is_columns",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_series_values_are_correct",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_single_int_middle_row",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_single_int_returns_series",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_list_preserves_order",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_slice_stop_is_exclusive",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_slice_rows_single_col",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_in_bounds_does_not_raise"
+      ],
+      "stdout_tail": "ries is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\n.venv/lib/python3.11/site-packages/pandas/core/generic.py:1513: ValueError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_is_position_not_label\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_integer_position_ignores_label_mismatch\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c1_last_position_via_negative_index\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_single_int_returns_series\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_series_index_is_columns\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_series_values_are_correct\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c2_single_int_middle_row\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_list_preserves_order\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_slice_stop_is_exclusive\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_slice_rows_single_col\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_in_bounds_does_not_raise\n17 failed, 20 passed in 0.64s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_list_squeeze_to_series",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_single_element_list_returns_dataframe",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_single_element_list_returns_dataframe",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded"
+      ],
+      "stdout_tail": "........F.........F..................                                    [100%]\n=================================== FAILURES ===================================\n________________ test_c3_single_element_list_returns_dataframe _________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c3_single_element_list_returns_dataframe(sample_df):\n        \"\"\"iloc[[0]] (single-item list) returns a DataFrame, not a Series.\"\"\"\n        result = sample_df.iloc[[0]]\n>       assert isinstance(result, pd.DataFrame)\nE       AssertionError: assert False\nE        +  where False = isinstance(a    1\\nb    4\\nName: 0, dtype: int64, <class 'pandas.DataFrame'>)\nE        +    where <class 'pandas.DataFrame'> = pd.DataFrame\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:117: AssertionError\n____________________ test_c5_bool_array_false_rows_excluded ____________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c5_bool_array_false_rows_excluded(sample_df):\n        \"\"\"Rows with False are excluded from the result.\"\"\"\n        result = sample_df.iloc[[False, True, False]]\n>       assert len(result) == 1\nE       assert 2 == 1\nE        +  where 2 = len(a    2\\nb    5\\nName: 1, dtype: int64)\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:193: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c3_single_element_list_returns_dataframe\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded\n2 failed, 35 passed in 0.13s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_slice_drop_last",
+      "clause_id": "C4",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_full_slice_returns_all_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_slice_stop_is_exclusive",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_negative_large_start_does_not_raise",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_with_large_stop_does_not_raise"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_full_slice_returns_all_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_slice_stop_is_exclusive",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_negative_large_start_does_not_raise",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_with_large_stop_does_not_raise"
+      ],
+      "stdout_tail": " 3  6\n\n    def test_c4_step_slice(sample_df):\n        \"\"\"iloc[::2] returns every other row.\"\"\"\n        result = sample_df.iloc[::2]\n>       assert len(result) == 2\nE       assert 0 == 2\nE        +  where 0 = len(Empty DataFrame\\nColumns: [a, b]\\nIndex: [])\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:160: AssertionError\n_________________ test_c9_slice_with_large_stop_does_not_raise _________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c9_slice_with_large_stop_does_not_raise(sample_df):\n        \"\"\"iloc[0:1000] does not raise IndexError even though 1000 >> len(df).\"\"\"\n        result = sample_df.iloc[0:1000]\n>       assert len(result) == 3\nE       assert 0 == 3\nE        +  where 0 = len(Empty DataFrame\\nColumns: [a, b]\\nIndex: [])\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:298: AssertionError\n______________ test_c9_slice_negative_large_start_does_not_raise _______________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c9_slice_negative_large_start_does_not_raise(sample_df):\n        \"\"\"iloc[-1000:] does not raise and clamps to beginning.\"\"\"\n        result = sample_df.iloc[-1000:]\n>       assert len(result) == 3\nE       assert 0 == 3\nE        +  where 0 = len(Empty DataFrame\\nColumns: [a, b]\\nIndex: [])\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:311: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_slice_stop_is_exclusive\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_full_slice_returns_all_rows\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c4_step_slice\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_with_large_stop_does_not_raise\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_negative_large_start_does_not_raise\n5 failed, 32 passed in 0.13s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_bool_invert",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_all_false_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_all_true_returns_all_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_all_false_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_all_true_returns_all_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows"
+      ],
+      "stdout_tail": "_____________________ test_c5_all_false_returns_empty ________________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c5_all_false_returns_empty(sample_df):\n        \"\"\"All-False boolean array returns an empty DataFrame.\"\"\"\n        result = sample_df.iloc[[False, False, False]]\n>       assert len(result) == 0\nE       assert 3 == 0\nE        +  where 3 = len(   a  b\\n0  1  4\\n1  2  5\\n2  3  6)\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:180: AssertionError\n______________________ test_c5_all_true_returns_all_rows _______________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c5_all_true_returns_all_rows(sample_df):\n        \"\"\"All-True boolean array returns all rows.\"\"\"\n        result = sample_df.iloc[[True, True, True]]\n>       assert len(result) == 3\nE       assert 0 == 3\nE        +  where 0 = len(Empty DataFrame\\nColumns: [a, b]\\nIndex: [])\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:187: AssertionError\n____________________ test_c5_bool_array_false_rows_excluded ____________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c5_bool_array_false_rows_excluded(sample_df):\n        \"\"\"Rows with False are excluded from the result.\"\"\"\n        result = sample_df.iloc[[False, True, False]]\n>       assert len(result) == 1\nE       assert 2 == 1\nE        +  where 2 = len(   a  b\\n0  1  4\\n2  3  6)\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:193: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_list_selects_true_rows\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_all_false_returns_empty\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_all_true_returns_all_rows\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c5_bool_array_false_rows_excluded\n4 failed, 33 passed in 0.15s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_callable_no_call",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_filters_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_receives_dataframe",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_filters_rows",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_receives_dataframe",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection"
+      ],
+      "stdout_tail": "y:1773: in _getitem_axis\n    self._validate_integer(key, axis)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <pandas.core.indexing._iLocIndexer object at 0x10bb16210>, key = 0\naxis = 0\n\n    def _validate_integer(self, key: int | np.integer, axis: AxisInt) -> None:\n        \"\"\"\n        Check that 'key' is a valid position in the desired axis.\n    \n        Parameters\n        ----------\n        key : int\n            Requested position.\n        axis : int\n            Desired axis.\n    \n        Raises\n        ------\n        IndexError\n            If 'key' is not a valid position in axis 'axis'.\n        \"\"\"\n        len_axis = len(self.obj._get_axis(axis))\n        if key >= len_axis or key < -len_axis:\n>           raise IndexError(\"single positional indexer is out-of-bounds\")\nE           IndexError: single positional indexer is out-of-bounds\n\n.venv/lib/python3.11/site-packages/pandas/core/indexing.py:1706: IndexError\n__________________________ test_c6_callable_bool_mask __________________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c6_callable_bool_mask(sample_df):\n        \"\"\"Callable returning boolean array selects the right rows.\"\"\"\n        result = sample_df.iloc[lambda df: [False, True, False]]\n>       assert len(result) == 1\nE       assert 0 == 1\nE        +  where 0 = len(Empty DataFrame\\nColumns: [a, b]\\nIndex: [])\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:230: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_filters_rows\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_receives_dataframe\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_result_used_for_selection\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c6_callable_bool_mask\n4 failed, 33 passed in 0.19s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_tuple_ignore_cols",
+      "clause_id": "C7",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_indexing_returns_scalar",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_negative_indices",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_value_is_correct",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_columns_match_requested_positions",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_row_list_col_list",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_slice_rows_single_col"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_indexing_returns_scalar",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_negative_indices",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_value_is_correct",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_columns_match_requested_positions",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_row_list_col_list",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_slice_rows_single_col"
+      ],
+      "stdout_tail": "s. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\n.venv/lib/python3.11/site-packages/pandas/core/generic.py:1513: ValueError\n_______________________ test_c10_scalar_negative_indices _______________________\n\nsample_df = <[TypeError('unsupported format string passed to numpy.ndarray.__format__') raised in repr()] DataFrame object at 0x1095b9450>\n\n    def test_c10_scalar_negative_indices(sample_df):\n        \"\"\"iloc[-1, -1] returns the scalar at the last row/column.\"\"\"\n        result = sample_df.iloc[-1, -1]\n>       assert result == 6\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:333: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = a    False\nb     True\nName: 2, dtype: bool\n\n    @final\n    def __bool__(self) -> NoReturn:\n>       raise ValueError(\n            f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\n.venv/lib/python3.11/site-packages/pandas/core/generic.py:1513: ValueError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_row_list_col_list\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_slice_rows_single_col\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_columns_match_requested_positions\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_indexing_returns_scalar\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_value_is_correct\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_negative_indices\n7 failed, 30 passed in 0.31s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C8_no_indexerror",
+      "clause_id": "C8",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_negative_out_of_bounds_raises_indexerror",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_out_of_bounds_raises_indexerror"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_negative_out_of_bounds_raises_indexerror",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_out_of_bounds_raises_indexerror"
+      ],
+      "stdout_tail": "...........................FF........                                    [100%]\n=================================== FAILURES ===================================\n___________________ test_c8_out_of_bounds_raises_indexerror ____________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c8_out_of_bounds_raises_indexerror(sample_df):\n        \"\"\"iloc[100] raises IndexError on a 3-row DataFrame.\"\"\"\n>       with pytest.raises(IndexError):\nE       Failed: DID NOT RAISE <class 'IndexError'>\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:269: Failed\n_______________ test_c8_negative_out_of_bounds_raises_indexerror _______________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c8_negative_out_of_bounds_raises_indexerror(sample_df):\n        \"\"\"iloc[-100] raises IndexError on a 3-row DataFrame.\"\"\"\n>       with pytest.raises(IndexError):\nE       Failed: DID NOT RAISE <class 'IndexError'>\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:275: Failed\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_out_of_bounds_raises_indexerror\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c8_negative_out_of_bounds_raises_indexerror\n2 failed, 35 passed in 0.13s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C9_slice_raises_indexerror",
+      "clause_id": "C9",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_negative_large_start_does_not_raise",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_with_large_stop_does_not_raise"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_negative_large_start_does_not_raise",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_with_large_stop_does_not_raise"
+      ],
+      "stdout_tail": " _ACTIVE_MUTANT == \"M_C6_callable_no_call\":\n            if callable(key):\n                return self.obj.iloc[[]]\n            return _original_iloc_getitem(self, key)\n    \n        # ---- M_C7: tuple ignores column indexer --------------------------------\n        if _ACTIVE_MUTANT == \"M_C7_tuple_ignore_cols\":\n            if isinstance(key, tuple) and len(key) >= 2:\n                return _original_iloc_getitem(self, key[0])\n            return _original_iloc_getitem(self, key)\n    \n        # ---- M_C8: suppress IndexError for out-of-bounds integer ---------------\n        if _ACTIVE_MUTANT == \"M_C8_no_indexerror\":\n            if isinstance(key, (int, np.integer)) and not isinstance(key, bool):\n                n = len(self.obj)\n                k = int(key)\n                if k >= n or k < -n:\n                    return pd.Series(dtype=float)\n            return _original_iloc_getitem(self, key)\n    \n        # ---- M_C9: slice raises IndexError for out-of-bounds stop --------------\n        if _ACTIVE_MUTANT == \"M_C9_slice_raises_indexerror\":\n            if isinstance(key, slice):\n                n = len(self.obj)\n                stop = key.stop\n                start = key.start if key.start is not None else 0\n                if (stop is not None and stop > n) or start < -n:\n>                   raise IndexError(\n                        f\"Mutant C9: slice indexer {key} is out of bounds for axis with {n} elements\"\n                    )\nE                   IndexError: Mutant C9: slice indexer slice(-1000, None, None) is out of bounds for axis with 3 elements\n\ntest_quality_metric/pandas/DataFrame/iloc/mutants/iloc_mutants.py:194: IndexError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_with_large_stop_does_not_raise\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c9_slice_negative_large_start_does_not_raise\n2 failed, 35 passed in 0.09s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C10_scalar_returns_series",
+      "clause_id": "C10",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_indexing_returns_scalar",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_negative_indices",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_value_is_correct",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_indexing_returns_scalar",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_negative_indices",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_value_is_correct",
+        "pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col"
+      ],
+      "stdout_tail": "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = a    False\nb     True\nName: 1, dtype: bool\n\n    @final\n    def __bool__(self) -> NoReturn:\n>       raise ValueError(\n            f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\n.venv/lib/python3.11/site-packages/pandas/core/generic.py:1513: ValueError\n_______________________ test_c10_scalar_negative_indices _______________________\n\nsample_df =    a  b\n0  1  4\n1  2  5\n2  3  6\n\n    def test_c10_scalar_negative_indices(sample_df):\n        \"\"\"iloc[-1, -1] returns the scalar at the last row/column.\"\"\"\n        result = sample_df.iloc[-1, -1]\n>       assert result == 6\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py:333: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = a    False\nb     True\nName: 2, dtype: bool\n\n    @final\n    def __bool__(self) -> NoReturn:\n>       raise ValueError(\n            f\"The truth value of a {type(self).__name__} is ambiguous. \"\n            \"Use a.empty, a.bool(), a.item(), a.any() or a.all().\"\n        )\nE       ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n\n.venv/lib/python3.11/site-packages/pandas/core/generic.py:1513: ValueError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c7_tuple_selects_row_and_col\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_indexing_returns_scalar\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_value_is_correct\nFAILED pandas_bug_finding/baseline_testing/test_iloc_hypothesis.py::test_c10_scalar_negative_indices\n4 failed, 33 passed in 0.20s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": true,
+    "returncode": 0,
+    "failed_nodeids": [],
+    "xfail_nodeids": [],
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0\nrootdir: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent\nconfigfile: pyproject.toml\nplugins: hypothesis-6.151.2\ncollected 37 items\n\npandas_bug_finding/baseline_testing/test_iloc_hypothesis.py ............ [ 32%]\n.........................                                                [100%]\n\n============================== 37 passed in 0.08s ==============================\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 10,
+    "survived": 0,
+    "invalid_baseline": 0,
+    "mutation_score": 1.0
+  }
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "C1",
+    "description": "iloc is purely integer-location based; positions are 0-based, not label-based.",
+    "quote": "Purely integer-location based indexing for selection by position.",
+    "category": "Core Indexing Semantics"
+  },
+  {
+    "id": "C2",
+    "description": "A single integer row index returns a pandas.Series.",
+    "quote": "An integer, e.g. 5.",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C3",
+    "description": "A list or array of integers returns a pandas.DataFrame.",
+    "quote": "A list or array of integers, e.g. [4, 3, 0].",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C4",
+    "description": "A slice object with ints returns a pandas.DataFrame.",
+    "quote": "A slice object with ints, e.g. 1:7.",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C5",
+    "description": "A boolean array selects rows where the value is True.",
+    "quote": "A boolean array.",
+    "category": "Boolean Indexing"
+  },
+  {
+    "id": "C6",
+    "description": "A callable is called with the calling Series or DataFrame; its return value is used for indexing.",
+    "quote": "A callable function with one argument (the calling Series or DataFrame) and that returns valid output for indexing (one of the above).",
+    "category": "Callable Indexing"
+  },
+  {
+    "id": "C7",
+    "description": "A tuple of row and column indexes selects both rows and columns simultaneously.",
+    "quote": "A tuple of row and column indexes. The tuple elements consist of one of the above inputs, e.g. (0, 1).",
+    "category": "Two-Axis Indexing"
+  },
+  {
+    "id": "C8",
+    "description": "An out-of-bounds integer indexer raises IndexError.",
+    "quote": ".iloc will raise IndexError if a requested indexer is out-of-bounds",
+    "category": "Error Handling"
+  },
+  {
+    "id": "C9",
+    "description": "Slice indexers allow out-of-bounds indexing without raising IndexError.",
+    "quote": "except slice indexers which allow out-of-bounds indexing (this conforms with python/numpy slice semantics).",
+    "category": "Error Handling"
+  },
+  {
+    "id": "C10",
+    "description": "Scalar (single row + single column) indexing returns a scalar value, not a Series or DataFrame.",
+    "quote": "df.iloc[0, 1]",
+    "category": "Return Contract"
+  }
+]

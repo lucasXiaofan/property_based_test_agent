@@ -1,0 +1,177 @@
+{
+  "generated_at_utc": "2026-02-25T14:26:32.466881+00:00",
+  "function": "pandas.DataFrame.assign",
+  "pytest_file": "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_no_new_columns",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_skip_overwrite",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_return_self_modified",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_dont_call_callables",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_ignore_noncallables",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_reversed_order",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_all_from_original",
+      "clause_id": "C7"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_no_new_columns",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c4_callable_evaluated_on_dataframe",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c5_noncallable_directly_assigned",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c4_callable_evaluated_on_dataframe",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c5_noncallable_directly_assigned",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "stdout_tail": "et_indexer_for : Returns an indexer even when non-unique.\n    \n        Examples\n        --------\n        >>> unique_index = pd.Index(list(\"abc\"))\n        >>> unique_index.get_loc(\"b\")\n        1\n    \n        >>> monotonic_index = pd.Index(list(\"abbc\"))\n        >>> monotonic_index.get_loc(\"b\")\n        slice(1, 3, None)\n    \n        >>> non_monotonic_index = pd.Index(list(\"abcb\"))\n        >>> non_monotonic_index.get_loc(\"b\")\n        array([False,  True, False,  True])\n        \"\"\"\n        casted_key = self._maybe_cast_indexer(key)\n        try:\n            return self._engine.get_loc(casted_key)\n        except KeyError as err:\n            if isinstance(casted_key, slice) or (\n                isinstance(casted_key, abc.Iterable)\n                and any(isinstance(x, slice) for x in casted_key)\n            ):\n                raise InvalidIndexError(key) from err\n>           raise KeyError(key) from err\nE           KeyError: 'derived'\nE           Falsifying example: test_c7_later_items_see_modified_columns(\nE               df=Empty DataFrame\nE               Columns: [a, b, c]\nE               Index: [],  # or any other generated value\nE           )\n\n.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:3648: KeyError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c4_callable_evaluated_on_dataframe\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c5_noncallable_directly_assigned\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns\n6 failed, 1 passed in 40.18s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_skip_overwrite",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "stdout_tail": "     obj, f\"{obj} shapes are different\", left.shape, right.shape\n                )\n    \n            diff = 0\n            for left_arr, right_arr in zip(left, right, strict=True):\n                # count up differences\n                if not array_equivalent(left_arr, right_arr, strict_nan=strict_nan):\n                    diff += 1\n    \n            diff = diff * 100.0 / left.size\n            msg = f\"{obj} values are different ({np.round(diff, 5)} %)\"\n>           raise_assert_detail(obj, msg, left, right, index_values=index_values)\nE           AssertionError: Series are different\nE           \nE           Series values are different (100.0 %)\nE           [index]: [0]\nE           [left]:  [2]\nE           [right]: [11]\nE           Falsifying example: test_c7_later_items_see_modified_columns(\nE               df=   a    b c\nE               0  1  0.0  ,\nE           )\nE           Explanation:\nE               These lines were always and only run by failing examples:\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:685\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:695\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:124\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:232\n\n.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:689: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns\n2 failed, 5 passed in 6.70s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_return_self_modified",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c3_original_not_modified",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c3_original_not_modified",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "stdout_tail": " right_arr, strict_nan=strict_nan):\n                    diff += 1\n    \n            diff = diff * 100.0 / left.size\n            msg = f\"{obj} values are different ({np.round(diff, 5)} %)\"\n>           raise_assert_detail(obj, msg, left, right, index_values=index_values)\nE           AssertionError: Series are different\nE           \nE           Series values are different (100.0 %)\nE           [index]: [0]\nE           [left]:  [11]\nE           [right]: [101]\nE           Falsifying example: test_c7_later_items_see_modified_columns(\nE               df=   a    b c\nE               0  1  0.0  ,\nE           )\nE           Explanation:\nE               These lines were always and only run by failing examples:\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:682\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:685\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:695\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:124\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:232\n\n.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:689: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c3_original_not_modified\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns\n3 failed, 4 passed in 32.89s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_dont_call_callables",
+      "clause_id": "C4",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c4_callable_evaluated_on_dataframe",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c4_callable_evaluated_on_dataframe",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "stdout_tail": "fying example: test_c6_items_computed_in_order(\nE           df=Empty DataFrame\nE           Columns: [a, b, c]\nE           Index: [],  # or any other generated value\nE       )\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:135: AssertionError\n___________________ test_c7_later_items_see_modified_columns ___________________\n\n    @given(df=_dfs)\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:145: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ndf =    a    b c\n0  1  0.0  \n\n    @given(df=_dfs)\n    @settings(max_examples=100)\n    def test_c7_later_items_see_modified_columns(df):\n        \"\"\"C7: Later items can refer to columns modified by earlier assignments.\"\"\"\n        # First overwrite 'a' with 10x its value, then derive from the modified 'a'\n        result = df.assign(\n            a=lambda x: x[\"a\"] * 10,\n            derived=lambda x: x[\"a\"] + 1,\n        )\n        expected_modified_a = df[\"a\"] * 10\n        expected_derived = expected_modified_a + 1\n>       pd.testing.assert_series_equal(\n            result[\"derived\"], expected_derived, check_names=False\n        )\nE       AssertionError: Attributes of Series are different\nE       \nE       Attribute \"dtype\" are different\nE       [left]:  object\nE       [right]: int64\nE       Falsifying example: test_c7_later_items_see_modified_columns(\nE           df=   a    b c\nE           0  1  0.0  ,\nE       )\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:155: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c4_callable_evaluated_on_dataframe\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns\n3 failed, 4 passed in 8.95s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_ignore_noncallables",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c5_noncallable_directly_assigned"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c5_noncallable_directly_assigned"
+      ],
+      "stdout_tail": "   where all = 0    1\\nName: a, dtype: int64 == 0.all\nE       Falsifying example: test_c2_existing_column_overwritten(\nE           df=   a    b c\nE           0  1  0.0  ,\nE           val=0,\nE       )\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:67: AssertionError\n____________________ test_c5_noncallable_directly_assigned _____________________\n\n    @given(df=_dfs, val=_int_vals)\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:109: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ndf = Empty DataFrame\nColumns: [a, b, c]\nIndex: [], val = 0\n\n    @given(df=_dfs, val=_int_vals)\n    @settings(max_examples=100)\n    def test_c5_noncallable_directly_assigned(df, val):\n        \"\"\"C5: Non-callable (scalar) values are directly assigned as new column.\"\"\"\n        result = df.assign(fixed_col=val)\n>       assert \"fixed_col\" in result.columns\nE       AssertionError: assert 'fixed_col' in Index(['a', 'b', 'c'], dtype='str')\nE        +  where Index(['a', 'b', 'c'], dtype='str') = Empty DataFrame\\nColumns: [a, b, c]\\nIndex: [].columns\nE       Falsifying example: test_c5_noncallable_directly_assigned(\nE           # The test always failed when commented parts were varied together.\nE           df=Empty DataFrame\nE           Columns: [a, b, c]\nE           Index: [],  # or any other generated value\nE           val=0,  # or any other generated value\nE       )\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:113: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c1_returns_new_df_with_original_plus_new\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c2_existing_column_overwritten\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c5_noncallable_directly_assigned\n3 failed, 4 passed in 24.71s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_reversed_order",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "stdout_tail": "modified_columns ___________________\n\n    @given(df=_dfs)\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:145: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:155: in test_c7_later_items_see_modified_columns\n    pd.testing.assert_series_equal(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nleft = array([2]), right = array([11]), err_msg = None\n\n    def _raise(left, right, err_msg) -> NoReturn:\n        if err_msg is None:\n            if left.shape != right.shape:\n                raise_assert_detail(\n                    obj, f\"{obj} shapes are different\", left.shape, right.shape\n                )\n    \n            diff = 0\n            for left_arr, right_arr in zip(left, right, strict=True):\n                # count up differences\n                if not array_equivalent(left_arr, right_arr, strict_nan=strict_nan):\n                    diff += 1\n    \n            diff = diff * 100.0 / left.size\n            msg = f\"{obj} values are different ({np.round(diff, 5)} %)\"\n>           raise_assert_detail(obj, msg, left, right, index_values=index_values)\nE           AssertionError: Series are different\nE           \nE           Series values are different (100.0 %)\nE           [index]: [0]\nE           [left]:  [2]\nE           [right]: [11]\nE           Falsifying example: test_c7_later_items_see_modified_columns(\nE               df=   a    b c\nE               0  1  0.0  ,\nE           )\n\n.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:689: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns\n2 failed, 5 passed in 17.92s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_all_from_original",
+      "clause_id": "C7",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order",
+        "pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns"
+      ],
+      "stdout_tail": "modified_columns ___________________\n\n    @given(df=_dfs)\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:145: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas_bug_finding/baseline_testing/test_assign_hypothesis.py:155: in test_c7_later_items_see_modified_columns\n    pd.testing.assert_series_equal(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nleft = array([2]), right = array([11]), err_msg = None\n\n    def _raise(left, right, err_msg) -> NoReturn:\n        if err_msg is None:\n            if left.shape != right.shape:\n                raise_assert_detail(\n                    obj, f\"{obj} shapes are different\", left.shape, right.shape\n                )\n    \n            diff = 0\n            for left_arr, right_arr in zip(left, right, strict=True):\n                # count up differences\n                if not array_equivalent(left_arr, right_arr, strict_nan=strict_nan):\n                    diff += 1\n    \n            diff = diff * 100.0 / left.size\n            msg = f\"{obj} values are different ({np.round(diff, 5)} %)\"\n>           raise_assert_detail(obj, msg, left, right, index_values=index_values)\nE           AssertionError: Series are different\nE           \nE           Series values are different (100.0 %)\nE           [index]: [0]\nE           [left]:  [2]\nE           [right]: [11]\nE           Falsifying example: test_c7_later_items_see_modified_columns(\nE               df=   a    b c\nE               0  1  0.0  ,\nE           )\n\n.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:689: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c6_items_computed_in_order\nFAILED pandas_bug_finding/baseline_testing/test_assign_hypothesis.py::test_c7_later_items_see_modified_columns\n2 failed, 5 passed in 18.34s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": true,
+    "returncode": 0,
+    "failed_nodeids": [],
+    "xfail_nodeids": [],
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0\nrootdir: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent\nconfigfile: pyproject.toml\nplugins: hypothesis-6.151.2\ncollected 7 items\n\npandas_bug_finding/baseline_testing/test_assign_hypothesis.py .......    [100%]\n\n============================== 7 passed in 2.62s ===============================\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 7,
+    "survived": 0,
+    "invalid_baseline": 0,
+    "mutation_score": 1.0
+  }
+}

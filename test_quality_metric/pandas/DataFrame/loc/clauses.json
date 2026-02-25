@@ -1,0 +1,56 @@
+[
+  {
+    "id": "C1",
+    "description": "loc is primarily label-based, not integer-position-based",
+    "quote": ".loc[] is primarily label based, but may also be used with a boolean array.",
+    "category": "Access Semantics"
+  },
+  {
+    "id": "C2",
+    "description": "Integer inputs to loc are interpreted as labels, never as integer positions",
+    "quote": "5 is interpreted as a label of the index, and never as an integer position along the index",
+    "category": "Input Type Behavior"
+  },
+  {
+    "id": "C3",
+    "description": "Label slices include both start and stop endpoints (contrary to usual Python slices)",
+    "quote": "Note that contrary to usual python slices, both the start and the stop are included",
+    "category": "Slice Semantics"
+  },
+  {
+    "id": "C4",
+    "description": "Single label row access returns a Series, not a DataFrame",
+    "quote": "Single label, e.g. 5 or 'a', (note that 5 is interpreted as a label of the index, and never as an integer position along the index).",
+    "category": "Return Type"
+  },
+  {
+    "id": "C5",
+    "description": "A list or array of labels returns a DataFrame",
+    "quote": "A list or array of labels, e.g. ['a', 'b', 'c'].",
+    "category": "Return Type"
+  },
+  {
+    "id": "C6",
+    "description": "KeyError raised when any requested label is not found",
+    "quote": "Raises KeyError: If any items are not found.",
+    "category": "Error Handling"
+  },
+  {
+    "id": "C7",
+    "description": "Boolean array selects rows where the value is True; NA values treated as False",
+    "quote": "A boolean array (any NA values will be treated as False).",
+    "category": "Boolean Indexing"
+  },
+  {
+    "id": "C8",
+    "description": "Callable key is called with the DataFrame/Series and its return value is used for indexing",
+    "quote": "A callable, e.g. a function with one argument (the calling Series or DataFrame) that returns valid output for indexing (one of the above).",
+    "category": "Input Type Behavior"
+  },
+  {
+    "id": "C9",
+    "description": "IndexingError raised when an indexed key's index is unalignable to the frame index",
+    "quote": "Raises IndexingError: If an indexed key is passed and its index is unalignable to the frame index.",
+    "category": "Error Handling"
+  }
+]

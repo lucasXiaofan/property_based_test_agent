@@ -1,0 +1,183 @@
+{
+  "generated_at_utc": "2026-02-25T14:14:29.697144+00:00",
+  "function": "pandas.DataFrame.head",
+  "pytest_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/pandas_bug_finding/baseline_testing/test_head_hypothesis.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_returns_last_n",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_default_n_is_10",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_returns_values",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_off_by_one",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_zero_returns_all",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_negative_n_returns_empty",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_overflow_raises",
+      "clause_id": "C7"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_returns_last_n",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows"
+      ],
+      "stdout_tail": "_ _ \npandas_bug_finding/baseline_testing/test_head_hypothesis.py:121: in test_c6_negative_n_excludes_last_rows\n    pd.testing.assert_frame_equal(result, df[:n])\npandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n>   ???\nE   AssertionError: DataFrame.index are different\nE   \nE   DataFrame.index values are different (100.0 %)\nE   [left]:  RangeIndex(start=1, stop=2, step=1)\nE   [right]: RangeIndex(start=0, stop=1, step=1)\nE   At positional index 0, first diff: 1 != 0\nE   Falsifying example: test_c6_negative_n_excludes_last_rows(\nE       df=   a    b c\nE       0  0  0.0  \nE       1  0  0.0  ,\nE       n=-1,\nE   )\nE   Explanation:\nE       These lines were always and only run by failing examples:\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:3579\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:1471\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:1475\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:1477\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/range.py:299\n\npandas/_libs/testing.pyx:171: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows\n3 failed, 4 passed in 4.28s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_default_n_is_10",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5"
+      ],
+      "stdout_tail": ".F.....                                                                  [100%]\n=================================== FAILURES ===================================\n____________________________ test_c2_default_n_is_5 ____________________________\n\n    @given(df=_dfs)\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py:63: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ndf =    a    b c\n0  0  0.0  \n1  0  0.0  \n2  0  0.0  \n3  0  0.0  \n4  0  0.0  \n5  0  0.0  \n\n    @given(df=_dfs)\n    @settings(max_examples=100)\n    def test_c2_default_n_is_5(df):\n        \"\"\"C2: head() with no argument returns same as head(5).\"\"\"\n>       pd.testing.assert_frame_equal(df.head(), df.head(5))\nE       AssertionError: DataFrame are different\nE       \nE       DataFrame shape mismatch\nE       [left]:  (6, 3)\nE       [right]: (5, 3)\nE       Falsifying example: test_c2_default_n_is_5(\nE           df=   a    b c\nE           0  0  0.0  \nE           1  0  0.0  \nE           2  0  0.0  \nE           3  0  0.0  \nE           4  0  0.0  \nE           5  0  0.0  ,\nE       )\nE       Explanation:\nE           These lines were always and only run by failing examples:\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:1280\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py:66: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5\n1 failed, 6 passed in 4.59s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_returns_values",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c3_returns_dataframe_type",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c7_overflow_returns_all_rows"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c3_returns_dataframe_type",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c7_overflow_returns_all_rows"
+      ],
+      "stdout_tail": "ssert_* methods that ensures that\n        the two objects being compared have the right type before\n        proceeding with the comparison.\n    \n        Parameters\n        ----------\n        left : The first object being compared.\n        right : The second object being compared.\n        cls : The class type to check against.\n    \n        Raises\n        ------\n        AssertionError : Either `left` or `right` is not an instance of `cls`.\n        \"\"\"\n        cls_name = cls.__name__\n    \n        if not isinstance(left, cls):\n>           raise AssertionError(\n                f\"{cls_name} Expected type {cls}, found {type(left)} instead\"\n            )\nE           AssertionError: DataFrame Expected type <class 'pandas.DataFrame'>, found <class 'numpy.ndarray'> instead\nE           Falsifying example: test_c7_overflow_returns_all_rows(\nE               # The test always failed when commented parts were varied together.\nE               df=Empty DataFrame\nE               Columns: [a, b, c]\nE               Index: [],  # or any other generated value\nE               extra=1,  # or any other generated value\nE           )\n\n.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:173: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c3_returns_dataframe_type\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c7_overflow_returns_all_rows\n7 failed in 23.03s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_off_by_one",
+      "clause_id": "C4",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows"
+      ],
+      "stdout_tail": "(df) + n)  # equivalent to max(0, len(df) - |n|)\n>       assert len(result) == expected_len, (\n            f\"Expected {expected_len} rows, got {len(result)} (n={n}, df_len={len(df)})\"\n        )\nE       AssertionError: Expected 1 rows, got 0 (n=-1, df_len=2)\nE       assert 0 == 1\nE        +  where 0 = len(Empty DataFrame\\nColumns: [a, b, c]\\nIndex: [])\nE       Falsifying example: test_c6_negative_n_excludes_last_rows(\nE           df=   a    b c\nE           0  0  0.0  \nE           1  0  0.0  ,\nE           n=-1,\nE       )\nE       Explanation:\nE           These lines were always and only run by failing examples:\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/pandas_bug_finding/baseline_testing/test_head_hypothesis.py:120\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:279\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:285\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:500\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:512\nE               (and 29 more with settings.verbosity >= verbose)\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py:118: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows\n4 failed, 3 passed in 5.31s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_zero_returns_all",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty"
+      ],
+      "stdout_tail": "max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py:99: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ndf =    a    b c\n0  0  0.0  \n\n    @given(df=_dfs)\n    @settings(max_examples=100)\n    def test_c5_zero_returns_empty(df):\n        \"\"\"C5: head(0) returns an empty DataFrame.\"\"\"\n        result = df.head(0)\n>       assert len(result) == 0, f\"Expected empty DataFrame, got {len(result)} rows\"\nE       AssertionError: Expected empty DataFrame, got 1 rows\nE       assert 1 == 0\nE        +  where 1 = len(   a    b c\\n0  0  0.0  )\nE       Falsifying example: test_c5_zero_returns_empty(\nE           df=   a    b c\nE           0  0  0.0  ,\nE       )\nE       Explanation:\nE           These lines were always and only run by failing examples:\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/_methods.py:57\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:3284\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:279\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:285\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:500\nE               (and 101 more with settings.verbosity >= verbose)\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py:103: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c5_zero_returns_empty\n2 failed, 5 passed in 5.11s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_negative_n_returns_empty",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows"
+      ],
+      "stdout_tail": ")\n    def test_c6_negative_n_excludes_last_rows(df, n):\n        \"\"\"C6: head(n) with negative n equals df[:-n] (all except last |n|).\"\"\"\n        result = df.head(n)\n        expected_len = max(0, len(df) + n)  # equivalent to max(0, len(df) - |n|)\n>       assert len(result) == expected_len, (\n            f\"Expected {expected_len} rows, got {len(result)} (n={n}, df_len={len(df)})\"\n        )\nE       AssertionError: Expected 1 rows, got 0 (n=-1, df_len=2)\nE       assert 0 == 1\nE        +  where 0 = len(Empty DataFrame\\nColumns: [a, b, c]\\nIndex: [])\nE       Falsifying example: test_c6_negative_n_excludes_last_rows(\nE           df=   a    b c\nE           0  0  0.0  \nE           1  0  0.0  ,\nE           n=-1,\nE       )\nE       Explanation:\nE           These lines were always and only run by failing examples:\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/pandas_bug_finding/baseline_testing/test_head_hypothesis.py:120\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:279\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:285\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:500\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:512\nE               (and 29 more with settings.verbosity >= verbose)\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py:118: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c6_negative_n_excludes_last_rows\n2 failed, 5 passed in 7.81s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_overflow_raises",
+      "clause_id": "C7",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c3_returns_dataframe_type",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c7_overflow_returns_all_rows"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c3_returns_dataframe_type",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice",
+        "pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c7_overflow_returns_all_rows"
+      ],
+      "stdout_tail": "py:67: IndexError\n______________________ test_c7_overflow_returns_all_rows _______________________\n\n    @given(df=_dfs, extra=st.integers(min_value=1, max_value=100))\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py:129: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas_bug_finding/baseline_testing/test_head_hypothesis.py:133: in test_c7_overflow_returns_all_rows\n    result = df.head(n)\n             ^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = Empty DataFrame\nColumns: [a, b, c]\nIndex: [], n = 1\n\n    def _mutant_c7_overflow_raises(self, n=5):\n        \"\"\"Raise IndexError when n > len(df) instead of returning all rows.\"\"\"\n        if n > len(self):\n>           raise IndexError(f\"Mutant C7: n={n} exceeds DataFrame length {len(self)}\")\nE           IndexError: Mutant C7: n=1 exceeds DataFrame length 0\nE           Falsifying example: test_c7_overflow_returns_all_rows(\nE               # The test always failed when commented parts were varied together.\nE               df=Empty DataFrame\nE               Columns: [a, b, c]\nE               Index: [],  # or any other generated value\nE               extra=1,  # or any other generated value\nE           )\n\ntest_quality_metric/pandas/DataFrame/head/mutants/head_mutants.py:67: IndexError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c1_head_returns_first_n_rows\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c2_default_n_is_5\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c3_returns_dataframe_type\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c4_equivalent_to_slice\nFAILED pandas_bug_finding/baseline_testing/test_head_hypothesis.py::test_c7_overflow_returns_all_rows\n5 failed, 2 passed in 13.93s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": true,
+    "returncode": 0,
+    "failed_nodeids": [],
+    "xfail_nodeids": [],
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0\nrootdir: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent\nconfigfile: pyproject.toml\nplugins: hypothesis-6.151.2\ncollected 7 items\n\npandas_bug_finding/baseline_testing/test_head_hypothesis.py .......      [100%]\n\n============================== 7 passed in 2.56s ===============================\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 7,
+    "survived": 0,
+    "invalid_baseline": 0,
+    "mutation_score": 1.0
+  }
+}

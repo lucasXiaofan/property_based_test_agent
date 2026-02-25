@@ -1,0 +1,74 @@
+[
+  {
+    "id": "C1",
+    "description": "Returns a new DataFrame sorted by label when inplace=False (default).",
+    "quote": "Returns a new DataFrame sorted by label if inplace argument is False",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C2",
+    "description": "Returns None when inplace=True.",
+    "quote": "otherwise updates the original DataFrame and returns None",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C3",
+    "description": "Default sort is ascending (ascending=True by default).",
+    "quote": "Sort ascending vs. descending.",
+    "category": "Sort Order"
+  },
+  {
+    "id": "C4",
+    "description": "axis=1 (or 'columns') sorts column labels, not row labels.",
+    "quote": "1 identifies the columns",
+    "category": "Axis Behavior"
+  },
+  {
+    "id": "C5",
+    "description": "ascending=False produces descending label order.",
+    "quote": "Sort ascending vs. descending.",
+    "category": "Sort Order"
+  },
+  {
+    "id": "C6",
+    "description": "na_position='last' puts NaN index values at the end of the sorted result.",
+    "quote": "last puts NaNs at the end",
+    "category": "NaN Positioning"
+  },
+  {
+    "id": "C7",
+    "description": "na_position='first' puts NaN index values at the beginning of the sorted result.",
+    "quote": "Puts NaNs at the beginning if first",
+    "category": "NaN Positioning"
+  },
+  {
+    "id": "C8",
+    "description": "ignore_index=True relabels the result axis as 0, 1, ..., n-1.",
+    "quote": "If True, the resulting axis will be labeled 0, 1, \u2026, n - 1.",
+    "category": "Index Behavior"
+  },
+  {
+    "id": "C9",
+    "description": "key function is applied to index values before sorting.",
+    "quote": "If not None, apply the key function to the index values before sorting.",
+    "category": "Key Function"
+  },
+  {
+    "id": "C10",
+    "description": "Only mergesort and stable are stable sort algorithms.",
+    "quote": "mergesort and stable are the only stable algorithms.",
+    "category": "Algorithm"
+  },
+  {
+    "id": "C11",
+    "description": "sort_remaining=True sorts remaining MultiIndex levels after sorting by specified level.",
+    "quote": "If True and sorting by level and index is multilevel, sort by other levels too (in order) after sorting by specified level.",
+    "category": "MultiIndex"
+  },
+  {
+    "id": "C12",
+    "description": "level parameter sorts on values in specified index level(s) for MultiIndex.",
+    "quote": "If not None, sort on values in specified index level(s).",
+    "category": "MultiIndex"
+  }
+]

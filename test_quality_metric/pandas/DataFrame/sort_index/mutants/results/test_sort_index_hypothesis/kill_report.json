@@ -1,0 +1,283 @@
+{
+  "generated_at_utc": "2026-02-25T14:33:07.849864+00:00",
+  "function": "pandas.DataFrame.sort_index",
+  "pytest_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py",
+  "mutants": [
+    {
+      "mutant_id": "M_C1_no_sort",
+      "clause_id": "C1"
+    },
+    {
+      "mutant_id": "M_C2_inplace_returns_self",
+      "clause_id": "C2"
+    },
+    {
+      "mutant_id": "M_C3_ascending_reversed",
+      "clause_id": "C3"
+    },
+    {
+      "mutant_id": "M_C4_axis1_sorts_rows",
+      "clause_id": "C4"
+    },
+    {
+      "mutant_id": "M_C5_descending_becomes_ascending",
+      "clause_id": "C5"
+    },
+    {
+      "mutant_id": "M_C6_na_last_becomes_first",
+      "clause_id": "C6"
+    },
+    {
+      "mutant_id": "M_C7_na_first_becomes_last",
+      "clause_id": "C7"
+    },
+    {
+      "mutant_id": "M_C8_ignore_index_no_relabel",
+      "clause_id": "C8"
+    },
+    {
+      "mutant_id": "M_C9_key_not_applied",
+      "clause_id": "C9"
+    },
+    {
+      "mutant_id": "M_C10_stable_becomes_quicksort",
+      "clause_id": "C10"
+    },
+    {
+      "mutant_id": "M_C11_sort_remaining_ignored",
+      "clause_id": "C11"
+    },
+    {
+      "mutant_id": "M_C12_ignore_level",
+      "clause_id": "C12"
+    }
+  ],
+  "runs": [
+    {
+      "mutant_id": "M_C1_no_sort",
+      "clause_id": "C1",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c12_level_sorts_by_specified_level",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort_string_index",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_ascending_false_reverses_ascending_true",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c6_na_position_last_puts_nan_at_end",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_position_first_puts_nan_at_start",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c8_ignore_index_relabels_0_to_n",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c12_level_sorts_by_specified_level",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort_string_index",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_ascending_false_reverses_ascending_true",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c6_na_position_last_puts_nan_at_end",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_position_first_puts_nan_at_start",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c8_ignore_index_relabels_0_to_n",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort"
+      ],
+      "stdout_tail": "ex=idx)\n        result = df.sort_index(level=0)\n        lvl0_vals = list(result.index.get_level_values(0))\n>       assert lvl0_vals == sorted(lvl0_vals), (\n            f\"sort_index(level=0) must sort by level 0; got {lvl0_vals}\"\n        )\nE       AssertionError: sort_index(level=0) must sort by level 0; got [3, 1, 2]\nE       assert [3, 1, 2] == [1, 2, 3]\nE         \nE         At index 0 diff: 3 != 1\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:324: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort_string_index\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_ascending_false_reverses_ascending_true\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c6_na_position_last_puts_nan_at_end\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_position_first_puts_nan_at_start\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c8_ignore_index_relabels_0_to_n\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c12_level_sorts_by_specified_level\n12 failed, 9 passed in 4.76s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C2_inplace_returns_self",
+      "clause_id": "C2",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c2_inplace_returns_none"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c2_inplace_returns_none"
+      ],
+      "stdout_tail": ".F...................                                                    [100%]\n=================================== FAILURES ===================================\n_________________________ test_c2_inplace_returns_none _________________________\n\n    @given(df=_int_indexed_dfs)\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:73: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ndf = Empty DataFrame\nColumns: [a, b]\nIndex: []\n\n    @given(df=_int_indexed_dfs)\n    @settings(max_examples=100)\n    def test_c2_inplace_returns_none(df):\n        \"\"\"C2: sort_index(inplace=True) must return None.\"\"\"\n        df_copy = df.copy()\n        result = df_copy.sort_index(inplace=True)\n>       assert result is None, (\n            f\"sort_index(inplace=True) should return None, got {type(result)}\"\n        )\nE       AssertionError: sort_index(inplace=True) should return None, got <class 'pandas.DataFrame'>\nE       assert Empty DataFrame\\nColumns: [a, b]\\nIndex: [] is None\nE       Falsifying example: test_c2_inplace_returns_none(\nE           df=Empty DataFrame\nE           Columns: [a, b]\nE           Index: [],  # or any other generated value\nE       )\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:78: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c2_inplace_returns_none\n1 failed, 20 passed in 7.59s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C3_ascending_reversed",
+      "clause_id": "C3",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c12_level_sorts_by_specified_level",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort_string_index",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c4_axis1_sorts_columns",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_changes_sort_order",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c12_level_sorts_by_specified_level",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort_string_index",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c4_axis1_sorts_columns",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_changes_sort_order",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort"
+      ],
+      "stdout_tail": "____________ test_c12_level_sorts_by_specified_level ____________________\n\n    def test_c12_level_sorts_by_specified_level():\n        \"\"\"C12: level parameter causes sort by that MultiIndex level.\"\"\"\n        idx = pd.MultiIndex.from_tuples(\n            [(3, \"b\"), (1, \"a\"), (2, \"c\")], names=[\"x\", \"y\"]\n        )\n        df = pd.DataFrame({\"val\": [30, 10, 20]}, index=idx)\n        result = df.sort_index(level=0)\n        lvl0_vals = list(result.index.get_level_values(0))\n>       assert lvl0_vals == sorted(lvl0_vals), (\n            f\"sort_index(level=0) must sort by level 0; got {lvl0_vals}\"\n        )\nE       AssertionError: sort_index(level=0) must sort by level 0; got [3, 2, 1]\nE       assert [3, 2, 1] == [1, 2, 3]\nE         \nE         At index 0 diff: 3 != 1\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:324: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c3_default_ascending_sort_string_index\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c4_axis1_sorts_columns\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_changes_sort_order\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c12_level_sorts_by_specified_level\n9 failed, 12 passed in 5.63s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C4_axis1_sorts_rows",
+      "clause_id": "C4",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c4_axis1_sorts_columns"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c4_axis1_sorts_columns"
+      ],
+      "stdout_tail": "ed_dfs)\n    @settings(max_examples=100)\n    def test_c4_axis1_sorts_columns(df):\n        \"\"\"C4: sort_index(axis=1) sorts the column labels, not the row index.\"\"\"\n        result = df.sort_index(axis=1)\n        col_list = list(result.columns)\n        assert col_list == sorted(col_list), (\n            f\"sort_index(axis=1) should sort columns; got {col_list}\"\n        )\n        # Row index must be unchanged\n>       pd.testing.assert_index_equal(result.index, df.index)\nE       AssertionError: Index are different\nE       \nE       Index values are different (100.0 %)\nE       [left]:  Index([-1, 0], dtype='int64')\nE       [right]: Index([0, -1], dtype='int64')\nE       Falsifying example: test_c4_axis1_sorts_columns(\nE           df=    a    b\nE            0  0  0.0\nE           -1  0  0.0,\nE       )\nE       Explanation:\nE           These lines were always and only run by failing examples:\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/_dtype.py:330\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:344\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:348\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/array_algos/take.py:539\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/construction.py:478\nE               (and 39 more with settings.verbosity >= verbose)\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:123: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c4_axis1_sorts_columns\n1 failed, 20 passed in 5.23s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C5_descending_becomes_ascending",
+      "clause_id": "C5",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_ascending_false_reverses_ascending_true",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_ascending_false_reverses_ascending_true",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort"
+      ],
+      "stdout_tail": " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:156: in test_c5_ascending_false_reverses_ascending_true\n    pd.testing.assert_frame_equal(desc, asc[::-1])\npandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n>   ???\nE   AssertionError: DataFrame.index are different\nE   \nE   DataFrame.index values are different (100.0 %)\nE   [left]:  Index([0, 1], dtype='int64')\nE   [right]: Index([1, 0], dtype='int64')\nE   At positional index 0, first diff: 0 != 1\nE   Falsifying example: test_c5_ascending_false_reverses_ascending_true(\nE       df=   a    b\nE       0  0  0.0\nE       1  0  0.0,\nE   )\nE   Explanation:\nE       These lines were always and only run by failing examples:\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/_dtype.py:330\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:49\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:3579\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:1479\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:1496\nE           (and 11 more with settings.verbosity >= verbose)\n\npandas/_libs/testing.pyx:171: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_descending_sort\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c5_ascending_false_reverses_ascending_true\n2 failed, 19 passed in 4.24s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C6_na_last_becomes_first",
+      "clause_id": "C6",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c6_na_position_last_puts_nan_at_end",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c6_na_position_last_puts_nan_at_end",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites"
+      ],
+      "stdout_tail": "                                   [100%]\n=================================== FAILURES ===================================\n___________________ test_c6_na_position_last_puts_nan_at_end ___________________\n\n    def test_c6_na_position_last_puts_nan_at_end():\n        \"\"\"C6: na_position='last' (default) places NaN index values at the end.\"\"\"\n        df = pd.DataFrame({\"val\": [10, 20, 30]}, index=[1.0, float(\"nan\"), 2.0])\n        result = df.sort_index(na_position=\"last\")\n>       assert pd.isna(result.index[-1]), (\n            f\"Last index value should be NaN with na_position='last'; got {result.index[-1]}\"\n        )\nE       AssertionError: Last index value should be NaN with na_position='last'; got 2.0\nE       assert False\nE        +  where False = <function isna at 0x109cae8e0>(np.float64(2.0))\nE        +    where <function isna at 0x109cae8e0> = pd.isna\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:167: AssertionError\n____________________ test_c7_na_first_vs_last_are_opposites ____________________\n\n    def test_c7_na_first_vs_last_are_opposites():\n        \"\"\"C7: na_position='first' and 'last' place NaN at opposite ends.\"\"\"\n        df = pd.DataFrame({\"val\": [10, 20, 30]}, index=[1.0, float(\"nan\"), 2.0])\n        first = df.sort_index(na_position=\"first\")\n        last = df.sort_index(na_position=\"last\")\n        assert pd.isna(first.index[0])\n>       assert pd.isna(last.index[-1])\nE       assert False\nE        +  where False = <function isna at 0x109cae8e0>(np.float64(2.0))\nE        +    where <function isna at 0x109cae8e0> = pd.isna\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:201: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c6_na_position_last_puts_nan_at_end\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites\n2 failed, 19 passed in 4.60s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C7_na_first_becomes_last",
+      "clause_id": "C7",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_position_first_puts_nan_at_start"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_position_first_puts_nan_at_start"
+      ],
+      "stdout_tail": ".....FF.........                                                    [100%]\n=================================== FAILURES ===================================\n_________________ test_c7_na_position_first_puts_nan_at_start __________________\n\n    def test_c7_na_position_first_puts_nan_at_start():\n        \"\"\"C7: na_position='first' places NaN index values at the beginning.\"\"\"\n        df = pd.DataFrame({\"val\": [10, 20, 30]}, index=[1.0, float(\"nan\"), 2.0])\n        result = df.sort_index(na_position=\"first\")\n>       assert pd.isna(result.index[0]), (\n            f\"First index value should be NaN with na_position='first'; got {result.index[0]}\"\n        )\nE       AssertionError: First index value should be NaN with na_position='first'; got 1.0\nE       assert False\nE        +  where False = <function isna at 0x10a6168e0>(np.float64(1.0))\nE        +    where <function isna at 0x10a6168e0> = pd.isna\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:189: AssertionError\n____________________ test_c7_na_first_vs_last_are_opposites ____________________\n\n    def test_c7_na_first_vs_last_are_opposites():\n        \"\"\"C7: na_position='first' and 'last' place NaN at opposite ends.\"\"\"\n        df = pd.DataFrame({\"val\": [10, 20, 30]}, index=[1.0, float(\"nan\"), 2.0])\n        first = df.sort_index(na_position=\"first\")\n        last = df.sort_index(na_position=\"last\")\n>       assert pd.isna(first.index[0])\nE       assert False\nE        +  where False = <function isna at 0x10a6168e0>(np.float64(1.0))\nE        +    where <function isna at 0x10a6168e0> = pd.isna\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:200: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_position_first_puts_nan_at_start\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c7_na_first_vs_last_are_opposites\n2 failed, 19 passed in 4.56s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C8_ignore_index_no_relabel",
+      "clause_id": "C8",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c8_ignore_index_relabels_0_to_n"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c8_ignore_index_relabels_0_to_n"
+      ],
+      "stdout_tail": "............F........                                                    [100%]\n=================================== FAILURES ===================================\n_____________________ test_c8_ignore_index_relabels_0_to_n _____________________\n\n    @given(df=_int_indexed_dfs)\n>   @settings(max_examples=100)\n                   ^^^\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:211: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ndf =        a    b\n-330   9  0.0\n 880  51  0.0\n 249   1  0.0\n\n    @given(df=_int_indexed_dfs)\n    @settings(max_examples=100)\n    def test_c8_ignore_index_relabels_0_to_n(df):\n        \"\"\"C8: sort_index(ignore_index=True) produces RangeIndex 0..n-1.\"\"\"\n        result = df.sort_index(ignore_index=True)\n        expected_index = list(range(len(df)))\n>       assert list(result.index) == expected_index, (\n            f\"Expected 0..{len(df)-1} index, got {list(result.index)}\"\n        )\nE       AssertionError: Expected 0..2 index, got [-330, 249, 880]\nE       assert [-330, 249, 880] == [0, 1, 2]\nE         \nE         At index 0 diff: -330 != 0\nE         Use -v to get more diff\nE       Falsifying example: test_c8_ignore_index_relabels_0_to_n(\nE           df=       a    b\nE           -330   9  0.0\nE            880  51  0.0\nE            249   1  0.0,\nE       )\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:216: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c8_ignore_index_relabels_0_to_n\n1 failed, 20 passed in 4.05s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C9_key_not_applied",
+      "clause_id": "C9",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_changes_sort_order",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_changes_sort_order",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort"
+      ],
+      "stdout_tail": "==========================\n___________________ test_c9_key_function_changes_sort_order ____________________\n\n    def test_c9_key_function_changes_sort_order():\n        \"\"\"C9: key function modifies sort key; case-insensitive sort example.\"\"\"\n        df = pd.DataFrame({\"a\": [1, 2, 3, 4]}, index=[\"A\", \"b\", \"C\", \"d\"])\n        result = df.sort_index(key=lambda x: x.str.lower())\n        # With case-insensitive sort: A(a), b(b), C(c), d(d) \u2014 already in order\n>       assert list(result.index) == [\"A\", \"b\", \"C\", \"d\"], (\n            f\"key=str.lower() should produce case-insensitive order; got {list(result.index)}\"\n        )\nE       AssertionError: key=str.lower() should produce case-insensitive order; got ['A', 'C', 'b', 'd']\nE       assert ['A', 'C', 'b', 'd'] == ['A', 'b', 'C', 'd']\nE         \nE         At index 1 diff: 'C' != 'b'\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:241: AssertionError\n______________________ test_c9_key_function_reverse_sort _______________________\n\n    def test_c9_key_function_reverse_sort():\n        \"\"\"C9: key function that negates integers reverses sort order.\"\"\"\n        df = pd.DataFrame({\"v\": [10, 20, 30]}, index=[1, 2, 3])\n        result = df.sort_index(key=lambda x: -x)\n>       assert list(result.index) == [3, 2, 1], (\n            f\"key=-x should reverse sort; got {list(result.index)}\"\n        )\nE       AssertionError: key=-x should reverse sort; got [1, 2, 3]\nE       assert [1, 2, 3] == [3, 2, 1]\nE         \nE         At index 0 diff: 1 != 3\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:250: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_changes_sort_order\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c9_key_function_reverse_sort\n2 failed, 19 passed in 3.72s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C10_stable_becomes_quicksort",
+      "clause_id": "C10",
+      "status": "survived",
+      "returncode": 0,
+      "failed_nodeids": [],
+      "new_failed_nodeids": [],
+      "stdout_tail": ".....................                                                    [100%]\n21 passed in 3.71s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C11_sort_remaining_ignored",
+      "clause_id": "C11",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels"
+      ],
+      "stdout_tail": "                   obj, f\"{obj} shapes are different\", left.shape, right.shape\n                )\n    \n            diff = 0\n            for left_arr, right_arr in zip(left, right, strict=True):\n                # count up differences\n                if not array_equivalent(left_arr, right_arr, strict_nan=strict_nan):\n                    diff += 1\n    \n            diff = diff * 100.0 / left.size\n            msg = f\"{obj} values are different ({np.round(diff, 5)} %)\"\n>           raise_assert_detail(obj, msg, left, right, index_values=index_values)\nE           AssertionError: numpy array are different\nE           \nE           numpy array values are different (66.66667 %)\nE           [left]:  [0, 2, 1]\nE           [right]: [0, 1, 2]\n\n.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:689: AssertionError\n\nDuring handling of the above exception, another exception occurred:\n\n    def test_c11_sort_remaining_true_sorts_other_levels():\n        \"\"\"C11: sort_remaining=True also sorts non-specified MultiIndex levels.\"\"\"\n        idx = pd.MultiIndex.from_tuples(\n            [(2, 2), (2, 1), (1, 0)], names=[\"a\", \"b\"]\n        )\n        df = pd.DataFrame({\"x\": [10, 20, 30]}, index=idx)\n        result = df.sort_index(level=0, sort_remaining=True)\n        expected = pd.MultiIndex.from_tuples(\n            [(1, 0), (2, 1), (2, 2)], names=[\"a\", \"b\"]\n        )\n>       pd.testing.assert_index_equal(result.index, expected)\nE       AssertionError: MultiIndex level [1] are different\nE       \nE       MultiIndex level [1] values are different (66.66667 %)\nE       [left]:  Index([0, 2, 1], dtype='int64', name='b')\nE       [right]: Index([0, 1, 2], dtype='int64', name='b')\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:291: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_true_sorts_other_levels\n1 failed, 20 passed in 3.74s\n",
+      "stderr_tail": ""
+    },
+    {
+      "mutant_id": "M_C12_ignore_level",
+      "clause_id": "C12",
+      "status": "killed",
+      "returncode": 1,
+      "failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c10_stable_sort_preserves_relative_order",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels"
+      ],
+      "new_failed_nodeids": [
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c10_stable_sort_preserves_relative_order",
+        "pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels"
+      ],
+      "stdout_tail": "1}\"\n        )\nE       AssertionError: Stable sort must preserve relative order for ties; got ['a', 'b']\nE       assert ['a', 'b'] == ['b', 'a']\nE         \nE         At index 0 diff: 'a' != 'b'\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:272: AssertionError\n_______________ test_c11_sort_remaining_false_skips_other_levels _______________\n\n    def test_c11_sort_remaining_false_skips_other_levels():\n        \"\"\"C11: sort_remaining=False skips secondary level sorting.\"\"\"\n        idx = pd.MultiIndex.from_tuples(\n            [(2, 2), (2, 1), (1, 0)], names=[\"a\", \"b\"]\n        )\n        df = pd.DataFrame({\"x\": [10, 20, 30]}, index=idx)\n        result = df.sort_index(level=0, sort_remaining=False)\n        # Primary level must be sorted; secondary level within group may not be\n        level0 = list(result.index.get_level_values(0))\n        assert level0 == sorted(level0), f\"Primary level must be sorted; got {level0}\"\n        # Secondary level within group for a=2: must be original order [2, 1]\n        level1_for_2 = [v for k, v in zip(result.index.get_level_values(0),\n                                            result.index.get_level_values(1)) if k == 2]\n>       assert level1_for_2 == [2, 1], (\n            f\"sort_remaining=False should not sort secondary levels; got {level1_for_2}\"\n        )\nE       AssertionError: sort_remaining=False should not sort secondary levels; got [1, 2]\nE       assert [1, 2] == [2, 1]\nE         \nE         At index 0 diff: 1 != 2\nE         Use -v to get more diff\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py:307: AssertionError\n=========================== short test summary info ============================\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c10_stable_sort_preserves_relative_order\nFAILED pandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py::test_c11_sort_remaining_false_skips_other_levels\n2 failed, 19 passed in 3.74s\n",
+      "stderr_tail": ""
+    }
+  ],
+  "baseline": {
+    "passed": true,
+    "returncode": 0,
+    "failed_nodeids": [],
+    "xfail_nodeids": [],
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.14, pytest-9.0.2, pluggy-1.6.0\nrootdir: /Users/xiaofanlu/Documents/github_repos/property_based_test_agent\nconfigfile: pyproject.toml\nplugins: hypothesis-6.151.2\ncollected 21 items\n\npandas_bug_finding/baseline_testing/test_sort_index_hypothesis.py ...... [ 28%]\n...............                                                          [100%]\n\n============================== 21 passed in 2.61s ==============================\n",
+    "stderr_tail": ""
+  },
+  "summary": {
+    "killed": 11,
+    "survived": 1,
+    "invalid_baseline": 0,
+    "mutation_score": 0.9166666666666666
+  }
+}

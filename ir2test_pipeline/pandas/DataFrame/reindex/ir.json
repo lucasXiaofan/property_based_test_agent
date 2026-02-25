@@ -40,7 +40,11 @@
           "example": "[]"
         }
       },
-      "interaction_hints": ["axis", "index", "columns"],
+      "interaction_hints": [
+        "axis",
+        "index",
+        "columns"
+      ],
       "invalid_cases": []
     },
     "index": {
@@ -59,7 +63,11 @@
           "example": "[]"
         }
       },
-      "interaction_hints": ["labels", "fill_value", "method"],
+      "interaction_hints": [
+        "labels",
+        "fill_value",
+        "method"
+      ],
       "invalid_cases": []
     },
     "columns": {
@@ -78,7 +86,11 @@
           "example": "[]"
         }
       },
-      "interaction_hints": ["labels", "axis", "fill_value"],
+      "interaction_hints": [
+        "labels",
+        "axis",
+        "fill_value"
+      ],
       "invalid_cases": []
     },
     "axis": {
@@ -97,7 +109,9 @@
           "example": "1  # or 'columns'"
         }
       },
-      "interaction_hints": ["labels"],
+      "interaction_hints": [
+        "labels"
+      ],
       "invalid_cases": [
         {
           "desc": "axis value not in {0, 1, 'index', 'columns'}",
@@ -128,7 +142,11 @@
           "example": "'nearest'"
         }
       },
-      "interaction_hints": ["index", "limit", "tolerance"],
+      "interaction_hints": [
+        "index",
+        "limit",
+        "tolerance"
+      ],
       "invalid_cases": [
         {
           "desc": "method string not in valid enum",
@@ -173,7 +191,9 @@
           "example": "0  # or 'first_level'"
         }
       },
-      "interaction_hints": ["index"],
+      "interaction_hints": [
+        "index"
+      ],
       "invalid_cases": []
     },
     "fill_value": {
@@ -192,22 +212,29 @@
           "example": "'missing'  # for float column"
         }
       },
-      "interaction_hints": ["index", "columns", "method"],
+      "interaction_hints": [
+        "index",
+        "columns",
+        "method"
+      ],
       "invalid_cases": []
     },
+    # don't do the different id for differnt input, be consistent
     "limit": {
       "type": "int or None",
       "partitions": {
         "LM0": {
           "desc": "None (default) — no cap on consecutive fill positions",
-          "example": "None"
+          "example": "None" # clause don't need example, example should be here
         },
         "LM1": {
-          "desc": "positive integer — caps consecutive fill positions at N",
+          "desc": "positive integer — caps consecutive fill positions at N", # some formal way to express the (like assertion)
           "example": "2"
         }
       },
-      "interaction_hints": ["method"],
+      "interaction_hints": [
+        "method"
+      ],
       "invalid_cases": [
         {
           "desc": "limit set to a positive integer but method=None",
@@ -234,7 +261,10 @@
           "example": "[0.1, 0.5, 1.0]  # same length as new_index"
         }
       },
-      "interaction_hints": ["method", "index"],
+      "interaction_hints": [
+        "method",
+        "index"
+      ],
       "invalid_cases": [
         {
           "desc": "tolerance is list-like but its length differs from new index length",
@@ -249,10 +279,11 @@
   "post_conditions": [
     {
       "id": "P1",
-      "track": "valid",
+      "track": "valid", # delete this no assume 
       "evidence": "explicit",
-      "source_ref": "R1",
+      "source_ref": "R1", # delete 
       "why": "(1) Core usage: migrating a DataFrame to a new set of row labels where some rows don't exist. (2) Catches a bug where new labels accidentally receive 0 or empty-string instead of NaN when fill_value is unset. (3) Trigger on L2 (superset) isolates the new-label introduction path without conflating with value preservation.",
+      # no need to explain why the post condition is important, the ir just a formal way about what we can get from doc. simply formal representation of documentation, not just for testing
       "claim": "labels not present in the original index receive NaN in all columns when fill_value is not specified",
       "formal": [
         "new_labels = set(params.index) - set(original.index)",
@@ -260,8 +291,12 @@
         "  assert result.loc[lbl].isna().all()"
       ],
       "trigger": {
-        "index": ["X1"],
-        "fill_value": ["F0"]
+        "index": [
+          "X1"
+        ],
+        "fill_value": [
+          "F0"
+        ]
       }
     },
     {
@@ -275,8 +310,15 @@
         "assert result is not original"
       ],
       "trigger": {
-        "index": ["X0", "X1", "X2"],
-        "labels": ["L0", "L4"]
+        "index": [
+          "X0",
+          "X1",
+          "X2"
+        ],
+        "labels": [
+          "L0",
+          "L4"
+        ]
       }
     },
     {
@@ -294,7 +336,9 @@
         "  assert any(issubclass(warning.category, FutureWarning) for warning in w)"
       ],
       "trigger": {
-        "copy": ["CP1"]
+        "copy": [
+          "CP1"
+        ]
       }
     },
     {
@@ -310,8 +354,12 @@
         "  assert result.loc[new_lbl].equals(original.loc[preceding])"
       ],
       "trigger": {
-        "index": ["X1"],
-        "method": ["M1"]
+        "index": [
+          "X1"
+        ],
+        "method": [
+          "M1"
+        ]
       }
     },
     {
@@ -327,8 +375,12 @@
         "  assert result.loc[new_lbl].equals(original.loc[following])"
       ],
       "trigger": {
-        "index": ["X1"],
-        "method": ["M2"]
+        "index": [
+          "X1"
+        ],
+        "method": [
+          "M2"
+        ]
       }
     },
     {
@@ -344,7 +396,9 @@
         "assert result_ffill.equals(result_pad)"
       ],
       "trigger": {
-        "method": ["M1"]
+        "method": [
+          "M1"
+        ]
       }
     },
     {
@@ -360,7 +414,9 @@
         "assert result_bfill.equals(result_backfill)"
       ],
       "trigger": {
-        "method": ["M2"]
+        "method": [
+          "M2"
+        ]
       }
     },
     {
@@ -378,8 +434,12 @@
         "assert result.loc[new_lbl_3].isna().all()       # third consecutive stays NaN"
       ],
       "trigger": {
-        "method": ["M1"],
-        "limit": ["LM1"]
+        "method": [
+          "M1"
+        ],
+        "limit": [
+          "LM1"
+        ]
       }
     },
     {
@@ -398,8 +458,12 @@
         "  assert result.loc[lbl].equals(original.loc[lbl])"
       ],
       "trigger": {
-        "index": ["X1"],
-        "fill_value": ["F1"]
+        "index": [
+          "X1"
+        ],
+        "fill_value": [
+          "F1"
+        ]
       }
     },
     {
@@ -418,8 +482,12 @@
         "    assert not result.loc[new_lbl].isna().all()"
       ],
       "trigger": {
-        "method": ["M3"],
-        "tolerance": ["T1"]
+        "method": [
+          "M3"
+        ],
+        "tolerance": [
+          "T1"
+        ]
       }
     },
     {
@@ -438,8 +506,12 @@
         "    assert not result.iloc[i].isna().all()"
       ],
       "trigger": {
-        "method": ["M3"],
-        "tolerance": ["T2"]
+        "method": [
+          "M3"
+        ],
+        "tolerance": [
+          "T2"
+        ]
       }
     },
     {
@@ -455,8 +527,12 @@
         "  assert result.loc[new_lbl].equals(original.loc[nearest_orig])"
       ],
       "trigger": {
-        "method": ["M3"],
-        "tolerance": ["T0"]
+        "method": [
+          "M3"
+        ],
+        "tolerance": [
+          "T0"
+        ]
       }
     },
     {
@@ -472,8 +548,13 @@
         "assert result.loc['known_nan_row'].isna().all()"
       ],
       "trigger": {
-        "index": ["X1"],
-        "method": ["M1", "M2"]
+        "index": [
+          "X1"
+        ],
+        "method": [
+          "M1",
+          "M2"
+        ]
       }
     },
     {
@@ -489,7 +570,9 @@
         "  assert result.loc[lbl].equals(original.loc[lbl])"
       ],
       "trigger": {
-        "labels": ["L2"]
+        "labels": [
+          "L2"
+        ]
       }
     },
     {
@@ -503,8 +586,17 @@
         "assert result.index.tolist() == list(params.index)"
       ],
       "trigger": {
-        "index": ["X1", "X2"],
-        "labels": ["L1", "L2", "L3", "L4", "L5"]
+        "index": [
+          "X1",
+          "X2"
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ]
       }
     },
     {
@@ -518,8 +610,12 @@
         "assert result.columns.tolist() == original.columns.tolist()"
       ],
       "trigger": {
-        "index": ["X1"],
-        "columns": ["C0"]
+        "index": [
+          "X1"
+        ],
+        "columns": [
+          "C0"
+        ]
       }
     },
     {
@@ -534,7 +630,9 @@
         "assert result is not original  # still a new object"
       ],
       "trigger": {
-        "labels": ["L4"]
+        "labels": [
+          "L4"
+        ]
       }
     },
     {
@@ -550,8 +648,12 @@
         "assert result['col'].dtype == np.float64"
       ],
       "trigger": {
-        "index": ["X1"],
-        "fill_value": ["F0"]
+        "index": [
+          "X1"
+        ],
+        "fill_value": [
+          "F0"
+        ]
       }
     },
     {
@@ -565,8 +667,17 @@
         "assert len(result) == len(params.index)"
       ],
       "trigger": {
-        "index": ["X1", "X2"],
-        "labels": ["L1", "L2", "L3", "L4", "L5"]
+        "index": [
+          "X1",
+          "X2"
+        ],
+        "labels": [
+          "L1",
+          "L2",
+          "L3",
+          "L4",
+          "L5"
+        ]
       }
     },
     {
@@ -580,9 +691,21 @@
         "assert isinstance(result, pd.DataFrame)"
       ],
       "trigger": {
-        "index": ["X0", "X1", "X2"],
-        "columns": ["C0", "C1"],
-        "method": ["M0", "M1", "M2", "M3"]
+        "index": [
+          "X0",
+          "X1",
+          "X2"
+        ],
+        "columns": [
+          "C0",
+          "C1"
+        ],
+        "method": [
+          "M0",
+          "M1",
+          "M2",
+          "M3"
+        ]
       }
     },
     {
@@ -601,8 +724,12 @@
         "  assert result[col].equals(original[col])"
       ],
       "trigger": {
-        "columns": ["C1"],
-        "index": ["X0"]
+        "columns": [
+          "C1"
+        ],
+        "index": [
+          "X0"
+        ]
       }
     },
     {
@@ -618,9 +745,19 @@
         "assert original.equals(original_copy)"
       ],
       "trigger": {
-        "index": ["X1"],
-        "method": ["M0", "M1", "M2", "M3"],
-        "fill_value": ["F0", "F1"]
+        "index": [
+          "X1"
+        ],
+        "method": [
+          "M0",
+          "M1",
+          "M2",
+          "M3"
+        ],
+        "fill_value": [
+          "F0",
+          "F1"
+        ]
       }
     },
     {
@@ -635,8 +772,12 @@
         "assert result.columns.tolist() == list(params.columns)"
       ],
       "trigger": {
-        "index": ["X1"],
-        "columns": ["C1"]
+        "index": [
+          "X1"
+        ],
+        "columns": [
+          "C1"
+        ]
       }
     },
     {
@@ -651,7 +792,9 @@
         "  df_with_non_monotonic_index.reindex(new_index, method='ffill')"
       ],
       "trigger": {
-        "method": ["non-monotonic index"]
+        "method": [
+          "non-monotonic index"
+        ]
       }
     },
     {
@@ -666,7 +809,9 @@
         "  original.reindex(new_index, method='linear')"
       ],
       "trigger": {
-        "method": ["method string not in valid enum"]
+        "method": [
+          "method string not in valid enum"
+        ]
       }
     },
     {
@@ -681,7 +826,9 @@
         "  original.reindex([1, 2, 3], method='nearest', tolerance=[0.1, 0.5])"
       ],
       "trigger": {
-        "tolerance": ["tolerance is list-like but its length differs from new index length"]
+        "tolerance": [
+          "tolerance is list-like but its length differs from new index length"
+        ]
       }
     },
     {
@@ -696,7 +843,9 @@
         "  original.reindex(new_index, limit=1)"
       ],
       "trigger": {
-        "limit": ["limit set to a positive integer but method=None"]
+        "limit": [
+          "limit set to a positive integer but method=None"
+        ]
       }
     },
     {
@@ -711,7 +860,9 @@
         "  original.reindex(['a', 'b'], axis=2)"
       ],
       "trigger": {
-        "axis": ["axis value not in {0, 1, 'index', 'columns'}"]
+        "axis": [
+          "axis value not in {0, 1, 'index', 'columns'}"
+        ]
       }
     }
   ]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "C1",
+    "description": "head() returns the first n rows.",
+    "quote": "Return the first n rows.",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C2",
+    "description": "Default value of n is 5.",
+    "quote": "n : int, default 5",
+    "category": "Default Parameter"
+  },
+  {
+    "id": "C3",
+    "description": "head() returns the same type as the caller.",
+    "quote": "same type as caller",
+    "category": "Return Contract"
+  },
+  {
+    "id": "C4",
+    "description": "head() behavior mirrors df[:n] for positive n.",
+    "quote": "This method returns the same rows as df[:n].",
+    "category": "Equivalence"
+  },
+  {
+    "id": "C5",
+    "description": "n=0 returns an empty object.",
+    "quote": "For negative values of n, this function returns all rows except the last n rows",
+    "category": "Edge Case: Zero"
+  },
+  {
+    "id": "C6",
+    "description": "Negative n returns all rows except the last |n| rows.",
+    "quote": "For negative values of n, this function returns all rows except the last n rows, equivalent to df[:-n].",
+    "category": "Edge Case: Negative"
+  },
+  {
+    "id": "C7",
+    "description": "When n is larger than the number of rows, all rows are returned.",
+    "quote": "If n is larger than the number of rows, this function returns all rows.",
+    "category": "Edge Case: Overflow"
+  }
+]

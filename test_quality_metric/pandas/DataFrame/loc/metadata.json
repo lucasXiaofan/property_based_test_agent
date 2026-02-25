@@ -1,0 +1,6 @@
+{
+  "library": "pandas",
+  "version": "3.0.0",
+  "qualified_name": "pandas.DataFrame.loc",
+  "doc_url": "https://pandas.pydata.org/pandas-docs/version/3.0.0/reference/api/pandas.DataFrame.loc.html"
+}
