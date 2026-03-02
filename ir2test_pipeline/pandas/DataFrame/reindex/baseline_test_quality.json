@@ -1,0 +1,255 @@
+{
+  "generated_at_utc": "2026-03-02T16:33:49.989633+00:00",
+  "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py",
+  "doc_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/pandas.DataFrame.reindex.md",
+  "model": "deepseek-chat",
+  "tests": [
+    {
+      "test_name": "test_tolerance_within_limit_matches",
+      "pre_condition": "A DataFrame is reindexed with method='nearest' and a tolerance within which a new label matches an original.",
+      "post_condition": "Assert that the new label is filled from the nearest original label.",
+      "is_unique": true,
+      "unique_reason": "This test checks tolerance parameter when within limit, distinct from outside case.",
+      "is_valid": true,
+      "valid_reason": "Documentation describes tolerance as 'Maximum distance between original and new labels for inexact matches' with equation.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_bfill_uses_next_valid_observation",
+      "pre_condition": "A DataFrame with a monotonic date index is reindexed with method='bfill' to a wider date range.",
+      "post_condition": "Assert that gaps are filled with the following valid value and boundaries produce NaN where no next value exists.",
+      "is_unique": true,
+      "unique_reason": "This is the only test verifying backward fill behavior with specific boundary checks.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'backfill / bfill: Use next valid observation to fill gap' and shows example.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_reindex_same_index_reproduces_values",
+      "pre_condition": "A DataFrame is reindexed with an identical index.",
+      "post_condition": "Assert that all values remain unchanged.",
+      "is_unique": false,
+      "unique_reason": "Semantically duplicates test_existing_labels_preserve_values, which also checks preservation when reindexing with overlapping labels.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'A new object is produced unless the new index is equivalent to the current one', implying values are reproduced.",
+      "overall": "not_unique"
+    },
+    {
+      "test_name": "test_method_does_not_fill_preexisting_nan",
+      "pre_condition": "A DataFrame with a NaN value in the original index is reindexed with the same index using method='ffill'.",
+      "post_condition": "Assert that the pre-existing NaN is not filled by the method.",
+      "is_unique": true,
+      "unique_reason": "No other test checks that fill methods do not affect original NaN values.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'Please note that the NaN value present in the original DataFrame will not be filled by any of the value propagation schemes.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_return_type_is_always_dataframe",
+      "pre_condition": "A DataFrame is reindexed with arbitrary new labels.",
+      "post_condition": "Assert that the result is always a DataFrame instance.",
+      "is_unique": true,
+      "unique_reason": "No other test explicitly checks the return type regardless of index contents.",
+      "is_valid": true,
+      "valid_reason": "Documentation specifies return type as DataFrame in the Returns section.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_limit_caps_consecutive_fills",
+      "pre_condition": "A DataFrame is reindexed with method='ffill' and a limit parameter to a larger index.",
+      "post_condition": "Assert that filling stops after the specified number of consecutive missing positions.",
+      "is_unique": true,
+      "unique_reason": "No other test checks the limit parameter's effect on consecutive fills.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'limit: Maximum number of consecutive elements to forward or backward fill.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_pad_is_alias_for_ffill",
+      "pre_condition": "A DataFrame is reindexed with method='pad' and method='ffill' on the same new index.",
+      "post_condition": "Assert that both methods produce equal results.",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks that pad and ffill are aliases, not covered by other tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation lists method options including 'pad'/'ffill' as equivalent.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_removed_column_absent_from_result",
+      "pre_condition": "A DataFrame is reindexed with a subset of its original columns.",
+      "post_condition": "Assert that columns not in the new column list are dropped from the result.",
+      "is_unique": true,
+      "unique_reason": "No other test verifies that omitted columns are removed during column reindexing.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies dropping by showing reindexing with new column lists changes columns.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_ffill_propagates_last_valid_observation",
+      "pre_condition": "A DataFrame with a monotonic date index is reindexed with method='ffill' to a wider date range.",
+      "post_condition": "Assert that gaps are filled with the preceding valid value and boundaries produce NaN where no prior value exists.",
+      "is_unique": true,
+      "unique_reason": "This is the only test verifying forward fill behavior with specific boundary checks.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'pad / ffill: Propagate last valid observation forward to next valid' and shows example with bfill.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_result_shape_matches_new_index_and_columns",
+      "pre_condition": "A DataFrame is reindexed with new index and column lists.",
+      "post_condition": "Assert that output shape is (len(new_index), len(new_cols)).",
+      "is_unique": true,
+      "unique_reason": "No other test explicitly checks shape after simultaneous row and column reindexing.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies shape change by describing reindexing to new labels on both axes.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_new_column_label_gets_nan",
+      "pre_condition": "A DataFrame is reindexed with columns including a new column label not in original columns.",
+      "post_condition": "Assert that the new column is present and filled with NaN.",
+      "is_unique": true,
+      "unique_reason": "No other test checks NaN filling for new column labels without fill_value.",
+      "is_valid": true,
+      "valid_reason": "Documentation example shows reindexing columns with new label produces NaN-filled column.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_method_raises_on_non_monotonic_index",
+      "pre_condition": "A DataFrame with a non-monotonic index is reindexed with a fill method.",
+      "post_condition": "Assert that an error is raised.",
+      "is_unique": true,
+      "unique_reason": "This is the only test verifying that fill methods require monotonic index.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'Please note: this is only applicable to DataFrames/Series with a monotonically increasing/decreasing index.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_backfill_is_alias_for_bfill",
+      "pre_condition": "A DataFrame is reindexed with method='backfill' and method='bfill' on the same new index.",
+      "post_condition": "Assert that both methods produce equal results.",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks that backfill and bfill are aliases, not covered by other tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation lists method options including 'backfill'/'bfill' as equivalent.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_multiindex_level_reindex_adds_nan_for_new_level_value",
+      "pre_condition": "A DataFrame with a MultiIndex is reindexed using level parameter with a new level value not in original.",
+      "post_condition": "Assert that rows for the new level value are filled with NaN.",
+      "is_unique": true,
+      "unique_reason": "This test checks level reindexing with new values, distinct from matching case.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies NaN for missing values as with standard reindex, applied to level.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_nearest_fill_selects_closer_neighbor",
+      "pre_condition": "A DataFrame with two index values is reindexed with method='nearest' to include an intermediate label.",
+      "post_condition": "Assert that the intermediate label receives the value from the nearest index position.",
+      "is_unique": true,
+      "unique_reason": "This is the only test verifying nearest fill behavior with distance comparison.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'nearest: Use nearest valid observations to fill gap.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_fill_value_used_for_missing_row_labels",
+      "pre_condition": "A DataFrame is reindexed with additional row labels not in original index, using a specified fill_value.",
+      "post_condition": "Assert that fill_value is placed at rows whose label was not in the original index.",
+      "is_unique": true,
+      "unique_reason": "This is the only test checking fill_value for missing row labels specifically.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'fill_value: Value to use for missing values. Defaults to NaN, but can be any compatible value' and shows examples with fill_value.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_missing_row_labels_get_nan",
+      "pre_condition": "A DataFrame with a single column and integer index is reindexed with additional labels not in the original index.",
+      "post_condition": "Assert that all new labels receive NaN values in the result.",
+      "is_unique": true,
+      "unique_reason": "No other test specifically checks that missing row labels receive NaN by default without fill_value.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'Places NA/NaN in locations having no value in the previous index' and example shows new index labels without corresponding records get NaN.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_multiindex_level_reindex_preserves_matching_rows",
+      "pre_condition": "A DataFrame with a MultiIndex is reindexed using level parameter with existing level values.",
+      "post_condition": "Assert that rows matching the reindexed level values are preserved.",
+      "is_unique": true,
+      "unique_reason": "This is the only test checking level reindexing with matching values.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'level: Broadcast across a level, matching Index values on the passed MultiIndex level.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_reindex_returns_new_dataframe_object",
+      "pre_condition": "A DataFrame is reindexed with its own index.",
+      "post_condition": "Assert that the result is a DataFrame object distinct from the original.",
+      "is_unique": true,
+      "unique_reason": "No other test verifies that reindex always returns a new object, not a view.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'A new object is produced unless the new index is equivalent to the current one and copy=False' and notes copy parameter is ignored, implying always new object.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_fill_value_applies_to_new_columns",
+      "pre_condition": "A DataFrame is reindexed with a new column label and a specified fill_value.",
+      "post_condition": "Assert that fill_value fills the new column positions.",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks fill_value for new columns, distinct from row-focused tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation states fill_value applies to missing values, and examples show it used for both rows and columns.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_labels_axis_columns_equals_columns_kwarg",
+      "pre_condition": "A DataFrame is reindexed using labels with axis='columns' and compared to using columns keyword.",
+      "post_condition": "Assert that both calling conventions produce equal results.",
+      "is_unique": true,
+      "unique_reason": "This is the only test comparing axis='columns' to columns keyword equivalence.",
+      "is_valid": true,
+      "valid_reason": "Documentation states: 'DataFrame.reindex supports two calling conventions: (index=index_labels, columns=column_labels, ...) and (labels, axis={'index', 'columns'}, ...)' and recommends keyword arguments.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_existing_labels_preserve_values",
+      "pre_condition": "A DataFrame is reindexed with a subset of its original index labels.",
+      "post_condition": "Assert that values for labels present in both old and new index are preserved exactly.",
+      "is_unique": true,
+      "unique_reason": "No other test focuses on preserving values for overlapping labels without fill methods.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies preservation by stating reindex conforms to new index, and examples show existing labels retain their values.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_labels_axis_0_equals_index_kwarg",
+      "pre_condition": "A DataFrame is reindexed using labels with axis=0 and compared to using index keyword.",
+      "post_condition": "Assert that both calling conventions produce equal results.",
+      "is_unique": true,
+      "unique_reason": "This is the only test comparing axis=0 to index keyword equivalence.",
+      "is_valid": true,
+      "valid_reason": "Documentation states two calling conventions as above, implying axis=0 corresponds to index.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_tolerance_outside_limit_gives_nan",
+      "pre_condition": "A DataFrame is reindexed with method='nearest' and a tolerance outside which a new label does not match.",
+      "post_condition": "Assert that the new label receives NaN.",
+      "is_unique": true,
+      "unique_reason": "This test checks tolerance parameter when outside limit, distinct from within case.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies NaN for labels outside tolerance by describing it as maximum distance.",
+      "overall": "unique_and_valid"
+    }
+  ],
+  "summary": {
+    "total_tests": 24,
+    "unique_and_valid_count": 23,
+    "not_unique_count": 1,
+    "not_valid_count": 0,
+    "unique_and_valid_rate": 0.9583333333333334
+  }
+}

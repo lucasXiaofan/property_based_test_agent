@@ -16,103 +16,66 @@ ir2test_pipeline/
 
 ## Inputs
 - doc_url: {URL}
-- function: {FULLY_QUALIFIED_NAME}
+- target function name (optional)
 
-## Output JSON Structure
-```json
+Given a documentation URL for a library function, generate a formal specification JSON with the following structure:
+
+```
 {
   "metadata": {
-    "library": "string",
-    "version": "string",
-    "function": "string — fully qualified e.g. pd.DataFrame.reindex",
-    "references": [
-      { "id": "R1", "type": "api_doc | docstring | user_guide", "url": "string" }
-    ]
+    "library": string,
+    "version": string,
+    "function": string,
+    "references": [url strings]
   },
-  "pre_conditions": {
-    "{param_name}": {
-      "type": "accepted Python types",
-      "partitions": {
-        "{ID e.g. L0, M1}": {
-          "desc": "what makes this region semantically distinct",
-          "example": "concrete value or expression"
+
+  "preconditions": {
+    "data_state": {
+      "required": bool,  // true if the function's behavior depends on the state of an object (e.g. DataFrame), false for pure functions like max(x)
+      "rationale": string,  // only if required=true, explain why data state matters
+      "self": {  // only if required=true
+        "type": string,
+        "partitions": {
+          "partition_name": "description with one concrete example"
         }
-      },
-      "interaction_hints": ["other param names whose behavior changes with this one"],
-      "invalid_cases": [
-        {
-          "desc": "why this input is invalid",
-          "example": "concrete invalid input",
-          "expected_exception": "ValueError | TypeError | KeyError etc.",
-          "note": "null or clarification if doc is ambiguous",
-          "source_ref": "R1"
-        }
-      ]
+      }
+    },
+    "parameters": {
+      "<param_name>": {
+        "type": string,
+        "partitions": {  // only define partitions that trigger distinct behavior; omit trivial restatements of type
+          "partition_name": "description with one concrete example"
+        },
+        "invalid_cases": [
+          { "desc": "what goes wrong and concrete example" }
+        ]
+      }
     }
   },
-  "post_conditions": [
+
+  "postconditions": [
     {
-      "id": "P1",
-      "track": "valid | invalid",
-      "evidence": "explicit | indirect | implicit",
-      "source_ref": "R1 — null only when evidence=implicit",
-      "why": "(1) what real usage scenario this represents, (2) what specific bug this catches that other post-conditions would not, (3) why this trigger scope is right — not too broad, not too narrow",
-      "claim": "one NL sentence of expected behavior",
-      "formal": [
-        "pseudo-Python assertion lines using symbols:",
-        "  original = input df before the call",
-        "  result   = returned value",
-        "  params.* = parameter values e.g. params.method",
-        "valid track:  assert result.something == expected",
-        "invalid track: with pytest.raises(XError): original.fn(bad_input)"
-      ],
+      "id": "PC-XX",
+      "claim": "natural language: given what input state/params, what is the expected behavior",
       "trigger": {
-        "{param_name}": ["partition IDs for valid track, or invalid_case desc for invalid track"]
-      }
+        // structured map of parameter/data_state → partition name(s) that activate this postcondition
+        // only include parameters that are relevant to this postcondition
+        // reference partition names defined in preconditions; do not invent new terms
+        "<param_or_self>": "partition_name | partition_name | ..."
+      },
+      "expected_behavior": "assertion or error in concise formal style, e.g. result.loc[x].isna().all() == True or raises ValueError",
+      "confidence": "explicit | implicit"  // explicit = doc directly states this; implicit = logically follows from doc
     }
   ]
 }
 ```
 
-## Evidence Types
+**Rules:**
 
-- **explicit**: doc directly states this behavior. `source_ref` must point to a
-  reference that contains a direct quote supporting the claim.
-- **indirect**: doc implies the behavior through examples or parameter descriptions
-  but does not state it outright. Quote the relevant text and explain the implication.
-- **implicit**: standard convention not mentioned in the doc at all — e.g. no mutation,
-  column preservation, return type. `source_ref` is str. Justify why this is expected.
+1. **Partitions** — only define a partition when it produces a behaviorally distinct outcome. Do not create partitions that merely restate the type or the default value.
+2. **data_state** — include only if the object's internal state (e.g. index monotonicity, existing NaN cells, gap structure) affects behavior or validity of parameters. For pure functions, set `required: false` and omit `self`.
+3. **Triggers** — every key in a trigger must reference a partition name defined in preconditions. Never introduce terms (like `gap_size`) that are not formally defined somewhere in preconditions.
+4. **confidence** — `explicit` if the doc directly states the behavior; `implicit` if it logically follows but is not stated outright.
+5. **invalid_cases** — cover type errors, value errors, and constraint violations with a concrete example each.
+6. **expected_behavior** — express as a checkable assertion or a raised exception, not prose.
 
-## Rules for pre_conditions
-
-- Partitions must be **mutually exclusive** and **collectively cover** the full valid
-  input space for that parameter.
-- A partition boundary is where observable behavior changes — not just where the value
-  changes. Two inputs that produce identical behavior belong in the same partition.
-- `interaction_hints` drives covering array priority — if A lists B, at least one
-  post-condition must have both in its trigger.
-- `invalid_cases` are tested 1-way independently — never cross two invalid cases.
-
-## Rules for post_conditions
-
-**Be exhaustive. For every function, ensure you cover:**
-- Core output shape/structure (index, columns, length)
-- Value preservation for matched inputs
-- Fill/default behavior for unmatched inputs
-- Each fill method variant if applicable (ffill, bfill, nearest etc.)
-- Boundary partitions: empty input, identical input, fully disjoint input
-- Limit/threshold stopping conditions and their off-by-one boundary
-- Interaction between 2–3 parameters where behavior is non-obvious
-- No mutation of the original input
-- Return type and object identity
-- One E-id per invalid_case in pre_conditions — no more, no less
-
-**Post-condition quality checks:**
-- P-ids for valid behavior, E-ids for exception checks
-- Each post-condition must catch a **unique** failure mode — if two would catch the
-  same bug, merge them or narrow the trigger
-- Prefer triggers that combine 2–3 parameters — most real bugs live in interactions,
-  not in single-parameter cases
-- Every partition ID must appear in at least one valid-track trigger
-- Every invalid_case must map to exactly one E-id
-- No two post-conditions should share identical formal assertions

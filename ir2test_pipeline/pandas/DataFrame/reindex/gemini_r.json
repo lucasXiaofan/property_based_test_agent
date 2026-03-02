@@ -1,0 +1,98 @@
+{
+    "metadata": {
+        "library": "pandas",
+        "version": "3.0.1",
+        "function": "DataFrame.reindex",
+        "references": [
+            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reindex.html"
+        ]
+    },
+    "preconditions": {
+        "data_state": {
+            "required": true,
+            "rationale": "Filling logic through method or tolerance requires the DataFrame index to be monotonically increasing or decreasing. Also, original NaNs in data are preserved.",
+            "self": {
+                "type": "DataFrame",
+                "partitions": {
+                    "monotonic": "DataFrame index is sorted and monotonically increasing or decreasing",
+                    "non_monotonic": "DataFrame index is not monotonically sorted"
+                }
+            }
+        },
+        "parameters": {
+            "index": {
+                "type": "array-like",
+                "partitions": {
+                    "intersecting": "New index partially overlaps with original index, keeping original values for matched labels",
+                    "disjoint": "New index has no overlap with original index",
+                    "equivalent": "New index is identical to original index"
+                },
+                "invalid_cases": []
+            },
+            "method": {
+                "type": "str",
+                "partitions": {
+                    "none": "Default behavior with no gaps filled",
+                    "ffill": "Propagate last valid observation forward to next valid",
+                    "bfill": "Use next valid observation backward to fill gap"
+                },
+                "invalid_cases": [
+                    {
+                        "desc": "Using a method when the DataFrame index is not monotonically increasing or decreasing raises ValueError"
+                    }
+                ]
+            },
+            "fill_value": {
+                "type": "scalar",
+                "partitions": {
+                    "default_nan": "Missing values are filled with NaN",
+                    "custom_value": "Missing values are filled with a specific custom scalar like 0 or 'missing'"
+                },
+                "invalid_cases": []
+            }
+        }
+    },
+    "postconditions": [
+        {
+            "id": "PC-01",
+            "claim": "When no fill method is specified, labels in the new index that do not exist in the original index are filled with fill_value.",
+            "trigger": {
+                "method": "none",
+                "fill_value": "custom_value",
+                "index": "intersecting | disjoint"
+            },
+            "expected_behavior": "result.loc[new_labels_not_in_original].isin([fill_value]).all().all() == True",
+            "confidence": "explicit"
+        },
+        {
+            "id": "PC-02",
+            "claim": "When the original index is not monotonic and a filling method is specified, a ValueError is raised.",
+            "trigger": {
+                "self": "non_monotonic",
+                "method": "ffill | bfill"
+            },
+            "expected_behavior": "raises ValueError",
+            "confidence": "explicit"
+        },
+        {
+            "id": "PC-03",
+            "claim": "When the original index is monotonic and a ffill method is specified, unmapped new labels are filled with the last valid observation.",
+            "trigger": {
+                "self": "monotonic",
+                "method": "ffill",
+                "index": "intersecting | disjoint"
+            },
+            "expected_behavior": "result.loc[new_labels_not_in_original] reflects propagated values from previous index",
+            "confidence": "explicit"
+        },
+        {
+            "id": "PC-04",
+            "claim": "When the new index is completely identical to the old index, the resulting DataFrame maintains the exact same data.",
+            "trigger": {
+                "index": "equivalent"
+            },
+            "expected_behavior": "result.equals(original_self) == True",
+            "confidence": "explicit"
+        }
+    ]
+}
