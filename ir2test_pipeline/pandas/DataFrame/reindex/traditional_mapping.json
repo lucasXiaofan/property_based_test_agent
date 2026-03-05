@@ -1,0 +1,97 @@
+{
+  "function": "pandas.DataFrame.reindex",
+  "mutant_source": "traditional",
+  "note": "Mutants derived from reindex_wrapper.py using classical mutation operators (SDL/ROR/COR/AOR/SVR). No LLM semantics involved.",
+  "mutants": [
+    {
+      "mutant_id": "SDL_index",
+      "operator": "SDL",
+      "target_line": "kwargs['index'] = index",
+      "behavior_broken": "Row reindexing via index= keyword is silently ignored; DataFrame keeps original row index."
+    },
+    {
+      "mutant_id": "SDL_columns",
+      "operator": "SDL",
+      "target_line": "kwargs['columns'] = columns",
+      "behavior_broken": "Column reindexing via columns= keyword is silently ignored; DataFrame keeps original columns."
+    },
+    {
+      "mutant_id": "SDL_method",
+      "operator": "SDL",
+      "target_line": "kwargs['method'] = method",
+      "behavior_broken": "Fill method (ffill/bfill/nearest) is dropped; all gaps remain NaN instead of being filled."
+    },
+    {
+      "mutant_id": "SDL_fill_value",
+      "operator": "SDL",
+      "target_line": "kwargs['fill_value'] = fill_value",
+      "behavior_broken": "Custom fill_value is never forwarded; missing positions always receive NaN."
+    },
+    {
+      "mutant_id": "SDL_limit",
+      "operator": "SDL",
+      "target_line": "kwargs['limit'] = limit",
+      "behavior_broken": "limit= is never forwarded; fill continues without restriction past the requested cap."
+    },
+    {
+      "mutant_id": "SDL_tolerance",
+      "operator": "SDL",
+      "target_line": "kwargs['tolerance'] = tolerance",
+      "behavior_broken": "tolerance= is never forwarded; inexact matches succeed regardless of distance."
+    },
+    {
+      "mutant_id": "SDL_level",
+      "operator": "SDL",
+      "target_line": "kwargs['level'] = level",
+      "behavior_broken": "level= is never forwarded; MultiIndex level broadcast is lost."
+    },
+    {
+      "mutant_id": "SDL_labels_block",
+      "operator": "SDL",
+      "target_line": "if labels is not None: ... (entire block)",
+      "behavior_broken": "Positional labels are silently dropped; reindex(labels, axis='columns') is a no-op."
+    },
+    {
+      "mutant_id": "ROR_axis_eq",
+      "operator": "ROR",
+      "target_line": "if axis_int == 0:",
+      "behavior_broken": "Axis routing is reversed: labels intended for rows go to columns and vice versa."
+    },
+    {
+      "mutant_id": "ROR_labels_none",
+      "operator": "ROR",
+      "target_line": "if labels is not None:",
+      "behavior_broken": "Labels routing fires only when labels IS None; actual labels passed are silently ignored."
+    },
+    {
+      "mutant_id": "ROR_index_none",
+      "operator": "ROR",
+      "target_line": "if index is not None:",
+      "behavior_broken": "Index is forwarded only when it IS None (no-op); caller-supplied index values are ignored."
+    },
+    {
+      "mutant_id": "ROR_columns_none",
+      "operator": "ROR",
+      "target_line": "if columns is not None:",
+      "behavior_broken": "Columns are forwarded only when they IS None; caller-supplied columns are ignored."
+    },
+    {
+      "mutant_id": "COR_fill_sentinel",
+      "operator": "COR",
+      "target_line": "if not _is_nan_sentinel(fill_value):",
+      "behavior_broken": "fill_value forwarded only when it IS NaN (sentinel); custom values dropped. The 'not' is removed."
+    },
+    {
+      "mutant_id": "AOR_limit_plus1",
+      "operator": "AOR",
+      "target_line": "kwargs['limit'] = limit",
+      "behavior_broken": "limit is inflated by 1 (limit + 1); one extra consecutive fill is performed beyond what was requested."
+    },
+    {
+      "mutant_id": "SVR_axis_default",
+      "operator": "SVR",
+      "target_line": "return 0  (in _resolve_axis when axis is None)",
+      "behavior_broken": "Default axis when axis=None is changed from 0 (rows) to 1 (columns); positional labels without explicit axis go to columns."
+    }
+  ]
+}

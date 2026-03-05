@@ -1,0 +1,255 @@
+{
+  "generated_at_utc": "2026-03-02T22:02:05.571504+00:00",
+  "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/baseline_test.py",
+  "doc_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/ir2test_pipeline/pandas/DataFrame/reindex/pandas.DataFrame.reindex.md",
+  "model": "deepseek-chat",
+  "tests": [
+    {
+      "test_name": "test_multiindex_level_reindex_adds_nan_for_new_level_value",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks that new level values produce NaN in MultiIndex reindexing, a distinct behavior.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies NaN for missing values in level reindexing similar to default row/column behavior.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_new_column_label_gets_nan",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "No other test specifically checks that new column labels produce NaN-filled columns.",
+      "is_valid": true,
+      "valid_reason": "Documentation examples show NaN for new columns (e.g., 'user_agent' column gets NaN).",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_reindex_returns_new_dataframe_object",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "No other test verifies that reindex always returns a new DataFrame object rather than a view.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'A new object is produced unless the new index is equivalent to the current one and copy=False' and copy parameter description confirms always returns new object.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_nearest_fill_selects_closer_neighbor",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks nearest method behavior, distinct from other method tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'nearest: Use nearest valid observations to fill gap.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_pad_is_alias_for_ffill",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks that pad is an alias for ffill, which is not covered by other tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation lists 'pad' as an alias for 'ffill' in the method parameter description.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_method_does_not_fill_preexisting_nan",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks that pre-existing NaN values are not filled by method, a distinct behavior.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'Please note that the NaN value present in the original DataFrame will not be filled by any of the value propagation schemes.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_existing_labels_preserve_values",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "No other test specifically checks that values for labels present in both old and new index are preserved exactly.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies preservation through examples where existing labels retain their values (e.g., 'Safari' keeps 404).",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_fill_value_used_for_missing_row_labels",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks fill_value for missing row labels, distinct from test_fill_value_applies_to_new_columns which tests columns.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'fill_value: Value to use for missing values' and shows examples with fill_value replacing NaN.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_return_type_is_always_dataframe",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "No other test explicitly asserts that the return type is always DataFrame regardless of index contents.",
+      "is_valid": true,
+      "valid_reason": "Documentation return section states 'DataFrame' as the return type.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_bfill_uses_next_valid_observation",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks bfill behavior, distinct from other method tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'backfill / bfill: Use next valid observation to fill gap.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_backfill_is_alias_for_bfill",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks that backfill is an alias for bfill, which is not covered by other tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation lists 'backfill' as an alias for 'bfill' in the method parameter description.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_missing_row_labels_get_nan",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "No other test specifically checks that missing row labels receive NaN by default without fill_value.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'Places NA/NaN in locations having no value in the previous index' and examples show NaN for missing labels.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_multiindex_level_reindex_preserves_matching_rows",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks level parameter preservation for MultiIndex, distinct from other tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'level: Broadcast across a level, matching Index values on the passed MultiIndex level.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_tolerance_outside_limit_gives_nan",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks tolerance parameter when outside limit, distinct from within limit test.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies NaN when tolerance condition is not met through the description of tolerance.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_tolerance_within_limit_matches",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks tolerance parameter when within limit, distinct from outside limit test.",
+      "is_valid": true,
+      "valid_reason": "Documentation describes tolerance as 'Maximum distance between original and new labels for inexact matches' with condition for matching.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_fill_value_applies_to_new_columns",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks fill_value for new column labels, distinct from test_fill_value_used_for_missing_row_labels.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'fill_value: Value to use for missing values' which applies to both rows and columns as shown in examples.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_labels_axis_0_equals_index_kwarg",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks equivalence between axis=0 and index= parameter, distinct from axis='columns' test.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies this equivalence through the description of axis parameter and calling conventions.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_result_shape_matches_new_index_and_columns",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "No other test explicitly verifies that output shape matches (len(new_index), len(new_cols)).",
+      "is_valid": true,
+      "valid_reason": "Documentation implies shape change through reindexing examples that alter index and columns.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_ffill_propagates_last_valid_observation",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks ffill behavior, distinct from other method tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'pad / ffill: Propagate last valid observation forward to next valid.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_limit_caps_consecutive_fills",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks limit parameter behavior, not covered by other tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'limit: Maximum number of consecutive elements to forward or backward fill.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_removed_column_absent_from_result",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "No other test specifically verifies that columns not in the new column list are dropped.",
+      "is_valid": true,
+      "valid_reason": "Documentation implies dropping through examples where reindexing columns omits original columns.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_method_raises_on_non_monotonic_index",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test specifically checks that method raises error on non-monotonic index, a distinct condition.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'Please note: this is only applicable to DataFrames/Series with a monotonically increasing/decreasing index.'",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_labels_axis_columns_equals_columns_kwarg",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": true,
+      "unique_reason": "This test checks equivalence between axis='columns' and columns= parameter, which is not covered by other tests.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'labels + axis='columns' equivalent to columns=' in the calling conventions section.",
+      "overall": "unique_and_valid"
+    },
+    {
+      "test_name": "test_reindex_same_index_reproduces_values",
+      "pre_condition": "",
+      "post_condition": "",
+      "is_unique": false,
+      "unique_reason": "Semantically duplicates test_existing_labels_preserve_values as both test preservation when reindexing with existing labels.",
+      "is_valid": true,
+      "valid_reason": "Documentation states 'A new object is produced unless the new index is equivalent to the current one' implying values are reproduced.",
+      "overall": "not_unique"
+    }
+  ],
+  "summary": {
+    "total_tests": 24,
+    "unique_and_valid_count": 23,
+    "not_unique_count": 1,
+    "not_valid_count": 0,
+    "unique_and_valid_rate": 0.9583333333333334
+  }
+}

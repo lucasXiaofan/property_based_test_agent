@@ -20,11 +20,11 @@ import argparse
 import ast
 import json
 import os
-import urllib.error
-import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+
 from dotenv import load_dotenv
+from openai import OpenAI
 
 load_dotenv()
 
@@ -37,7 +37,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--model", default="deepseek-chat")
     p.add_argument("--api-key-env", default="DEEPSEEK_API_KEY")
     p.add_argument("--base-url", default="https://api.deepseek.com")
-    p.add_argument("--max-tokens", type=int, default=20000)
+    p.add_argument("--max-tokens", type=int, default=8000)
     return p.parse_args()
 
 
@@ -63,41 +63,19 @@ def deepseek_json_call(
     user_prompt: str,
     max_tokens: int,
 ) -> dict:
-    url = f"{base_url.rstrip('/')}/chat/completions"
-    payload = {
-        "model": model,
-        "messages": [
+    client = OpenAI(api_key=api_key, base_url=base_url)
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
-        "response_format": {"type": "json_object"},
-        "temperature": 0,
-        "max_tokens": max_tokens,
-    }
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
+        response_format={"type": "json_object"},
+        temperature=0,
+        max_tokens=max_tokens,
     )
-    try:
-        with urllib.request.urlopen(req, timeout=300) as resp:
-            raw = resp.read().decode("utf-8")
-    except urllib.error.HTTPError as e:
-        detail = e.read().decode("utf-8", errors="ignore")
-        raise RuntimeError(f"HTTP {e.code}: {detail}") from e
-
-    data = json.loads(raw)
-    content = (
-        data.get("choices", [{}])[0]
-        .get("message", {})
-        .get("content", "")
-        .strip()
-    )
-    if not content:
+    content = response.choices[0].message.content or ""
+    if not content.strip():
         raise RuntimeError("DeepSeek returned empty content")
     return json.loads(content)
 
@@ -162,10 +140,14 @@ SYSTEM_PROMPT = (
     "is NOT semantically duplicated by another test in the same file. "
     "Two tests are duplicates if they exercise the same setup and assert the same behaviour, "
     "even if they use different variable names or data.\n"
-    "  2. VALID – Both the pre_condition and the post_condition are explicitly mentioned or "
-    "clearly implied by the official documentation. The test must be grounded in documented "
-    "behaviour, not testing undocumented or speculative behaviour.\n\n"
-    "Return JSON only. Do not add markdown fences."
+   "  2. VALID – All of the following must hold:\n"
+"     a. DOC-GROUNDED: Both pre_condition and post_condition are explicitly stated "
+"        or clearly implied by the official documentation. "
+"        Internal implementation details not mentioned in the docs do not qualify.\n"
+"     b. FALSIFIABLE: The post_condition would fail for at least one plausible "
+"        incorrect implementation of the function. "
+"        Assertions that are always true regardless of implementation are invalid "
+"        (e.g. 'result is not None' when None is never a valid return, "
 )
 
 
@@ -174,8 +156,6 @@ def build_user_prompt(test_names: list[str], test_code: str, doc_text: str) -> s
         "tests": [
             {
                 "test_name": "test_example",
-                "pre_condition": "A one-sentence description of the setup / input state",
-                "post_condition": "A one-sentence description of what is asserted",
                 "is_unique": True,
                 "unique_reason": "No other test covers this specific combination",
                 "is_valid": True,

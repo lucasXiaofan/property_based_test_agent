@@ -1,0 +1,257 @@
+{
+  "metadata": {
+    "function": "pd.DataFrame.reindex",
+    "library": "pandas",
+    "version": "3.0.0",
+    "signature": "DataFrame.reindex(labels=None, *, index=None, columns=None, axis=None, method=None, copy=<no_default>, level=None, fill_value=nan, limit=None, tolerance=None)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0.0/reference/api/pandas.DataFrame.reindex.html"
+    ]
+  },
+
+  "logical_errors": [
+    {
+      "id": "E1",
+      "description": "The parameter table lists `copy` with 'Default: False', but the function signature shows `copy=<no_default>`. Since `copy` is deprecated in pandas 3.0.0 and entirely ignored, listing 'False' as the default is misleading — there is no meaningful default for a no-op parameter.",
+      "severity": "minor",
+      "source": "fetched online documentation — Parameters table vs function signature",
+      "affects_properties": []
+    }
+  ],
+
+  "input_domain": {
+    "self": "pandas DataFrame with any index type and at least one column; for method-based fill tests the index must be monotonically increasing or decreasing",
+    "labels": "array-like or None; new labels for the axis specified by `axis`; use None when providing `index` or `columns` directly instead",
+    "index": "array-like or None; new labels for the row index; None means row index is not reindexed",
+    "columns": "array-like or None; new labels for the columns; None means columns are not reindexed",
+    "axis": "0, 1, 'index', or 'columns'; or None; specifies which axis `labels` targets — ignored when using `index`/`columns` keywords directly",
+    "method": "None, 'backfill', 'bfill', 'pad', 'ffill', or 'nearest'; requires monotonically increasing/decreasing index; None means no fill propagation",
+    "fill_value": "scalar compatible with the DataFrame dtype; default np.nan; replaces NaN only for new labels added by reindexing — does not fill pre-existing NaN in the original DataFrame",
+    "limit": "positive int or None; maximum number of consecutive positions to fill; only meaningful when method is not None",
+    "tolerance": "non-negative scalar or None; maximum distance between original and new label for a match to qualify for fill; only meaningful when method is not None",
+    "constraints": [
+      "`labels` and `axis` are used together; `index`/`columns` are used independently — mixing both calling styles in one call has undefined behavior (see A1)",
+      "`method` requires the calling DataFrame's index to be monotonically increasing or decreasing",
+      "`limit` is only applicable when `method` is not None",
+      "`tolerance` is only applicable when `method` is not None"
+    ],
+    "invalid_inputs": [
+      "method value not in {None, 'backfill', 'bfill', 'pad', 'ffill', 'nearest'} → raises ValueError",
+      "limit <= 0 → raises ValueError"
+    ],
+    "excluded_parameters": [
+      "copy — deprecated in pandas 3.0.0; parameter is silently ignored",
+      "level — behavior with non-MultiIndex DataFrames and interaction with fill parameters is insufficiently documented (see A4)"
+    ]
+  },
+
+  "properties": [
+    {
+      "id": "P1",
+      "type": "explicit",
+      "claim": "new labels not present in the original index receive NaN (or fill_value) in the result",
+      "expression": "all(result.loc[label].isna().all() for label in result.index if label not in original_index)",
+      "when": "method=None, fill_value=np.nan, new labels include entries absent from original index",
+      "strategy": "Build a small DataFrame with a string index ['x','y','z']. Reindex with ['y','z','new1','new2']. Assert that rows for 'new1' and 'new2' contain only NaN.",
+      "source": "fetched online documentation — Description: 'Places NA/NaN in locations having no value in the previous index' and Example 1"
+    },
+    {
+      "id": "P2",
+      "type": "explicit",
+      "claim": "labels present in both the original and new index retain their original values",
+      "expression": "all(result.loc[label].equals(df.loc[label]) for label in result.index if label in original_index)",
+      "when": "method=None, new index has overlap with original index",
+      "strategy": "Build a DataFrame with string index ['x','y','z']. Reindex with ['y','z','new1']. Assert that result rows for 'y' and 'z' are identical to the original rows.",
+      "source": "fetched online documentation — Example 1 (Safari, IE10, Chrome retain original values)"
+    },
+    {
+      "id": "P3",
+      "type": "explicit",
+      "claim": "the result DataFrame's index equals exactly the new labels in the given order",
+      "expression": "list(result.index) == list(new_labels)",
+      "when": "reindexing rows (labels or index argument)",
+      "strategy": "Generate a DataFrame and reindex to a fixed ordered list. Assert result.index matches the list exactly, including order.",
+      "source": "fetched online documentation — Description: 'Conform DataFrame to new index' and Example 1 output"
+    },
+    {
+      "id": "P4",
+      "type": "explicit",
+      "claim": "fill_value replaces NaN for new labels added by reindexing",
+      "expression": "all((result.loc[label] == fill_value).all() for label in result.index if label not in original_index)",
+      "when": "method=None, fill_value is a concrete scalar (not NaN), new labels are absent from original index",
+      "strategy": "Reindex with new labels using fill_value=0 and fill_value='missing'. Assert new-label rows contain exactly that fill value, as shown in Example 2.",
+      "source": "fetched online documentation — Parameters: fill_value and Example 2"
+    },
+    {
+      "id": "P5",
+      "type": "explicit",
+      "claim": "method='ffill'/'pad' propagates the last valid original value forward into new gap positions",
+      "expression": "result.loc[new_label] == df.loc[last_original_label_before_new_label]",
+      "when": "method='ffill' or 'pad', index is monotonically increasing, new label falls between or after existing labels",
+      "strategy": "Build a DataFrame with a monotonic integer index. Reindex to include integers between existing values. With method='ffill', assert each new index position holds the value of the nearest preceding original index label.",
+      "source": "fetched online documentation — Parameters: method options 'pad/ffill: Propagate last valid observation forward'"
+    },
+    {
+      "id": "P6",
+      "type": "explicit",
+      "claim": "method='bfill'/'backfill' fills new gap positions with the next valid original value",
+      "expression": "result.loc[new_label] == df.loc[first_original_label_after_new_label]",
+      "when": "method='bfill' or 'backfill', index is monotonically increasing, new label falls before or between existing labels",
+      "strategy": "Build a DataFrame with a monotonic date index. Reindex to a wider date range. With method='bfill', assert each new pre-existing date position is filled from the next original date, matching Example 4.",
+      "source": "fetched online documentation — Parameters: method options 'backfill/bfill: Use next valid observation to fill gap' and Example 4"
+    },
+    {
+      "id": "P7",
+      "type": "explicit",
+      "claim": "NaN values already present in the original DataFrame are not overwritten by fill methods; only gap positions introduced by reindexing are filled",
+      "expression": "pd.isna(result.loc[orig_label, col]) == pd.isna(df.loc[orig_label, col]) for all orig_label in original_index",
+      "when": "method='ffill' or 'bfill', original DataFrame contains NaN at some existing labels",
+      "strategy": "Build a DataFrame with a monotonic index containing explicit NaN values at known positions. Reindex to a wider range with method='bfill'. Confirm that positions carried over from the original still hold NaN where they originally had NaN. Example 4 (2010-01-03 stays NaN with bfill) demonstrates this.",
+      "source": "fetched online documentation — Notes: 'NaN values present in the original DataFrame will not be filled by value propagation schemes'"
+    },
+    {
+      "id": "P8",
+      "type": "explicit",
+      "claim": "reindexing columns to include new column labels fills those columns entirely with NaN",
+      "expression": "result[new_col].isna().all()",
+      "when": "columns argument includes labels not in original DataFrame columns",
+      "strategy": "Build a DataFrame with columns ['a','b']. Reindex columns to ['a','new_col']. Assert result['new_col'] is all NaN. Also verify 'a' values are preserved.",
+      "source": "fetched online documentation — Example 3"
+    },
+    {
+      "id": "P9",
+      "type": "explicit",
+      "claim": "the result is always a new DataFrame object (never the same object as self)",
+      "expression": "result is not df",
+      "when": "any call to reindex",
+      "strategy": "Call reindex on a DataFrame with any new index. Assert the returned object is not the same Python object using 'is not'. Also confirm modifying the result does not affect the original (copy-on-write semantics).",
+      "source": "fetched online documentation — Description: 'A new object is produced unless the new index is equivalent to the current one and copy=False' and Notes: 'this method always returns a new object using a lazy copy mechanism'"
+    },
+    {
+      "id": "P10",
+      "type": "indirect",
+      "claim": "using labels with axis='columns' or axis=1 produces the same result as using the columns keyword directly",
+      "expression": "df.reindex(labels, axis='columns').equals(df.reindex(columns=labels))",
+      "when": "labels is a list of column labels; axis is 'columns' or 1",
+      "strategy": "Take a DataFrame. Call reindex with (labels=['a','new_col'], axis='columns'). Also call reindex with (columns=['a','new_col']). Assert the two results are equal. Repeat with axis=1. This mirrors Example 3's axis-style syntax.",
+      "source": "fetched online documentation — Example 3: 'Axis-style syntax' showing df.reindex([...], axis='columns') equivalent"
+    },
+    {
+      "id": "P11",
+      "type": "indirect",
+      "claim": "using labels with axis='index' or axis=0 produces the same result as using the index keyword directly",
+      "expression": "df.reindex(labels, axis='index').equals(df.reindex(index=labels))",
+      "when": "labels is a list of row labels; axis is 'index' or 0",
+      "strategy": "Take a DataFrame. Call reindex with (labels=[...], axis='index') and with (index=[...]). Assert the two results are equal. Repeat with axis=0.",
+      "source": "fetched online documentation — Notes: 'Use keyword arguments (index=..., columns=...) or (labels, axis=...) for clarity'"
+    },
+    {
+      "id": "P12",
+      "type": "implicit",
+      "claim": "the number of rows in the result equals the number of labels in the new index",
+      "expression": "len(result) == len(new_index_labels)",
+      "when": "reindexing rows via labels or index argument",
+      "strategy": "Generate random-length label lists and verify len(result) matches len(new_labels) for all combinations of overlap, subset, and superset.",
+      "source": null
+    },
+    {
+      "id": "P13",
+      "type": "implicit",
+      "claim": "the columns of the result are unchanged when only the row index is reindexed",
+      "expression": "list(result.columns) == list(df.columns)",
+      "when": "only index (or labels with axis='index') is provided; columns argument is None",
+      "strategy": "Reindex a DataFrame's rows only. Assert result.columns equals df.columns exactly.",
+      "source": null
+    },
+    {
+      "id": "P14",
+      "type": "implicit",
+      "claim": "reindexing to the identical index as the original returns a DataFrame equal to the original",
+      "expression": "df.reindex(df.index).equals(df)",
+      "when": "new index is identical to original index (same labels in same order)",
+      "strategy": "Call df.reindex(df.index) and assert the result equals df using DataFrame.equals().",
+      "source": null
+    },
+    {
+      "id": "P15",
+      "type": "explicit",
+      "claim": "the return type is always a DataFrame",
+      "expression": "isinstance(result, pd.DataFrame)",
+      "when": "any valid call to reindex",
+      "strategy": "Call reindex with various combinations of arguments and always assert isinstance(result, pd.DataFrame).",
+      "source": "fetched online documentation — Returns: 'DataFrame with changed index'"
+    },
+    {
+      "id": "P16",
+      "type": "explicit",
+      "claim": "limit restricts the maximum number of consecutive positions filled by the fill method",
+      "expression": "consecutive_filled_run_lengths <= limit for all runs in result",
+      "when": "method is not None, limit is a positive integer",
+      "strategy": "Build a DataFrame with a monotonic index. Reindex to add multiple consecutive new labels in a row. With method='ffill' and limit=1, assert only the first gap after each original value is filled; the rest are NaN. Verify limit=2 fills up to two consecutive gaps.",
+      "source": "fetched online documentation — Parameters: limit 'Maximum number of consecutive elements to forward or backward fill'"
+    },
+    {
+      "id": "P17",
+      "type": "explicit",
+      "claim": "tolerance excludes fill matches where the distance between original and new label exceeds tolerance",
+      "expression": "pd.isna(result.loc[new_label]) when abs(new_label - nearest_original_label) > tolerance",
+      "when": "method is not None, tolerance is a non-negative scalar, new label is farther from any original label than tolerance",
+      "strategy": "Build a numeric-index DataFrame with values at [0, 10, 20]. Reindex to [0, 5, 10, 15, 20] with method='ffill' and tolerance=4. Assert position 5 is filled from 0 (distance 5 > 4, so it should be NaN) and position 15 is not filled (distance 5 > 4). Use tolerance=6 and assert both 5 and 15 get filled.",
+      "source": "fetched online documentation — Parameters: tolerance 'Maximum distance between original and new labels for inexact matches'"
+    },
+    {
+      "id": "P18",
+      "type": "implicit",
+      "claim": "reindexing to an empty index returns an empty DataFrame preserving the original columns",
+      "expression": "len(result) == 0 and list(result.columns) == list(df.columns)",
+      "when": "new index is an empty list or empty Index",
+      "strategy": "Call df.reindex([]) and assert the result has zero rows and the same column names as df.",
+      "source": null
+    },
+    {
+      "id": "P19",
+      "type": "explicit",
+      "claim": "passing an invalid method string raises an error",
+      "expression": "pytest.raises((ValueError, KeyError)): df.reindex(new_labels, method=bad_method)",
+      "when": "method is a non-None string not in {'backfill','bfill','pad','ffill','nearest'}",
+      "strategy": "Generate strings not in the valid set and integers. Each call with an invalid method should raise. Valid methods should not raise.",
+      "source": "fetched online documentation — Parameters: method lists valid values implying others are invalid"
+    },
+    {
+      "id": "P20",
+      "type": "indirect",
+      "claim": "method='nearest' fills each new label with the value from the closest original label",
+      "expression": "result.loc[new_label] == df.loc[nearest_original_label]",
+      "when": "method='nearest', index is monotonically increasing, new label is equidistant or closer to one original label",
+      "strategy": "Build a numeric-index DataFrame at positions [0, 10]. Reindex to [0, 3, 7, 10]. With method='nearest', assert position 3 takes value from 0 (distance 3 < 7) and position 7 takes value from 10 (distance 3 < 7).",
+      "source": "fetched online documentation — Parameters: method 'nearest: Use nearest valid observations to fill gap'"
+    }
+  ],
+
+  "unresolved_ambiguities": [
+    {
+      "id": "A1",
+      "description": "What happens when both `labels` (with `axis`) and `index`/`columns` keyword arguments are provided in the same call? Precedence or error behavior is not documented.",
+      "source": "fetched online documentation — Parameters section describes each argument independently with no conflict-resolution specification",
+      "maintainer_note": "No documentation on interaction between `labels+axis` style and `index`/`columns` style in a single call."
+    },
+    {
+      "id": "A2",
+      "description": "`tolerance` as list-like is described as 'must match index size' but it is not specified whether this refers to the size of the new index or the original index.",
+      "source": "fetched online documentation — Parameters: tolerance",
+      "maintainer_note": "List-form tolerance size requirement is underspecified. Only scalar tolerance is included in test properties."
+    },
+    {
+      "id": "A3",
+      "description": "The `method` parameter is documented as 'only applicable to DataFrames with a monotonically increasing/decreasing index', but no behavior is defined when the index is non-monotonic — it is unclear whether a ValueError, a warning, or silent no-fill occurs.",
+      "source": "fetched online documentation — Parameters: method and Notes section",
+      "maintainer_note": "Non-monotonic index + non-None method behavior (error vs silent) is undocumented. Properties using method are tested only on monotonic indexes."
+    },
+    {
+      "id": "A4",
+      "description": "The `level` parameter documentation is limited to one sentence ('Broadcast across a level, matching Index values on the passed MultiIndex level'). Behavior with non-MultiIndex DataFrames, with fill methods, and with `labels+axis` vs `index`/`columns` style is entirely undocumented.",
+      "source": "fetched online documentation — Parameters: level",
+      "maintainer_note": "`level` is excluded from test generation due to insufficient documentation for any combination."
+    }
+  ]
+}

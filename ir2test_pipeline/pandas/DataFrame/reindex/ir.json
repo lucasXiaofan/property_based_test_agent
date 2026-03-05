@@ -7,128 +7,397 @@
       "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reindex.html"
     ]
   },
-
   "preconditions": {
-    "data_state": {
-      "required": true,
-      "rationale": "Index monotonicity is required when method != None. Existing NaN values in cells are never filled by propagation methods — only newly introduced gaps are filled. The shape and dtype of the DataFrame determine what fill_value is compatible.",
-      "self": {
-        "type": "pandas.DataFrame",
-        "partitions": {
-          "monotonic_index": "Row index is strictly monotonic increasing or decreasing; e.g., DatetimeIndex(['2010-01-01','2010-01-02','2010-01-03'])",
-          "non_monotonic_index": "Row index is not monotonic; e.g., Index(['b','a','c'])",
-          "multiindex_rows": "DataFrame has a MultiIndex on rows; e.g., pd.MultiIndex.from_tuples([('a',1),('a',2),('b',1)])",
-          "contains_existing_nan": "At least one cell already holds NaN before reindexing; e.g., df with df.iloc[0,0]=np.nan"
+    "self": {
+      "type": "pandas.DataFrame",
+      "partitions": [
+        {
+          "id": "df_int_monotonic",
+          "description": "Integer-indexed, sorted, no NaNs",
+          "type": "pandas.DataFrame",
+          "constraints": {
+            "index_type": "int",
+            "index_sorted": true,
+            "index_unique": true,
+            "rows": {
+              "min": 2,
+              "max": 8
+            },
+            "cols": {
+              "min": 1,
+              "max": 4
+            },
+            "col_dtype": "float",
+            "has_nan": false
+          }
+        },
+        {
+          "id": "df_str_unsorted",
+          "description": "String-indexed, unsorted, no NaNs",
+          "type": "pandas.DataFrame",
+          "constraints": {
+            "index_type": "str",
+            "index_sorted": false,
+            "index_unique": true,
+            "rows": {
+              "min": 2,
+              "max": 6
+            },
+            "cols": {
+              "min": 1,
+              "max": 3
+            },
+            "col_dtype": "float",
+            "has_nan": false
+          }
+        },
+        {
+          "id": "df_datetime_monotonic",
+          "description": "DatetimeIndex, sorted, float columns",
+          "type": "pandas.DataFrame",
+          "constraints": {
+            "index_type": "datetime",
+            "index_sorted": true,
+            "index_unique": true,
+            "rows": {
+              "min": 3,
+              "max": 10
+            },
+            "cols": {
+              "min": 1,
+              "max": 3
+            },
+            "col_dtype": "float",
+            "has_nan": false
+          }
+        },
+        {
+          "id": "df_with_nan",
+          "description": "Integer-indexed, sorted, contains NaN values in data",
+          "type": "pandas.DataFrame",
+          "constraints": {
+            "index_type": "int",
+            "index_sorted": true,
+            "index_unique": true,
+            "rows": {
+              "min": 3,
+              "max": 8
+            },
+            "cols": {
+              "min": 2,
+              "max": 4
+            },
+            "col_dtype": "float",
+            "has_nan": true
+          }
         }
-      }
+      ]
     },
-    "parameters": {
+    "params": {
       "labels": {
-        "type": "array-like, optional",
-        "partitions": {
-          "labels_with_overlap": "New labels partially overlap existing index; missing ones become gaps; e.g., ['Safari','Iceweasel','Chrome']",
-          "labels_no_overlap": "None of the new labels exist in the current index; all rows become NaN; e.g., ['X','Y','Z']",
-          "labels_identical": "New labels are identical to current index in the same order; no structural change; e.g., df.index.tolist()",
-          "labels_subset": "New labels are a strict subset of current index; result has fewer rows; e.g., ['Chrome','Safari']"
-        },
-        "invalid_cases": [
-          { "desc": "Passing both 'labels' and 'index'/'columns' simultaneously raises TypeError; e.g., df.reindex(['a'], index=['b'])" }
-        ]
-      },
-      "index": {
-        "type": "array-like, optional",
-        "partitions": {
-          "index_partial_overlap": "New row labels partially overlap current; e.g., ['Safari','NewBrowser','Chrome']",
-          "index_no_overlap": "New row labels have no match in current index; e.g., ['A','B','C']"
-        },
-        "invalid_cases": [
-          { "desc": "Providing both 'labels' and 'index' raises TypeError; e.g., df.reindex(['a'], index=['b'])" }
+        "partitions": [
+          {
+            "id": "labels_none",
+            "description": "Not provided — axis unchanged",
+            "type": "None",
+            "constraints": {},
+            "constraint_tags": []
+          },
+          {
+            "id": "labels_identical",
+            "description": "Exactly the same as original index, same order",
+            "type": "List[~index_type]",
+            "constraints": {
+              "relative": "identical"
+            },
+            "constraint_tags": []
+          },
+          {
+            "id": "labels_subset",
+            "description": "Strict subset of original index labels",
+            "type": "List[~index_type]",
+            "constraints": {
+              "relative": "subset",
+              "length": {
+                "min": 1
+              }
+            },
+            "constraint_tags": []
+          },
+          {
+            "id": "labels_with_overlap",
+            "description": "Mix of existing and new labels",
+            "type": "List[~index_type]",
+            "constraints": {
+              "relative": "partial_overlap"
+            },
+            "constraint_tags": []
+          },
+          {
+            "id": "labels_no_overlap",
+            "description": "Entirely new labels, none in original index",
+            "type": "List[~index_type]",
+            "constraints": {
+              "relative": "disjoint",
+              "length": {
+                "min": 1,
+                "max": 4
+              }
+            },
+            "constraint_tags": []
+          },
+          {
+            "id": "labels_empty",
+            "description": "Empty list — result should have zero rows",
+            "type": "List[~index_type]",
+            "constraints": {
+              "length": {
+                "min": 0,
+                "max": 0
+              }
+            },
+            "constraint_tags": []
+          }
         ]
       },
       "columns": {
-        "type": "array-like, optional",
-        "partitions": {
-          "columns_partial_overlap": "New column labels partially overlap current; new columns become NaN; e.g., ['http_status','user_agent']",
-          "columns_no_overlap": "No column label matches current; all columns become NaN; e.g., ['X','Y']"
-        },
-        "invalid_cases": [
-          { "desc": "Providing both 'labels' and 'columns' raises TypeError; e.g., df.reindex(['a'], columns=['b'])" }
-        ]
-      },
-      "axis": {
-        "type": "int or str, optional",
-        "partitions": {
-          "axis_index": "Reindex along rows; axis=0 or axis='index'",
-          "axis_columns": "Reindex along columns; axis=1 or axis='columns'"
-        },
-        "invalid_cases": [
-          { "desc": "Out-of-range axis raises ValueError; e.g., df.reindex(['a'], axis=2)" }
+        "partitions": [
+          {
+            "id": "columns_none",
+            "description": "Not provided — columns unchanged",
+            "type": "None",
+            "constraints": {},
+            "constraint_tags": []
+          },
+          {
+            "id": "columns_identical",
+            "description": "Same as original columns",
+            "type": "List[str]",
+            "constraints": {
+              "relative": "identical"
+            },
+            "constraint_tags": []
+          },
+          {
+            "id": "columns_subset",
+            "description": "Strict subset of original columns",
+            "type": "List[str]",
+            "constraints": {
+              "relative": "subset",
+              "length": {
+                "min": 1
+              }
+            },
+            "constraint_tags": []
+          },
+          {
+            "id": "columns_partial_overlap",
+            "description": "Mix of existing and new column names",
+            "type": "List[str]",
+            "constraints": {
+              "relative": "partial_overlap"
+            },
+            "constraint_tags": []
+          },
+          {
+            "id": "columns_no_overlap",
+            "description": "All new column names, none in original",
+            "type": "List[str]",
+            "constraints": {
+              "relative": "disjoint",
+              "length": {
+                "min": 1,
+                "max": 3
+              }
+            },
+            "constraint_tags": []
+          }
         ]
       },
       "method": {
-        "type": "{None, 'backfill'/'bfill', 'pad'/'ffill', 'nearest'}, optional",
-        "partitions": {
-          "method_none": "No propagation; new index labels without a match get NaN; e.g., method=None",
-          "method_ffill": "Forward-fill: propagate last valid observation forward to cover gaps; e.g., method='ffill' or method='pad'",
-          "method_bfill": "Backward-fill: use next valid observation to fill gap; e.g., method='bfill' or method='backfill'",
-          "method_nearest": "Fill with the nearest observation; ties broken by forward preference; e.g., method='nearest'"
-        },
-        "invalid_cases": [
-          { "desc": "method != None on a non-monotonic index raises ValueError; e.g., df with Index(['b','a','c']) and method='ffill'" },
-          { "desc": "Unrecognised method string raises ValueError; e.g., method='interpolate'" }
+        "partitions": [
+          {
+            "id": "method_none",
+            "description": "No fill method — NaN for missing labels",
+            "type": "None",
+            "constraints": {},
+            "constraint_tags": []
+          },
+          {
+            "id": "method_ffill",
+            "description": "Forward fill from last valid observation",
+            "type": "str",
+            "constraints": {
+              "literal": "ffill"
+            },
+            "constraint_tags": [
+              "requires_monotonic_index",
+              "excludes_fill_value"
+            ]
+          },
+          {
+            "id": "method_bfill",
+            "description": "Backward fill from next valid observation",
+            "type": "str",
+            "constraints": {
+              "literal": "bfill"
+            },
+            "constraint_tags": [
+              "requires_monotonic_index",
+              "excludes_fill_value"
+            ]
+          },
+          {
+            "id": "method_nearest",
+            "description": "Fill from nearest valid observation",
+            "type": "str",
+            "constraints": {
+              "literal": "nearest"
+            },
+            "constraint_tags": [
+              "requires_monotonic_index",
+              "excludes_fill_value"
+            ]
+          }
         ]
       },
       "fill_value": {
-        "type": "scalar, default np.nan",
-        "partitions": {
-          "fill_default_nan": "Default; missing positions filled with NaN; fill_value=np.nan",
-          "fill_numeric": "Integer or float replaces NaN for missing positions; e.g., fill_value=0",
-          "fill_string": "String replaces NaN for missing positions; e.g., fill_value='missing'"
-        },
-        "invalid_cases": []
+        "partitions": [
+          {
+            "id": "fill_value_default",
+            "description": "Not provided — defaults to NaN",
+            "type": "None",
+            "constraints": {},
+            "constraint_tags": []
+          },
+          {
+            "id": "fill_numeric",
+            "description": "Numeric fill value (e.g. 0 or -1)",
+            "type": "int",
+            "constraints": {
+              "min": -10,
+              "max": 10
+            },
+            "constraint_tags": [
+              "excludes_method"
+            ]
+          },
+          {
+            "id": "fill_string",
+            "description": "String fill value (e.g. 'missing')",
+            "type": "str",
+            "constraints": {
+              "literal": "missing"
+            },
+            "constraint_tags": [
+              "excludes_method"
+            ]
+          }
+        ]
       },
       "limit": {
-        "type": "int, default None",
-        "partitions": {
-          "limit_none": "No cap on consecutive fills; limit=None",
-          "limit_positive": "Fill at most N consecutive gaps; positions beyond N remain NaN; e.g., limit=1"
-        },
-        "invalid_cases": [
-          { "desc": "Non-positive integer limit raises ValueError; e.g., limit=-1" }
+        "partitions": [
+          {
+            "id": "limit_none",
+            "description": "Not provided — fill as many as needed",
+            "type": "None",
+            "constraints": {},
+            "constraint_tags": []
+          },
+          {
+            "id": "limit_one",
+            "description": "Fill at most 1 consecutive gap",
+            "type": "int",
+            "constraints": {
+              "min": 1,
+              "max": 1
+            },
+            "constraint_tags": [
+              "requires_method"
+            ]
+          },
+          {
+            "id": "limit_large",
+            "description": "Fill up to a large number of consecutive gaps",
+            "type": "int",
+            "constraints": {
+              "min": 5,
+              "max": 20
+            },
+            "constraint_tags": [
+              "requires_method"
+            ]
+          }
         ]
       },
       "tolerance": {
-        "type": "scalar or list-like, optional",
-        "partitions": {
-          "tolerance_none": "No distance constraint; all in-range fills proceed; tolerance=None",
-          "tolerance_scalar": "Single scalar applied to every new label; match only if abs(new - old) <= tolerance; e.g., tolerance=pd.Timedelta('1 day')",
-          "tolerance_list": "Per-label list; length must equal len(new_index); e.g., tolerance=[pd.Timedelta('1D'), pd.Timedelta('2D'), pd.Timedelta('1D')]"
-        },
-        "invalid_cases": [
-          { "desc": "List tolerance whose length differs from new index length raises ValueError; e.g., df.reindex(new_idx_len3, tolerance=[1, 2])" },
-          { "desc": "tolerance provided without method raises ValueError; e.g., df.reindex(new_idx, tolerance=1) with method=None" }
+        "partitions": [
+          {
+            "id": "tolerance_none",
+            "description": "Not provided — exact label matching only",
+            "type": "None",
+            "constraints": {},
+            "constraint_tags": []
+          },
+          {
+            "id": "tolerance_small",
+            "description": "Small tolerance for inexact numeric matching",
+            "type": "float",
+            "constraints": {
+              "min": 0.1,
+              "max": 1.0
+            },
+            "constraint_tags": [
+              "requires_numeric_or_datetime_index"
+            ]
+          }
         ]
-      },
-      "level": {
-        "type": "int or name, optional",
-        "partitions": {
-          "level_none": "Standard reindex with no MultiIndex level matching; level=None",
-          "level_specified": "Match new index against a single level of a MultiIndex; broadcast result; e.g., level=0 on a (level0, level1) MultiIndex"
-        },
-        "invalid_cases": [
-          { "desc": "level specified on a flat (non-MultiIndex) DataFrame raises TypeError; e.g., df_flat.reindex(new_index, level=0)" }
-        ]
-      },
-      "copy": {
-        "type": "bool, deprecated since 3.0.0",
-        "partitions": {
-          "copy_provided": "Parameter is accepted but silently ignored in pandas >= 3.0.0; triggers FutureWarning or DeprecationWarning; e.g., copy=True"
-        },
-        "invalid_cases": []
       }
-    }
+    },
+    "compatibility_rules": [
+      {
+        "rule": "method != null requires index to be monotonic",
+        "if_tags": [
+          "requires_monotonic_index"
+        ],
+        "then_require_self": [
+          "df_int_monotonic",
+          "df_datetime_monotonic"
+        ]
+      },
+      {
+        "rule": "method and fill_value are mutually exclusive",
+        "if_tags": [
+          "excludes_fill_value"
+        ],
+        "then_exclude_params": [
+          "fill_numeric",
+          "fill_string"
+        ]
+      },
+      {
+        "rule": "limit only valid when method is set",
+        "if_tags": [
+          "requires_method"
+        ],
+        "then_require_params": [
+          "method_ffill",
+          "method_bfill",
+          "method_nearest"
+        ]
+      },
+      {
+        "rule": "tolerance only valid for numeric or datetime index",
+        "if_tags": [
+          "requires_numeric_or_datetime_index"
+        ],
+        "then_require_self": [
+          "df_int_monotonic",
+          "df_datetime_monotonic"
+        ]
+      }
+    ]
   },
-
   "postconditions": [
     {
       "id": "PC-01",
@@ -139,7 +408,7 @@
     },
     {
       "id": "PC-02",
-      "claim": "when labels (or index) are provided without method, new labels not in the original index produce rows where all cells are NaN",
+      "claim": "when labels are provided without method, new labels not in the original index produce rows where all cells are NaN",
       "trigger": {
         "labels": "labels_with_overlap | labels_no_overlap",
         "method": "method_none"
@@ -158,7 +427,7 @@
     },
     {
       "id": "PC-04",
-      "claim": "when labels (or columns) are provided without method, new column labels not in original columns produce NaN-filled columns",
+      "claim": "new column labels not in original columns produce NaN-filled columns when method=None",
       "trigger": {
         "columns": "columns_partial_overlap | columns_no_overlap",
         "method": "method_none"
@@ -168,16 +437,16 @@
     },
     {
       "id": "PC-05",
-      "claim": "the result index equals the new labels passed in, preserving order",
+      "claim": "result index equals the new labels passed in, preserving order",
       "trigger": {
-        "labels": "labels_with_overlap | labels_no_overlap | labels_identical | labels_subset"
+        "labels": "labels_with_overlap | labels_no_overlap | labels_identical | labels_subset | labels_empty"
       },
       "expected_behavior": "list(result.index) == list(new_labels)",
       "confidence": "explicit"
     },
     {
       "id": "PC-06",
-      "claim": "fill_value replaces NaN for new labels that have no match when method=None",
+      "claim": "fill_value replaces NaN for new labels not in original index when method=None",
       "trigger": {
         "labels": "labels_with_overlap | labels_no_overlap",
         "method": "method_none",
@@ -198,133 +467,68 @@
     },
     {
       "id": "PC-08",
-      "claim": "method='ffill' on a monotonic index fills each gap with the last observed value before it",
+      "claim": "result has zero rows when labels is an empty list",
       "trigger": {
-        "self": "monotonic_index",
-        "method": "method_ffill"
+        "labels": "labels_empty"
       },
-      "expected_behavior": "for each new label without direct match: result.loc[lbl] equals the value at the largest original label <= lbl",
+      "expected_behavior": "result.shape[0] == 0",
       "confidence": "explicit"
     },
     {
       "id": "PC-09",
-      "claim": "method='bfill' on a monotonic index fills each gap with the first observed value after it",
+      "claim": "result column count equals len(columns) when columns is provided",
       "trigger": {
-        "self": "monotonic_index",
-        "method": "method_bfill"
+        "columns": "columns_subset | columns_partial_overlap | columns_no_overlap | columns_identical"
       },
-      "expected_behavior": "for each new label without direct match: result.loc[lbl] equals the value at the smallest original label >= lbl",
+      "expected_behavior": "result.shape[1] == len(new_columns)",
       "confidence": "explicit"
     },
     {
       "id": "PC-10",
-      "claim": "method='nearest' on a monotonic index fills each gap with the value from the closest original label",
+      "claim": "ffill/bfill does not introduce NaN beyond the first/last valid label when limit is not set",
       "trigger": {
-        "self": "monotonic_index",
-        "method": "method_nearest"
+        "labels": "labels_with_overlap | labels_no_overlap",
+        "method": "method_ffill | method_bfill",
+        "limit": "limit_none",
+        "self": "df_int_monotonic | df_datetime_monotonic"
       },
-      "expected_behavior": "for each unmatched new label: result.loc[lbl] equals original value at argmin(abs(original_index - lbl))",
-      "confidence": "explicit"
+      "expected_behavior": "result.isna().sum().sum() <= original_df.isna().sum().sum()",
+      "confidence": "implicit"
     },
     {
       "id": "PC-11",
-      "claim": "method != None with a non-monotonic index raises ValueError",
+      "claim": "when limit=1, at most 1 consecutive gap is filled per column",
       "trigger": {
-        "self": "non_monotonic_index",
-        "method": "method_ffill | method_bfill | method_nearest"
+        "method": "method_ffill | method_bfill",
+        "limit": "limit_one"
       },
-      "expected_behavior": "raises ValueError",
+      "expected_behavior": "no run of filled values in any column exceeds length 1",
       "confidence": "explicit"
     },
     {
       "id": "PC-12",
-      "claim": "existing NaN values in the DataFrame are NOT overwritten by propagation methods",
-      "trigger": {
-        "self": "contains_existing_nan",
-        "method": "method_ffill | method_bfill | method_nearest"
-      },
-      "expected_behavior": "cells that were NaN before reindex remain NaN in result regardless of method",
-      "confidence": "explicit"
-    },
-    {
-      "id": "PC-13",
-      "claim": "limit=N with a fill method caps consecutive fills at N; positions beyond the cap remain NaN",
-      "trigger": {
-        "self": "monotonic_index",
-        "method": "method_ffill | method_bfill",
-        "limit": "limit_positive"
-      },
-      "expected_behavior": "for a run of K consecutive gaps where K > N: only the first N (ffill) or last N (bfill) are filled; the rest are NaN",
-      "confidence": "explicit"
-    },
-    {
-      "id": "PC-14",
-      "claim": "scalar tolerance restricts fills: a gap is filled only when abs(new_label - source_label) <= tolerance",
-      "trigger": {
-        "self": "monotonic_index",
-        "method": "method_ffill | method_bfill | method_nearest",
-        "tolerance": "tolerance_scalar"
-      },
-      "expected_behavior": "for each new label l: if min distance to original index > tolerance then result.loc[l].isna().all() == True",
-      "confidence": "explicit"
-    },
-    {
-      "id": "PC-15",
-      "claim": "list tolerance applies per-label distance constraints; its length must equal the new index length",
-      "trigger": {
-        "method": "method_ffill | method_bfill | method_nearest",
-        "tolerance": "tolerance_list"
-      },
-      "expected_behavior": "len(tolerance) != len(new_index) raises ValueError; otherwise each position i uses tolerance[i] as its distance cap",
-      "confidence": "explicit"
-    },
-    {
-      "id": "PC-16",
-      "claim": "using labels + axis='index' is equivalent to passing index=labels directly",
-      "trigger": {
-        "labels": "labels_with_overlap | labels_no_overlap",
-        "axis": "axis_index"
-      },
-      "expected_behavior": "df.reindex(labels, axis='index').equals(df.reindex(index=labels)) == True",
-      "confidence": "explicit"
-    },
-    {
-      "id": "PC-17",
-      "claim": "using labels + axis='columns' is equivalent to passing columns=labels directly",
-      "trigger": {
-        "labels": "labels_with_overlap | labels_no_overlap",
-        "axis": "axis_columns"
-      },
-      "expected_behavior": "df.reindex(labels, axis='columns').equals(df.reindex(columns=labels)) == True",
-      "confidence": "explicit"
-    },
-    {
-      "id": "PC-18",
-      "claim": "when labels is identical to the current index, the result is equal to the original DataFrame",
+      "claim": "reindex with labels_identical and method_none returns a DataFrame equal to the original",
       "trigger": {
         "labels": "labels_identical",
         "method": "method_none"
       },
       "expected_behavior": "result.equals(original_df) == True",
-      "confidence": "implicit"
-    },
-    {
-      "id": "PC-19",
-      "claim": "level= on a MultiIndex DataFrame reindexes by matching one level against the new labels, broadcasting across other levels",
-      "trigger": {
-        "self": "multiindex_rows",
-        "level": "level_specified"
-      },
-      "expected_behavior": "result.index retains MultiIndex structure; rows whose target level value appears in new_labels are kept; unmatched level values become NaN rows",
       "confidence": "explicit"
     },
     {
-      "id": "PC-20",
-      "claim": "copy parameter (deprecated since 3.0.0) is silently ignored; passing it emits a deprecation warning but does not raise",
+      "id": "PC-13",
+      "claim": "original DataFrame is never mutated by reindex",
+      "trigger": {},
+      "expected_behavior": "original_df.equals(snapshot_before_call) == True",
+      "confidence": "explicit"
+    },
+    {
+      "id": "PC-14",
+      "claim": "existing column values are preserved for columns that appear in both old and new column list",
       "trigger": {
-        "copy": "copy_provided"
+        "columns": "columns_subset | columns_partial_overlap | columns_identical"
       },
-      "expected_behavior": "no exception is raised; result is the same as without copy argument; a DeprecationWarning or FutureWarning is issued",
+      "expected_behavior": "result[common_columns].equals(original_df[common_columns]) == True",
       "confidence": "explicit"
     }
   ]

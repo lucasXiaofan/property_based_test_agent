@@ -1,0 +1,90 @@
+{
+    "metadata": {
+        "library": "pandas",
+        "version": "3.0.0",
+        "function": "pandas.DataFrame.reindex",
+        "signature": "DataFrame.reindex(labels=None, *, index=None, columns=None, axis=None, method=None, copy=None, level=None, fill_value=np.nan, limit=None, tolerance=None)",
+        "reference_urls": [
+            "https://pandas.pydata.org/pandas-docs/version/3.0.0/reference/api/pandas.DataFrame.reindex.html"
+        ]
+    },
+    "pre_condition": {
+        "self": [
+            {
+                "id": "basic_dataframe",
+                "description": "A basic pandas DataFrame",
+                "constraints": "st.dataframes(index=st.indexes(elements=st.integers()), columns=st.indexes(elements=st.text()))"
+            },
+            {
+                "id": "monotonic_index_dataframe",
+                "description": "DataFrame with monotonically increasing dates",
+                "constraints": "st.dataframes(index=st.indexes(elements=st.dates(), unique=True).map(lambda idx: idx.sort_values()))"
+            }
+        ],
+        "index": [
+            {
+                "id": "new_row_index",
+                "description": "New labels for the row index",
+                "constraints": "st.lists(st.integers(), min_size=1, max_size=10).map(list)"
+            }
+        ],
+        "columns": [
+            {
+                "id": "new_col_index",
+                "description": "New labels for the columns",
+                "constraints": "st.lists(st.text(), min_size=1, max_size=5).map(list)"
+            }
+        ],
+        "axis": [
+            {
+                "id": "axis_columns",
+                "description": "Target the column axis",
+                "constraints": "st.just('columns')"
+            }
+        ],
+        "fill_value": [
+            {
+                "id": "scalar_fill_value",
+                "description": "A specific value to fill missing entries",
+                "constraints": "st.sampled_from([0, 'missing'])"
+            }
+        ],
+        "method": [
+            {
+                "id": "fill_method_bfill",
+                "description": "Use next valid observation to fill gap",
+                "constraints": "st.just('bfill')"
+            }
+        ]
+    },
+    "post_condition": [
+        {
+            "id": "reindex_rows_default",
+            "input": {
+                "self": "basic_dataframe",
+                "index": "new_row_index"
+            },
+            "expected_behavior": "list(result.index) == list(index)",
+            "confidence": "explicit"
+        },
+        {
+            "id": "reindex_columns_default",
+            "input": {
+                "self": "basic_dataframe",
+                "columns": "new_col_index"
+            },
+            "expected_behavior": "list(result.columns) == list(columns)",
+            "confidence": "explicit"
+        },
+        {
+            "id": "reindex_with_fill_value",
+            "input": {
+                "self": "basic_dataframe",
+                "index": "new_row_index",
+                "fill_value": "scalar_fill_value"
+            },
+            "expected_behavior": "all(result.loc[idx].notna().all() for idx in index if idx not in self.index) if fill_value != 'missing' else True",
+            "confidence": "implicit"
+        }
+    ]
+}
