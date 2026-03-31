@@ -1,0 +1,242 @@
+{
+  "cases": [
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach while triaging the failing example.",
+      "counted_in_valid_set": true,
+      "detail": "len=864 tail=['2024-01-03 23:45:00', '2024-01-03 23:50:00', '2024-01-03 23:55:00']",
+      "hypothesis_sketch": "st.integers(min_value=2, max_value=4).map(lambda days: [pd.Series(range(288), index=pd.date_range('2024-01-01', periods=288, freq='5min', unit='us') + pd.Timedelta(days=i)) for i in range(days)])",
+      "input_summary": "Concatenate several non-overlapping Series whose DatetimeIndex uses a non-nanosecond unit such as us.",
+      "issue": 58471,
+      "status": "not_reproduced",
+      "title": "concat on non-ns DatetimeIndex drops rows",
+      "url": "https://github.com/pandas-dev/pandas/issues/58471"
+    },
+    {
+      "confirmation_signal": "Maintainer comments by rhshadrach and jorisvandenbossche discuss the buggy FloatingArray reduce path.",
+      "counted_in_valid_set": true,
+      "detail": "mean=np.float64(0.3333333333333333) dtype=Float64",
+      "hypothesis_sketch": "st.lists(st.one_of(st.floats(allow_nan=False, allow_infinity=False), st.integers()), min_size=4, max_size=4).map(lambda xs: pd.Series(xs).convert_dtypes())",
+      "input_summary": "Create nullable floating results that mix ordinary floats, division by zero, and NaN, then call a reduction with skipna=True.",
+      "issue": 59965,
+      "status": "not_reproduced",
+      "title": "FloatingArray reductions do not skip NaN correctly",
+      "url": "https://github.com/pandas-dev/pandas/issues/59965"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach notes the bug could be reproduced on main while investigating.",
+      "counted_in_valid_set": true,
+      "detail": "shape=(4, 4) index=['2025-01-29 01:36:00', '2025-01-29 01:37:00', '2025-01-29 01:38:00', '2025-01-29 01:39:00']",
+      "hypothesis_sketch": "st.integers(min_value=3, max_value=8).map(lambda n: (pd.date_range('2025-01-29 01:36', periods=n, freq='1min', unit='us'), n - 1))",
+      "input_summary": "Concatenate frames on axis=1 where both sides share a non-ns DatetimeIndex and one side is a strict prefix of the other.",
+      "issue": 60922,
+      "status": "not_reproduced",
+      "title": "concat misaligns non-ns DatetimeIndex columns",
+      "url": "https://github.com/pandas-dev/pandas/issues/60922"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach discusses the failing infer-string case.",
+      "counted_in_valid_set": true,
+      "detail": "comparison succeeded",
+      "hypothesis_sketch": "st.lists(st.text(min_size=1), min_size=1, max_size=5, unique=True).map(lambda labels: (pd.Series(range(len(labels)), index=labels), pd.Index(labels).astype('string')))",
+      "input_summary": "Compare two otherwise identical Series after converting one index to the nullable string dtype.",
+      "issue": 61099,
+      "status": "not_reproduced",
+      "title": "Series comparison fails for object-index vs string-index",
+      "url": "https://github.com/pandas-dev/pandas/issues/61099"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by snitish: 'Confirmed on main.'",
+      "counted_in_valid_set": true,
+      "detail": "result=[3.0, 5.0, 7.0]",
+      "hypothesis_sketch": "st.tuples(st.lists(st.integers(), min_size=2, max_size=6), st.lists(st.integers(), min_size=1, max_size=5)).map(lambda pair: (pd.Series(pair[0]), pd.Series(pair[1])))",
+      "input_summary": "Build two misaligned Series, combine them in pd.eval, and then call a Series method like dropna() on the BinOp result.",
+      "issue": 61175,
+      "status": "not_reproduced",
+      "title": "pd.eval crashes on method call after binary op",
+      "url": "https://github.com/pandas-dev/pandas/issues/61175"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach: 'Confirmed on main. PR to fix is up.'",
+      "counted_in_valid_set": true,
+      "detail": "groups={'a': [0, 2], nan: [1]}",
+      "hypothesis_sketch": "st.just(pd.DataFrame({'cat': pd.Categorical(['a', np.nan, 'a'], categories=['a', 'b', 'd']), 'vals': [1, 2, 3]}))",
+      "input_summary": "Group by a categorical column whose values include NaN and ask for groups with observed=True, dropna=False.",
+      "issue": 61356,
+      "status": "not_reproduced",
+      "title": "groupby.groups fails with categorical + NaN + dropna=False",
+      "url": "https://github.com/pandas-dev/pandas/issues/61356"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach: 'Confirmed on main...'",
+      "counted_in_valid_set": true,
+      "detail": "all_row={'x': 1.0, nan: 2.0, 'All': 3.0}",
+      "hypothesis_sketch": "st.just(pd.DataFrame({'i': [1, 2, 3], 'g1': ['a', 'b', 'b'], 'g2': ['x', None, None]}))",
+      "input_summary": "Count with pivot_table using margins=True when one grouping key has missing values.",
+      "issue": 61509,
+      "status": "not_reproduced",
+      "title": "pivot_table margins omit NaN bucket totals",
+      "url": "https://github.com/pandas-dev/pandas/issues/61509"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by arthurlw: 'Confirmed on main!'",
+      "counted_in_valid_set": true,
+      "detail": "with_pdNA=floating with_nan=floating",
+      "hypothesis_sketch": "st.lists(st.floats(allow_nan=False, allow_infinity=False), min_size=1, max_size=5).map(lambda xs: (pd.Series(xs + [pd.NA], dtype=object), pd.Series(xs + [np.nan], dtype=object)))",
+      "input_summary": "Call infer_dtype on an object Series containing floats plus pd.NA, then compare it to the same data with np.nan.",
+      "issue": 61621,
+      "status": "not_reproduced",
+      "title": "infer_dtype diverges on pd.NA vs np.nan in object arrays",
+      "url": "https://github.com/pandas-dev/pandas/issues/61621"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by jbrockmendel identifies the missing arithmetic frequency propagation.",
+      "counted_in_valid_set": true,
+      "detail": "shifted_head=['730 days 00:00:00', '731 days 00:00:00', '732 days 00:00:00']",
+      "hypothesis_sketch": "st.dates(min_value=pd.Timestamp('2000-01-01').date(), max_value=pd.Timestamp('2030-01-01').date()).map(lambda d: pd.date_range(d, periods=5) - pd.Timestamp('2019-01-03'))",
+      "input_summary": "Construct a TimedeltaIndex by subtracting a Timestamp from a date range, then call shift(1).",
+      "issue": 62094,
+      "status": "not_reproduced",
+      "title": "TimedeltaIndex.shift regressed on computed freq-less indexes",
+      "url": "https://github.com/pandas-dev/pandas/issues/62094"
+    },
+    {
+      "confirmation_signal": "Maintainer discussion by rhshadrach and jorisvandenbossche, including a linked PR for the regression.",
+      "counted_in_valid_set": true,
+      "detail": "match=[True, True, False, False, False] contains=[True, True, False, True, True] matches_python=True",
+      "hypothesis_sketch": "st.just((re.compile('foo', flags=re.IGNORECASE), pd.Series(['Foo', 'foo', 'Bar', '_Foo_', '_foo_'])))",
+      "input_summary": "Use a compiled regex with flags against Series.str.match and Series.str.contains.",
+      "issue": 62240,
+      "status": "not_reproduced",
+      "title": "Compiled regex handling in str.match/str.contains is inconsistent",
+      "url": "https://github.com/pandas-dev/pandas/issues/62240"
+    },
+    {
+      "confirmation_signal": "Maintainer discussion by jbrockmendel on expected behavior for bool * string arrays.",
+      "counted_in_valid_set": true,
+      "detail": "python backend also raises TypeError: Cannot multiply StringArray by bools. Explicitly cast to integers instead.",
+      "hypothesis_sketch": "st.just(pd.Series(['a', 'b', 'c']))",
+      "input_summary": "Multiply a string Series by True and compare python-backed strings against the generic string dtype.",
+      "issue": 62595,
+      "status": "not_reproduced",
+      "title": "Arrow-backed string Series multiply behaves differently from python strings",
+      "url": "https://github.com/pandas-dev/pandas/issues/62595"
+    },
+    {
+      "confirmation_signal": "Maintainer-authored issue by mroeschke.",
+      "counted_in_valid_set": true,
+      "detail": "now raises ValueError: numeric_only accepts only Boolean values",
+      "hypothesis_sketch": "st.sampled_from([['B'], [1], 'yes']).map(lambda bad: (pd.DataFrame({'A': range(5), 'B': range(5)}), bad))",
+      "input_summary": "Pass a truthy non-bool object to a GroupBy reduction's numeric_only parameter.",
+      "issue": 62778,
+      "status": "not_reproduced",
+      "title": "groupby reductions accept non-bool numeric_only",
+      "url": "https://github.com/pandas-dev/pandas/issues/62778"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach discusses the invalid mixed dict/NaN input and expected error handling.",
+      "counted_in_valid_set": true,
+      "detail": "now raises TypeError: All items in data must be of type dict, found float",
+      "hypothesis_sketch": "st.lists(st.one_of(st.dictionaries(st.text(min_size=1), st.integers()), st.just(np.nan)), min_size=2, max_size=5)",
+      "input_summary": "Call json_normalize(max_level=0) on a list that mixes nested dicts and NaN values.",
+      "issue": 62829,
+      "status": "not_reproduced",
+      "title": "json_normalize with max_level mishandles NaN entries",
+      "url": "https://github.com/pandas-dev/pandas/issues/62829"
+    },
+    {
+      "confirmation_signal": "Maintainer discussion by rhshadrach and jbrockmendel on the incorrect object factorization semantics.",
+      "counted_in_valid_set": true,
+      "detail": "uniques=[0, 1]",
+      "hypothesis_sketch": "st.permutations([0, 1, True, False]).map(lambda xs: pd.Series(list(xs)))",
+      "input_summary": "Factorize object data that mixes ints and bools with equal hashes and equal comparisons.",
+      "issue": 62888,
+      "status": "bug_reproduced",
+      "title": "factorize collapses 0/False and 1/True in object dtype",
+      "url": "https://github.com/pandas-dev/pandas/issues/62888"
+    },
+    {
+      "confirmation_signal": "Maintainer comments by WillAyd, jbrockmendel, and jorisvandenbossche, with a linked fix PR.",
+      "counted_in_valid_set": true,
+      "detail": "iso={\"P1DT0H0M0S\":{\"0\":1}} epoch={\"86400000\":{\"0\":1}}",
+      "hypothesis_sketch": "st.sampled_from(['us', 'ms', 's']).map(lambda unit: pd.DataFrame([[1]], columns=[pd.Timedelta('1D').as_unit(unit)]))",
+      "input_summary": "Serialize a frame whose column index is a non-nanosecond Timedelta.",
+      "issue": 63236,
+      "status": "not_reproduced",
+      "title": "to_json stringifies non-ns TimedeltaIndex with wrong units",
+      "url": "https://github.com/pandas-dev/pandas/issues/63236"
+    },
+    {
+      "confirmation_signal": "Maintainer comments by jorisvandenbossche and jbrockmendel on the slice bound casting bug.",
+      "counted_in_valid_set": true,
+      "detail": "len=1 index=['2000-01-01 01:00:00']",
+      "hypothesis_sketch": "st.just((pd.Series(1, index=pd.date_range('2000-01-01', periods=8, freq='h')), pd.Timestamp('2000-01-01 01:00:00')))",
+      "input_summary": "Slice a DatetimeIndex-backed Series with start/stop Timestamps that have different internal units.",
+      "issue": 63262,
+      "status": "not_reproduced",
+      "title": "Datetime slicing fails with mixed timestamp units",
+      "url": "https://github.com/pandas-dev/pandas/issues/63262"
+    },
+    {
+      "confirmation_signal": "Maintainer comments by mroeschke and jorisvandenbossche generalize the read-only array problem.",
+      "counted_in_valid_set": true,
+      "detail": "series=['a', 'b', 'c', 'd']",
+      "hypothesis_sketch": "st.just((pd.Index([0, 1, 2, 3], dtype='int8').to_numpy(), pd.Index(['a', 'b', 'c', 'd'])))",
+      "input_summary": "Construct a Series from an Index backed by read-only categorical codes and then assign through a boolean mask in CoW mode.",
+      "issue": 63306,
+      "status": "not_reproduced",
+      "title": "CoW write path fails on read-only categorical backing data",
+      "url": "https://github.com/pandas-dev/pandas/issues/63306"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach acknowledges the bug and leaves it open for pandas 3.x.",
+      "counted_in_valid_set": true,
+      "detail": "row_keys=['id', 'arr', 'sparse']",
+      "hypothesis_sketch": "st.just(pd.DataFrame({'id': ['A', 'B'], 'arr': [np.array([1.0, 2.0]), np.array([3.0, 4.0])]}))",
+      "input_summary": "Take a row from a filtered DataFrame that contains both ndarray-valued cells and a SparseArray column.",
+      "issue": 63581,
+      "status": "not_reproduced",
+      "title": "iloc[0] fails on rows mixing SparseArray and ndarray objects",
+      "url": "https://github.com/pandas-dev/pandas/issues/63581"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach explains that Series/DataFrame handled the mask but pd.array did not.",
+      "counted_in_valid_set": true,
+      "detail": "array=[1, 2, 3, 4] dtype=Int64",
+      "hypothesis_sketch": "st.lists(st.integers(), min_size=2, max_size=6).flatmap(lambda xs: st.tuples(st.just(xs), st.lists(st.booleans(), min_size=len(xs), max_size=len(xs))))",
+      "input_summary": "Pass a numpy masked array to pd.array and check whether masked elements become missing values.",
+      "issue": 63879,
+      "status": "bug_reproduced",
+      "title": "pd.array ignores masks on numpy masked arrays",
+      "url": "https://github.com/pandas-dev/pandas/issues/63879"
+    },
+    {
+      "confirmation_signal": "Maintainer comment by rhshadrach: 'confirmed on main.'",
+      "counted_in_valid_set": true,
+      "detail": "AssertionError: 2",
+      "hypothesis_sketch": "st.lists(st.text(min_size=1), min_size=2, max_size=5, unique=True).map(lambda extra: (pd.DataFrame({'a': [0]}), ['a'] + extra, 'missing'))",
+      "input_summary": "Reindex a one-column DataFrame to multiple columns using a string fill_value.",
+      "issue": 63993,
+      "status": "bug_reproduced",
+      "title": "DataFrame.reindex crashes with multi-column string fill_value",
+      "url": "https://github.com/pandas-dev/pandas/issues/63993"
+    },
+    {
+      "confirmation_signal": "Bug-labeled issue with a clear reproducer, but the fetched thread did not include an explicit maintainer confirmation comment.",
+      "counted_in_valid_set": false,
+      "detail": "TypeError: '_NoDefault' object is not subscriptable",
+      "hypothesis_sketch": "st.just((pd.DataFrame([[0.0, 0.5, 0.0], [0.1, 0.0, 0.2], [0.2, 0.0, 0.0]]), pd.Series([1.0, 1.0, np.nan])))",
+      "input_summary": "Apply DataFrame.where with axis=1 using a 1D boolean mask derived from a Series that contains NaN.",
+      "issue": 58190,
+      "status": "bug_reproduced",
+      "title": "DataFrame.where(..., axis=1) crashes on Series mask",
+      "url": "https://github.com/pandas-dev/pandas/issues/58190"
+    }
+  ],
+  "summary": {
+    "pandas_version": "3.0.0",
+    "supplemental_cases": 1,
+    "supplemental_reproduced": 1,
+    "valid_cases": 20,
+    "valid_reproduced": 3
+  }
+}

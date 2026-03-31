@@ -1,0 +1,322 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0.0",
+    "function": "DataFrame.reindex",
+    "signature": "DataFrame.reindex(labels=None, *, index=None, columns=None, axis=None, method=None, copy=<no_default>, level=None, fill_value=nan, limit=None, tolerance=None)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0.0/reference/api/pandas.DataFrame.reindex.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_standard_string_index",
+        "description": "DataFrame with string row labels and numeric columns",
+        "constraints": "st.just(pd.DataFrame({'http_status': [200, 200, 404, 404, 301], 'response_time': [0.04, 0.02, 0.07, 0.08, 1.0]}, index=['Firefox', 'Chrome', 'Safari', 'IE10', 'Konqueror']))"
+      },
+      {
+        "id": "self_with_nan_values",
+        "description": "DataFrame that contains NaN in its data; fill methods should not propagate these existing NaNs",
+        "constraints": "st.just(pd.DataFrame({'prices': [100.0, 101.0, float('nan'), 100.0, 89.0, 88.0]}, index=pd.date_range('2010-01-01', periods=6, freq='D')))"
+      },
+      {
+        "id": "self_monotonic_increasing_index",
+        "description": "DataFrame with a monotonically increasing DatetimeIndex; required for method-based gap filling",
+        "constraints": "st.just(pd.DataFrame({'prices': [100.0, 101.0, 100.0, 89.0, 88.0]}, index=pd.date_range('2010-01-01', periods=5, freq='D')))"
+      }
+    ],
+
+    "labels": [
+      {
+        "id": "labels_none",
+        "description": "labels not provided; reindexing is done via the index or columns parameter",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "labels_all_existing_rows",
+        "description": "All provided row labels already exist in the DataFrame index",
+        "constraints": "st.just(['Firefox', 'Chrome', 'Safari'])"
+      },
+      {
+        "id": "labels_some_new_rows",
+        "description": "Some row labels are absent from the original index; those new rows get NaN",
+        "constraints": "st.just(['Safari', 'Iceweasel', 'Comodo Dragon', 'IE10', 'Chrome'])"
+      },
+      {
+        "id": "labels_all_new_rows",
+        "description": "All labels are absent from the current index; the entire result data becomes NaN",
+        "constraints": "st.just(['NewBrowser1', 'NewBrowser2'])"
+      },
+      {
+        "id": "labels_for_column_reindex",
+        "description": "Labels that are column names, intended for use with axis=1 or axis='columns'",
+        "constraints": "st.just(['http_status', 'user_agent'])"
+      }
+    ],
+
+    "index": [
+      {
+        "id": "index_none",
+        "description": "index parameter not provided",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "index_subset_of_original",
+        "description": "New index is a strict subset of the original; rows absent from new index are dropped",
+        "constraints": "st.just(['Firefox', 'Safari'])"
+      },
+      {
+        "id": "index_superset_of_original",
+        "description": "New index is a superset of the original; extra rows are filled with NaN or fill_value",
+        "constraints": "st.just(['Firefox', 'Chrome', 'Safari', 'Opera', 'Edge'])"
+      },
+      {
+        "id": "index_date_range_extended",
+        "description": "DatetimeIndex that extends both before and after the original index range, for fill method testing",
+        "constraints": "st.just(pd.date_range('2009-12-29', periods=10, freq='D'))"
+      }
+    ],
+
+    "columns": [
+      {
+        "id": "columns_none",
+        "description": "columns parameter not provided",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "columns_subset_of_original",
+        "description": "New columns is a strict subset of the original columns; absent columns are dropped",
+        "constraints": "st.just(['http_status'])"
+      },
+      {
+        "id": "columns_superset_with_new",
+        "description": "New columns includes names not present in the original; new columns are filled with NaN",
+        "constraints": "st.just(['http_status', 'user_agent'])"
+      }
+    ],
+
+    "axis": [
+      {
+        "id": "axis_none",
+        "description": "axis not provided; must use index or columns parameters directly",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "axis_row",
+        "description": "axis=0 or axis='index'; labels parameter targets the row index",
+        "constraints": "st.sampled_from([0, 'index'])"
+      },
+      {
+        "id": "axis_columns",
+        "description": "axis=1 or axis='columns'; labels parameter targets the column axis",
+        "constraints": "st.sampled_from([1, 'columns'])"
+      }
+    ],
+
+    "method": [
+      {
+        "id": "method_none",
+        "description": "method=None (default); no filling is performed, missing values become NaN",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "method_ffill",
+        "description": "method='pad'/'ffill'; propagates the last valid observation forward to fill new labels",
+        "constraints": "st.sampled_from(['pad', 'ffill'])"
+      },
+      {
+        "id": "method_bfill",
+        "description": "method='backfill'/'bfill'; uses the next valid observation to fill new labels",
+        "constraints": "st.sampled_from(['backfill', 'bfill'])"
+      },
+      {
+        "id": "method_nearest",
+        "description": "method='nearest'; uses the nearest valid observation to fill new labels",
+        "constraints": "st.just('nearest')"
+      }
+    ],
+
+    "fill_value": [
+      {
+        "id": "fill_value_nan",
+        "description": "fill_value=np.nan (default); missing entries become NaN",
+        "constraints": "st.just(float('nan'))"
+      },
+      {
+        "id": "fill_value_zero",
+        "description": "fill_value=0; missing entries are replaced with 0",
+        "constraints": "st.just(0)"
+      },
+      {
+        "id": "fill_value_arbitrary_scalar",
+        "description": "fill_value is a non-NaN numeric scalar",
+        "constraints": "st.floats(min_value=-1e6, max_value=1e6, allow_nan=False, allow_infinity=False)"
+      }
+    ],
+
+    "limit": [
+      {
+        "id": "limit_none",
+        "description": "limit=None (default); all consecutive gaps are filled",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "limit_one",
+        "description": "limit=1; at most one consecutive gap is filled per run of missing values",
+        "constraints": "st.just(1)"
+      }
+    ],
+
+    "tolerance": [
+      {
+        "id": "tolerance_none",
+        "description": "tolerance=None (default); no distance restriction on inexact label matching",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "tolerance_scalar",
+        "description": "tolerance is a non-negative scalar; labels farther than this from the original are left as NaN",
+        "constraints": "st.floats(min_value=0.0, max_value=5.0, allow_nan=False, allow_infinity=False)"
+      }
+    ],
+
+    "level": [
+      {
+        "id": "level_none",
+        "description": "level=None (default); no MultiIndex level broadcasting",
+        "constraints": "st.just(None)"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "result_is_dataframe",
+      "source": "Returns DataFrame with changed index.",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "method_none", "fill_value_nan"],
+      "expected_behavior": "assert isinstance(result, pd.DataFrame)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_index_matches_provided_labels",
+      "source": "Conform DataFrame to new index with optional filling logic.",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "method_none"],
+      "expected_behavior": "assert result.index.tolist() == ['Safari', 'Iceweasel', 'Comodo Dragon', 'IE10', 'Chrome']",
+      "confidence": "explicit"
+    },
+    {
+      "id": "new_labels_filled_with_nan_by_default",
+      "source": "Places NA/NaN in locations having no value in the previous index.",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "method_none", "fill_value_nan"],
+      "expected_behavior": "assert result.loc[['Iceweasel', 'Comodo Dragon']].isna().all().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "new_labels_filled_with_fill_value",
+      "source": "fill_value: Value to use for missing values. Defaults to np.nan.",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "method_none", "fill_value_zero"],
+      "expected_behavior": "assert (result.loc[['Iceweasel', 'Comodo Dragon']] == 0).all().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "existing_labels_preserve_original_values",
+      "source": "Places NA/NaN in locations having no value in the previous index.",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "method_none"],
+      "expected_behavior": "assert result.at['Safari', 'http_status'] == 404 and result.at['Chrome', 'http_status'] == 200",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_columns_unchanged_when_reindexing_rows",
+      "source": "",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "method_none"],
+      "expected_behavior": "assert result.columns.tolist() == ['http_status', 'response_time']",
+      "confidence": "implicit"
+    },
+    {
+      "id": "all_new_labels_produce_all_nan_result",
+      "source": "Places NA/NaN in locations having no value in the previous index.",
+      "pre_condition": ["self_standard_string_index", "labels_all_new_rows", "method_none", "fill_value_nan"],
+      "expected_behavior": "assert result.isna().all().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "new_columns_filled_with_nan",
+      "source": "Reindexing with new column labels not present in the original DataFrame results in NaN for those columns.",
+      "pre_condition": ["self_standard_string_index", "columns_superset_with_new", "method_none"],
+      "expected_behavior": "assert result['user_agent'].isna().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "missing_columns_dropped_on_column_reindex",
+      "source": "",
+      "pre_condition": ["self_standard_string_index", "columns_subset_of_original"],
+      "expected_behavior": "assert result.columns.tolist() == ['http_status'] and 'response_time' not in result.columns",
+      "confidence": "implicit"
+    },
+    {
+      "id": "result_index_matches_index_param",
+      "source": "index: New labels for the index.",
+      "pre_condition": ["self_standard_string_index", "index_superset_of_original", "method_none"],
+      "expected_behavior": "assert result.index.tolist() == ['Firefox', 'Chrome', 'Safari', 'Opera', 'Edge']",
+      "confidence": "explicit"
+    },
+    {
+      "id": "labels_with_axis_row_reindexes_index",
+      "source": "labels: New labels/index to conform the axis specified by 'axis' to.",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "axis_row"],
+      "expected_behavior": "assert result.index.tolist() == ['Safari', 'Iceweasel', 'Comodo Dragon', 'IE10', 'Chrome']",
+      "confidence": "explicit"
+    },
+    {
+      "id": "labels_with_axis_columns_reindexes_columns",
+      "source": "axis: Axis to target. Can be either the axis name ('index', 'columns') or number (0, 1).",
+      "pre_condition": ["self_standard_string_index", "labels_for_column_reindex", "axis_columns"],
+      "expected_behavior": "assert result.columns.tolist() == ['http_status', 'user_agent']",
+      "confidence": "explicit"
+    },
+    {
+      "id": "ffill_does_not_fill_labels_before_data_range",
+      "source": "pad/ffill: Propagate last valid observation forward to next valid.",
+      "pre_condition": ["self_monotonic_increasing_index", "index_date_range_extended", "method_ffill"],
+      "expected_behavior": "assert pd.isna(result.at[pd.Timestamp('2009-12-29'), 'prices'])",
+      "confidence": "implicit"
+    },
+    {
+      "id": "bfill_fills_labels_before_data_range",
+      "source": "backfill/bfill: Use next valid observation to fill gap.",
+      "pre_condition": ["self_monotonic_increasing_index", "index_date_range_extended", "method_bfill"],
+      "expected_behavior": "assert not pd.isna(result.at[pd.Timestamp('2009-12-29'), 'prices']) and result.at[pd.Timestamp('2009-12-29'), 'prices'] == 100.0",
+      "confidence": "explicit"
+    },
+    {
+      "id": "existing_nan_not_filled_by_method",
+      "source": "Note: Values already present as NaN in the original DataFrame will not be filled by propagation schemes (ffill/bfill).",
+      "pre_condition": ["self_with_nan_values", "index_date_range_extended", "method_bfill"],
+      "expected_behavior": "assert pd.isna(result.at[pd.Timestamp('2010-01-03'), 'prices'])",
+      "confidence": "explicit"
+    },
+    {
+      "id": "limit_restricts_number_of_consecutive_fills",
+      "source": "limit: Maximum number of consecutive elements to forward or backward fill.",
+      "pre_condition": ["self_monotonic_increasing_index", "index_date_range_extended", "method_bfill", "limit_one"],
+      "expected_behavior": "assert pd.isna(result.at[pd.Timestamp('2009-12-29'), 'prices'])",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_length_equals_new_index_length",
+      "source": "",
+      "pre_condition": ["self_standard_string_index", "labels_some_new_rows", "method_none"],
+      "expected_behavior": "assert len(result) == 5",
+      "confidence": "implicit"
+    },
+    {
+      "id": "result_is_new_object",
+      "source": "Deprecated since version 3.0.0: copy keyword is ignored; pandas 3.0 always returns a new object using Copy-on-Write.",
+      "pre_condition": ["self_standard_string_index", "labels_all_existing_rows", "method_none"],
+      "expected_behavior": "assert result is not df",
+      "confidence": "explicit"
+    }
+  ]
+}
