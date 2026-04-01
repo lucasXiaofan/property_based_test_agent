@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "Series.factorize",
+    "signature": "Series.factorize(sort=False, use_na_sentinel=True)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.factorize.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_string_no_nan",
+        "description": "Series of string values without missing values",
+        "constraints": "st.lists(st.text(alphabet='abcdefghij', min_size=1, max_size=4), min_size=1, max_size=20).map(pd.Series)"
+      },
+      {
+        "id": "self_numeric_no_nan",
+        "description": "Series of numeric (float) values without NaN",
+        "constraints": "st.lists(st.floats(allow_nan=False, allow_infinity=False, min_value=-100.0, max_value=100.0), min_size=1, max_size=20).map(pd.Series)"
+      },
+      {
+        "id": "self_with_nan",
+        "description": "Series containing at least one NaN/None value; 'the sentinel -1 will be used for NaN values'",
+        "constraints": "st.lists(st.one_of(st.text(alphabet='abcde', min_size=1, max_size=3), st.none()), min_size=2, max_size=20).filter(lambda x: any(v is None for v in x)).map(pd.Series)"
+      },
+      {
+        "id": "self_categorical",
+        "description": "Categorical-backed Series; 'When values is Categorical, uniques is a Categorical'",
+        "constraints": "st.lists(st.sampled_from(['a', 'b', 'c', 'd']), min_size=1, max_size=20).map(lambda x: pd.Series(pd.Categorical(x)))"
+      },
+      {
+        "id": "self_all_same",
+        "description": "Series where all elements are identical — uniques should have exactly 1 entry",
+        "constraints": "st.integers(min_value=1, max_value=5).flatmap(lambda n: st.integers(min_value=-100, max_value=100).map(lambda v: pd.Series([v] * n)))"
+      },
+      {
+        "id": "self_empty",
+        "description": "Empty Series — zero-length input edge case",
+        "constraints": "st.just(pd.Series([], dtype=object))"
+      }
+    ],
+
+    "sort": [
+      {
+        "id": "sort_false",
+        "description": "sort=False (default): uniques appear in order of first occurrence, codes not shuffled",
+        "constraints": "st.just(False)"
+      },
+      {
+        "id": "sort_true",
+        "description": "sort=True: 'Sort uniques and shuffle codes to maintain the relationship'",
+        "constraints": "st.just(True)"
+      }
+    ],
+
+    "use_na_sentinel": [
+      {
+        "id": "use_na_sentinel_true",
+        "description": "use_na_sentinel=True (default): 'the sentinel -1 will be used for NaN values'",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "use_na_sentinel_false",
+        "description": "use_na_sentinel=False: 'NaN values will be encoded as non-negative integers and will not drop the NaN from the uniques'",
+        "constraints": "st.just(False)"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "return_type_is_tuple_of_two",
+      "source": "Returns: codes ndarray ... uniques ndarray, Index, or Categorical",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert isinstance(result, tuple) and len(result) == 2",
+      "confidence": "explicit"
+    },
+    {
+      "id": "codes_is_integer_ndarray",
+      "source": "codesndarray — An integer ndarray that's an indexer into uniques.",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert isinstance(result[0], np.ndarray) and np.issubdtype(result[0].dtype, np.integer)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "codes_length_equals_series_length",
+      "source": "An integer ndarray that's an indexer into uniques.",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert len(result[0]) == len(self)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "reconstruction_correctness_no_nan",
+      "source": "uniques.take(codes) will have the same values as values.",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert list(result[1].take(result[0])) == list(self)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "uniques_has_no_duplicates",
+      "source": "The unique valid values.",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert len(result[1]) == len(set(result[1]))",
+      "confidence": "implicit"
+    },
+    {
+      "id": "uniques_count_equals_distinct_non_nan_values",
+      "source": "The unique valid values.",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert len(result[1]) == self.dropna().nunique()",
+      "confidence": "implicit"
+    },
+    {
+      "id": "uniques_type_is_index_for_plain_series",
+      "source": "When values is some other pandas object, an Index is returned.",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert isinstance(result[1], pd.Index)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "uniques_sorted_when_sort_true",
+      "source": "With sort=True, the uniques will be sorted, and codes will be shuffled so that the relationship is maintained.",
+      "pre_condition": ["self_string_no_nan", "sort_true", "use_na_sentinel_true"],
+      "expected_behavior": "assert list(result[1]) == sorted(list(result[1]))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "uniques_first_occurrence_order_when_sort_false",
+      "source": "",
+      "pre_condition": ["self_string_no_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert list(result[1]) == list(dict.fromkeys(v for v in self if not pd.isna(v)))",
+      "confidence": "implicit"
+    },
+    {
+      "id": "na_codes_are_minus_one_when_sentinel_true",
+      "source": "When use_na_sentinel=True (the default), missing values are indicated in the codes with the sentinel value -1",
+      "pre_condition": ["self_with_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert all(result[0][i] == -1 for i in range(len(self)) if pd.isna(self.iloc[i]))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "non_na_codes_nonneg_when_sentinel_true",
+      "source": "the sentinel -1 will be used for NaN values",
+      "pre_condition": ["self_with_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert all(result[0][i] >= 0 for i in range(len(self)) if not pd.isna(self.iloc[i]))",
+      "confidence": "implicit"
+    },
+    {
+      "id": "nan_not_in_uniques_when_sentinel_true",
+      "source": "Even if there's a missing value in values, uniques will not contain an entry for it.",
+      "pre_condition": ["self_with_nan", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert not any(pd.isna(v) for v in result[1])",
+      "confidence": "explicit"
+    },
+    {
+      "id": "all_codes_nonneg_when_sentinel_false",
+      "source": "If False, NaN values will be encoded as non-negative integers",
+      "pre_condition": ["self_with_nan", "sort_false", "use_na_sentinel_false"],
+      "expected_behavior": "assert all(c >= 0 for c in result[0])",
+      "confidence": "explicit"
+    },
+    {
+      "id": "nan_in_uniques_when_sentinel_false",
+      "source": "If False, NaN values will be encoded as non-negative integers and will not drop the NaN from the uniques of the values.",
+      "pre_condition": ["self_with_nan", "sort_false", "use_na_sentinel_false"],
+      "expected_behavior": "assert any(pd.isna(v) for v in result[1])",
+      "confidence": "explicit"
+    },
+    {
+      "id": "reconstruction_correctness_with_nan_sentinel_false",
+      "source": "uniques.take(codes) will have the same values as values.",
+      "pre_condition": ["self_with_nan", "sort_false", "use_na_sentinel_false"],
+      "expected_behavior": "assert all((pd.isna(result[1].take(result[0])[i]) and pd.isna(self.iloc[i])) or result[1].take(result[0])[i] == self.iloc[i] for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "all_same_series_has_one_unique",
+      "source": "The unique valid values.",
+      "pre_condition": ["self_all_same", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert len(result[1]) == 1",
+      "confidence": "implicit"
+    },
+    {
+      "id": "all_same_series_all_codes_zero",
+      "source": "An integer ndarray that's an indexer into uniques.",
+      "pre_condition": ["self_all_same", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert all(c == 0 for c in result[0])",
+      "confidence": "implicit"
+    },
+    {
+      "id": "empty_series_returns_empty_codes_and_uniques",
+      "source": "An integer ndarray that's an indexer into uniques.",
+      "pre_condition": ["self_empty", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert len(result[0]) == 0 and len(result[1]) == 0",
+      "confidence": "implicit"
+    },
+    {
+      "id": "uniques_type_categorical_for_categorical_series",
+      "source": "When values is Categorical, uniques is a Categorical.",
+      "pre_condition": ["self_categorical", "sort_false", "use_na_sentinel_true"],
+      "expected_behavior": "assert isinstance(result[1], (pd.Categorical, pd.CategoricalIndex))",
+      "confidence": "explicit"
+    }
+  ]
+}

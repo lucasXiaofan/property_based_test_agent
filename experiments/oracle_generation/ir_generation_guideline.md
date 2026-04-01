@@ -4,10 +4,10 @@ You are generating a Test IR (Intermediate Representation) from API documentatio
 The goal is to identify inputs and expected behaviors that catch real bugs — not just
 the happy path. Output valid JSON only. No prose outside the JSON.
 ## Folder Structure Rule (Added)
-To align with `test_quality_metric`, every IR target must use:
+every IR target must use:
 
 ```text
-ir2test_pipeline/
+experiments/oracle_generation/
   <library>/
     <module_or_class>/
       <function>/

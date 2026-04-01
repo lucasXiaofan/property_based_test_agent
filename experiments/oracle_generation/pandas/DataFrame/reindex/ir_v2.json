@@ -1,0 +1,336 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "DataFrame.reindex",
+    "signature": "DataFrame.reindex(labels=None, *, index=None, columns=None, axis=None, method=None, copy=<no_default>, level=None, fill_value=nan, limit=None, tolerance=None)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.DataFrame.reindex.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_any_df",
+        "description": "Any DataFrame with string index",
+        "constraints": "pdst.data_frames(columns=[pdst.column('http_status', dtype=float), pdst.column('response_time', dtype=float)], index=pdst.indexes(elements=st.text(min_size=1, max_size=10, alphabet=st.characters(whitelist_categories=('Lu','Ll'))), min_size=1, max_size=6, unique=True))"
+      },
+      {
+        "id": "self_monotonic_index_df",
+        "description": "DataFrame with monotonically increasing index; required for method: 'this is only applicable to DataFrames/Series with a monotonically increasing/decreasing index'",
+        "constraints": "st.just(pd.DataFrame({'prices': [100.0, 101.0, np.nan, 100.0, 89.0, 88.0]}, index=pd.date_range('2010-01-01', periods=6, freq='D')))"
+      },
+      {
+        "id": "self_empty_df",
+        "description": "DataFrame with no rows",
+        "constraints": "st.just(pd.DataFrame(columns=['http_status', 'response_time']))"
+      }
+    ],
+
+    "labels": [
+      {
+        "id": "labels_none",
+        "description": "labels parameter not provided (default None)",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "labels_partial_overlap",
+        "description": "New labels partially overlapping with current index; demonstrated by example: new_index = ['Safari', 'Iceweasel', 'Comodo Dragon', 'IE10', 'Chrome']",
+        "constraints": "st.just(['Safari', 'Iceweasel', 'Comodo Dragon', 'IE10', 'Chrome'])"
+      },
+      {
+        "id": "labels_identical_to_index",
+        "description": "New labels identical to current index",
+        "constraints": "st.just(['Firefox', 'Chrome', 'Safari', 'IE10', 'Konqueror'])"
+      },
+      {
+        "id": "labels_empty",
+        "description": "Empty array of labels",
+        "constraints": "st.just([])"
+      },
+      {
+        "id": "labels_all_new",
+        "description": "Labels entirely disjoint from current index",
+        "constraints": "st.just(['NewBrowserA', 'NewBrowserB'])"
+      }
+    ],
+
+    "index": [
+      {
+        "id": "index_none",
+        "description": "index parameter not provided (default None)",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "index_partial_overlap",
+        "description": "New index labels partially overlapping with self.index",
+        "constraints": "st.just(['Safari', 'Iceweasel', 'Comodo Dragon', 'IE10', 'Chrome'])"
+      },
+      {
+        "id": "index_identical_to_self",
+        "description": "New index identical to self.index",
+        "constraints": "st.just(['Firefox', 'Chrome', 'Safari', 'IE10', 'Konqueror'])"
+      },
+      {
+        "id": "index_empty",
+        "description": "Empty index",
+        "constraints": "st.just([])"
+      },
+      {
+        "id": "index_superset_of_self",
+        "description": "New index that is a superset of self.index (adds new rows)",
+        "constraints": "st.just(['Firefox', 'Chrome', 'Safari', 'IE10', 'Konqueror', 'NewBrowser'])"
+      }
+    ],
+
+    "columns": [
+      {
+        "id": "columns_none",
+        "description": "columns parameter not provided (default None)",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "columns_partial_overlap",
+        "description": "New column labels partially overlapping with self.columns: 'We can also reindex the columns'",
+        "constraints": "st.just(['http_status', 'user_agent'])"
+      },
+      {
+        "id": "columns_identical_to_self",
+        "description": "New column labels identical to self.columns",
+        "constraints": "st.just(['http_status', 'response_time'])"
+      }
+    ],
+
+    "axis": [
+      {
+        "id": "axis_none",
+        "description": "axis not specified (default None), used alongside index= or columns= keyword arguments",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "axis_zero_int",
+        "description": "axis=0 targets the index axis: 'Can be either the axis name or number (0, 1)'",
+        "constraints": "st.just(0)"
+      },
+      {
+        "id": "axis_one_int",
+        "description": "axis=1 targets the columns axis",
+        "constraints": "st.just(1)"
+      },
+      {
+        "id": "axis_index_str",
+        "description": "axis='index' targets the index axis",
+        "constraints": "st.just('index')"
+      },
+      {
+        "id": "axis_columns_str",
+        "description": "axis='columns' targets the columns axis",
+        "constraints": "st.just('columns')"
+      }
+    ],
+
+    "method": [
+      {
+        "id": "method_none",
+        "description": "No fill method (default): 'None (default): don't fill gaps'",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "method_ffill",
+        "description": "Forward fill: 'pad / ffill: Propagate last valid observation forward to next valid'",
+        "constraints": "st.sampled_from(['pad', 'ffill'])"
+      },
+      {
+        "id": "method_bfill",
+        "description": "Backward fill: 'backfill / bfill: Use next valid observation to fill gap'",
+        "constraints": "st.sampled_from(['backfill', 'bfill'])"
+      },
+      {
+        "id": "method_nearest",
+        "description": "Nearest fill: 'nearest: Use nearest valid observations to fill gap'",
+        "constraints": "st.just('nearest')"
+      }
+    ],
+
+    "fill_value": [
+      {
+        "id": "fill_value_default_nan",
+        "description": "Default fill value NaN: 'Value to use for missing values. Defaults to NaN'",
+        "constraints": "st.just(np.nan)"
+      },
+      {
+        "id": "fill_value_zero",
+        "description": "Fill missing values with zero",
+        "constraints": "st.just(0)"
+      },
+      {
+        "id": "fill_value_string",
+        "description": "Fill missing values with string: 'but can be any compatible value'",
+        "constraints": "st.just('missing')"
+      }
+    ],
+
+    "limit": [
+      {
+        "id": "limit_none",
+        "description": "No limit on consecutive fills (default): 'Maximum number of consecutive elements to forward or backward fill'",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "limit_positive_int",
+        "description": "Positive integer limit on consecutive fills",
+        "constraints": "st.integers(min_value=1, max_value=3)"
+      }
+    ],
+
+    "tolerance": [
+      {
+        "id": "tolerance_none",
+        "description": "No tolerance specified (default None)",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "tolerance_scalar",
+        "description": "Scalar tolerance for inexact matches: 'which applies the same tolerance to all values'",
+        "constraints": "st.floats(min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False)"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "returns_dataframe",
+      "source": "Returns: DataFrame with changed index.",
+      "pre_condition": ["self_any_df", "index_partial_overlap", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert isinstance(result, pd.DataFrame)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_index_equals_specified_index",
+      "source": "Conform DataFrame to new index with optional filling logic.",
+      "pre_condition": ["self_any_df", "index_partial_overlap", "columns_none", "axis_none", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert list(result.index) == list(new_index)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_columns_equals_specified_columns",
+      "source": "We can also reindex the columns.",
+      "pre_condition": ["self_any_df", "index_none", "columns_partial_overlap", "axis_none", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert list(result.columns) == list(new_columns)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "new_labels_filled_with_nan_by_default",
+      "source": "Places NA/NaN in locations having no value in the previous index.",
+      "pre_condition": ["self_any_df", "index_partial_overlap", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.loc[[lbl for lbl in result.index if lbl not in df.index]].isna().all().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "existing_labels_values_preserved",
+      "source": "",
+      "pre_condition": ["self_any_df", "index_partial_overlap", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.loc[result.index.intersection(df.index)].equals(df.loc[result.index.intersection(df.index)])",
+      "confidence": "implicit"
+    },
+    {
+      "id": "new_labels_filled_with_fill_value",
+      "source": "Value to use for missing values. Defaults to NaN, but can be any 'compatible' value.",
+      "pre_condition": ["self_any_df", "index_partial_overlap", "method_none", "fill_value_zero", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert (result.loc[[lbl for lbl in result.index if lbl not in df.index]] == 0).all().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "fill_value_string_replaces_missing",
+      "source": "but can be any 'compatible' value",
+      "pre_condition": ["self_any_df", "index_partial_overlap", "method_none", "fill_value_string", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert (result.loc[[lbl for lbl in result.index if lbl not in df.index]] == 'missing').all().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_is_new_object",
+      "source": "A new object is produced unless the new index is equivalent to the current one and copy=False.",
+      "pre_condition": ["self_any_df", "index_partial_overlap", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result is not df",
+      "confidence": "explicit"
+    },
+    {
+      "id": "identical_index_content_unchanged",
+      "source": "A new object is produced unless the new index is equivalent to the current one and copy=False.",
+      "pre_condition": ["self_any_df", "index_identical_to_self", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.equals(df)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "empty_index_returns_empty_dataframe",
+      "source": "Conform DataFrame to new index with optional filling logic.",
+      "pre_condition": ["self_any_df", "index_empty", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert len(result) == 0 and list(result.columns) == list(df.columns)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "columns_reindex_preserves_row_index",
+      "source": "We can also reindex the columns.",
+      "pre_condition": ["self_any_df", "index_none", "columns_partial_overlap", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert list(result.index) == list(df.index)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "new_columns_not_in_original_filled_with_nan",
+      "source": "Places NA/NaN in locations having no value in the previous index.",
+      "pre_condition": ["self_any_df", "index_none", "columns_partial_overlap", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result[[col for col in result.columns if col not in df.columns]].isna().all().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "bfill_fills_index_gaps_from_next_valid",
+      "source": "backfill / bfill: Use next valid observation to fill gap.",
+      "pre_condition": ["self_monotonic_index_df", "method_bfill", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.notna().sum().sum() >= df.notna().sum().sum()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "ffill_fills_index_gaps_from_last_valid",
+      "source": "pad / ffill: Propagate last valid observation forward to next valid.",
+      "pre_condition": ["self_monotonic_index_df", "method_ffill", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.notna().sum().sum() >= df.notna().sum().sum()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "method_does_not_fill_original_nan_values",
+      "source": "the NaN value present in the original DataFrame will not be filled by any of the value propagation schemes. This is because filling while reindexing does not look at DataFrame values, but only compares the original and desired indexes.",
+      "pre_condition": ["self_monotonic_index_df", "method_bfill", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.loc[result.index.intersection(df.index)].isna().equals(df.loc[result.index.intersection(df.index)].isna())",
+      "confidence": "explicit"
+    },
+    {
+      "id": "axis_style_equivalent_to_kwarg_style_for_index",
+      "source": "DataFrame.reindex supports two calling conventions: (index=index_labels, ...) or (labels, axis={'index'}, ...)",
+      "pre_condition": ["self_any_df", "labels_partial_overlap", "axis_index_str", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.equals(df.reindex(index=labels))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "axis_style_equivalent_to_kwarg_style_for_columns",
+      "source": "DataFrame.reindex supports two calling conventions: (index=index_labels, columns=column_labels, ...) or (labels, axis={'columns'}, ...)",
+      "pre_condition": ["self_any_df", "labels_partial_overlap", "axis_columns_str", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert result.equals(df.reindex(columns=labels))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "limit_constrains_consecutive_fills",
+      "source": "Maximum number of consecutive elements to forward or backward fill.",
+      "pre_condition": ["self_monotonic_index_df", "method_ffill", "limit_positive_int", "fill_value_default_nan", "tolerance_none"],
+      "expected_behavior": "assert result.notna().sum().sum() <= df.reindex(result.index, method='ffill').notna().sum().sum()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "superset_index_adds_nan_rows_for_new_labels",
+      "source": "Places NA/NaN in locations having no value in the previous index.",
+      "pre_condition": ["self_any_df", "index_superset_of_self", "method_none", "fill_value_default_nan", "limit_none", "tolerance_none"],
+      "expected_behavior": "assert len(result) == len(new_index) and result.loc[[lbl for lbl in new_index if lbl not in df.index]].isna().all().all()",
+      "confidence": "explicit"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "library": "numpy",
+    "version_under_test": "2.4.4",
+    "version_release_date": "2026-03-29",
+    "discovery_method": "PyPI latest-version check plus GitHub issue search/review via gh search issues and gh api graphql",
+    "counted_confirmed_cases": 5,
+    "cases_reproduced_on_local_2_4_4": 3
+  },
+  "cases": [
+    {
+      "issue": 31104,
+      "title": "f2py.crackfortran mutates global re._MAXCACHE at import time",
+      "url": "https://github.com/numpy/numpy/issues/31104",
+      "source": "gh_api_issue_search",
+      "counted_in_valid_set": true,
+      "confirmation_signal": "WarrenWeckesser called the line bad practice, opened PR #31105, and explicitly noted that 2.4.4 had already shipped the day before.",
+      "local_status": "bug_reproduced",
+      "local_detail": "re._MAXCACHE changed from 512 to 50 after importing numpy.f2py.crackfortran.",
+      "input_summary": "Import the f2py crackfortran module after reading the process-wide regex cache size.",
+      "hypothesis_sketch": "st.just('import re, numpy.f2py.crackfortran as cf') with an oracle over re._MAXCACHE before/after import",
+      "oracle_relation": "not_exceptional",
+      "input_constraint_relation": "moderate",
+      "documentation_helpfulness": "low"
+    },
+    {
+      "issue": 31019,
+      "title": "vecdot of object arrays along zero-length slice is None",
+      "url": "https://github.com/numpy/numpy/issues/31019",
+      "source": "gh_api_issue_search",
+      "counted_in_valid_set": true,
+      "confirmation_signal": "Issue was closed by merged PR #31033: 'BUG: Fix np.vecdot on empty object vectors returning None'.",
+      "local_status": "bug_reproduced",
+      "local_detail": "np.vecdot(np.array([], dtype=object), np.array([], dtype=object)) returned None.",
+      "input_summary": "Call np.vecdot on empty object-dtype arrays.",
+      "hypothesis_sketch": "st.just(np.array([], dtype=object)) and compare vecdot against an additive identity expectation rather than None",
+      "oracle_relation": "not_exceptional",
+      "input_constraint_relation": "essential",
+      "documentation_helpfulness": "partial"
+    },
+    {
+      "issue": 30909,
+      "title": "np.fft.hfft / ifft2 / irfft2 ignore the out parameter",
+      "url": "https://github.com/numpy/numpy/issues/30909",
+      "source": "gh_api_issue_search",
+      "counted_in_valid_set": true,
+      "confirmation_signal": "WarrenWeckesser replied that three FFT functions had the problem and pointed to the exact out=None call sites.",
+      "local_status": "bug_reproduced",
+      "local_detail": "For hfft, return value was not the provided output array and the provided out buffer stayed all zeros.",
+      "input_summary": "Pass a writable output array to affected FFT functions and check whether it is honored.",
+      "hypothesis_sketch": "st.integers(min_value=2, max_value=8).map(lambda n: (np.arange(float(n)), np.empty(2 * n - 2)))",
+      "oracle_relation": "not_exceptional",
+      "input_constraint_relation": "essential",
+      "documentation_helpfulness": "high"
+    },
+    {
+      "issue": 30883,
+      "title": "busdaycalendar weekmask rejects a boolean NumPy array",
+      "url": "https://github.com/numpy/numpy/issues/30883",
+      "source": "gh_api_issue_search",
+      "counted_in_valid_set": true,
+      "confirmation_signal": "WarrenWeckesser explicitly thanked the reporter for the bug, identified the failing conversion path, and documented the workaround.",
+      "local_status": "not_reproduced",
+      "local_detail": "np.busdaycalendar accepted a boolean NumPy array weekmask on local 2.4.4.",
+      "input_summary": "Construct a busdaycalendar with weekmask=np.array([...], dtype=bool).",
+      "hypothesis_sketch": "st.just(np.array([True, True, True, True, True, False, False]))",
+      "oracle_relation": "strong_exceptional",
+      "input_constraint_relation": "essential",
+      "documentation_helpfulness": "high"
+    },
+    {
+      "issue": 30641,
+      "title": "meshgrid return type depends on the value of copy",
+      "url": "https://github.com/numpy/numpy/issues/30641",
+      "source": "gh_api_issue_search",
+      "counted_in_valid_set": true,
+      "confirmation_signal": "ngoldbaum and seberg agreed the implementation should be fixed to match the documented tuple return type.",
+      "local_status": "not_reproduced",
+      "local_detail": "np.meshgrid(..., copy=True) and np.meshgrid(..., copy=False) both returned tuple on local 2.4.4.",
+      "input_summary": "Call np.meshgrid with copy=True and copy=False and compare the return container type.",
+      "hypothesis_sketch": "st.just(([1, 2], [3, 4]))",
+      "oracle_relation": "not_exceptional",
+      "input_constraint_relation": "moderate",
+      "documentation_helpfulness": "high"
+    }
+  ]
+}

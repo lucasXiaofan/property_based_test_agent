@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "Series.mean",
+    "signature": "Series.mean(*, axis=0, skipna=True, numeric_only=False, **kwargs)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.mean.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_numeric_ints",
+        "description": "Series of integer values",
+        "constraints": "st.lists(st.integers(min_value=-1000, max_value=1000), min_size=1, max_size=50).map(pd.Series)"
+      },
+      {
+        "id": "self_numeric_floats",
+        "description": "Series of float values",
+        "constraints": "st.lists(st.floats(min_value=-1e6, max_value=1e6, allow_nan=False, allow_infinity=False), min_size=1, max_size=50).map(pd.Series)"
+      },
+      {
+        "id": "self_with_na",
+        "description": "Series containing NA/null values",
+        "constraints": "st.lists(st.one_of(st.floats(min_value=-1e6, max_value=1e6, allow_nan=False, allow_infinity=False), st.none()), min_size=1, max_size=50).map(lambda x: pd.Series(x, dtype='float64'))"
+      },
+      {
+        "id": "self_all_na",
+        "description": "Series where all values are NA",
+        "constraints": "st.integers(min_value=1, max_value=20).map(lambda n: pd.Series([None] * n, dtype='float64'))"
+      },
+      {
+        "id": "self_single_element",
+        "description": "Series with exactly one non-NA element",
+        "constraints": "st.floats(min_value=-1e6, max_value=1e6, allow_nan=False, allow_infinity=False).map(lambda x: pd.Series([x]))"
+      },
+      {
+        "id": "self_booleans",
+        "description": "Series of boolean values",
+        "constraints": "st.lists(st.booleans(), min_size=1, max_size=50).map(pd.Series)"
+      }
+    ],
+    "skipna": [
+      {
+        "id": "skipna_true",
+        "description": "skipna=True (default): Exclude NA/null values when computing the result",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "skipna_false",
+        "description": "skipna=False: include NA/null values in computation",
+        "constraints": "st.just(False)"
+      }
+    ],
+    "axis": [
+      {
+        "id": "axis_default",
+        "description": "axis=0 (default): For Series this parameter is unused and defaults to 0",
+        "constraints": "st.just(0)"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "mean_basic_numeric",
+      "source": ">>> s = pd.Series([1, 2, 3])\n>>> s.mean()\n2.0",
+      "pre_condition": {
+        "self_numeric_ints": null,
+        "axis_default": null,
+        "skipna_true": null
+      },
+      "expected_behavior": "abs(result - sum(self.dropna()) / len(self.dropna())) < 1e-9",
+      "confidence": "explicit"
+    },
+    {
+      "id": "mean_returns_scalar",
+      "source": "Returns: scalar or Series (if level specified) — Mean of the values for the requested axis.",
+      "pre_condition": {
+        "self_numeric_floats": null,
+        "axis_default": null,
+        "skipna_true": null
+      },
+      "expected_behavior": "isinstance(result, (int, float, np.floating, np.integer))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "mean_skipna_true_ignores_na",
+      "source": "skipna: Exclude NA/null values when computing the result.",
+      "pre_condition": {
+        "self_with_na": null,
+        "skipna_true": null
+      },
+      "expected_behavior": "abs(result - self.dropna().sum() / len(self.dropna())) < 1e-9 if len(self.dropna()) > 0 else np.isnan(result)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "mean_skipna_false_with_na_returns_nan",
+      "source": "skipna: Exclude NA/null values when computing the result. (default True implies False means NAs propagate)",
+      "pre_condition": {
+        "self_with_na": null,
+        "skipna_false": null
+      },
+      "expected_behavior": "np.isnan(result)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "mean_all_na_skipna_true_returns_nan",
+      "source": "skipna: Exclude NA/null values when computing the result.",
+      "pre_condition": {
+        "self_all_na": null,
+        "skipna_true": null
+      },
+      "expected_behavior": "np.isnan(result)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "mean_single_element_equals_itself",
+      "source": "Return the mean of the values over the requested axis.",
+      "pre_condition": {
+        "self_single_element": null,
+        "skipna_true": null
+      },
+      "expected_behavior": "result == self.iloc[0]",
+      "confidence": "implicit"
+    },
+    {
+      "id": "mean_boolean_treated_as_numeric",
+      "source": "numeric_only: Include only float, int, boolean columns.",
+      "pre_condition": {
+        "self_booleans": null,
+        "skipna_true": null
+      },
+      "expected_behavior": "abs(result - self.astype(int).sum() / len(self)) < 1e-9",
+      "confidence": "implicit"
+    },
+    {
+      "id": "mean_float_result_type",
+      "source": ">>> s.mean()\n2.0",
+      "pre_condition": {
+        "self_numeric_ints": null,
+        "skipna_true": null
+      },
+      "expected_behavior": "isinstance(result, float)",
+      "confidence": "explicit"
+    }
+  ]
+}

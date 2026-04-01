@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "Index.astype",
+    "signature": "Index.astype(dtype, copy=True)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Index.astype.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_int64_index",
+        "description": "Index([1, 2, 3], dtype='int64') — doc example",
+        "constraints": "st.builds(pd.Index, st.lists(st.integers(min_value=-10**9, max_value=10**9), min_size=0, max_size=20).map(lambda x: x))"
+      },
+      {
+        "id": "self_float64_index",
+        "description": "Index with float64 values",
+        "constraints": "st.builds(pd.Index, st.lists(st.floats(allow_nan=False, allow_infinity=False, min_value=-1e9, max_value=1e9), min_size=0, max_size=20).map(lambda x: x))"
+      },
+      {
+        "id": "self_string_index",
+        "description": "Index with string values — castable to object dtype",
+        "constraints": "st.builds(pd.Index, st.lists(st.text(max_size=10), min_size=0, max_size=20))"
+      },
+      {
+        "id": "self_empty_index",
+        "description": "Empty Index — edge case, zero-length",
+        "constraints": "st.just(pd.Index([], dtype='int64'))"
+      }
+    ],
+    "dtype": [
+      {
+        "id": "dtype_float_string",
+        "description": "idx.astype('float') — doc example, cast int to float",
+        "constraints": "st.just('float')"
+      },
+      {
+        "id": "dtype_int64_string",
+        "description": "Any signed integer dtype is treated as 'int64'",
+        "constraints": "st.sampled_from(['int8', 'int16', 'int32', 'int64'])"
+      },
+      {
+        "id": "dtype_uint64_string",
+        "description": "Any unsigned integer dtype is treated as 'uint64'",
+        "constraints": "st.sampled_from(['uint8', 'uint16', 'uint32', 'uint64'])"
+      },
+      {
+        "id": "dtype_numpy_float_object",
+        "description": "numpy dtype object for float64",
+        "constraints": "st.just(np.dtype('float64'))"
+      },
+      {
+        "id": "dtype_object_string",
+        "description": "Cast to object dtype",
+        "constraints": "st.just('object')"
+      },
+      {
+        "id": "dtype_incompatible",
+        "description": "When conversion is impossible, a TypeError exception is raised",
+        "constraints": "st.just('datetime64[ns]')"
+      }
+    ],
+    "copy": [
+      {
+        "id": "copy_true",
+        "description": "By default, astype always returns a newly allocated object",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "copy_false",
+        "description": "If copy is set to False and internal requirements on dtype are satisfied, the original data is used",
+        "constraints": "st.just(False)"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "returns_index_instance",
+      "source": "Index with values cast to specified dtype.",
+      "pre_condition": ["self_int64_index", "dtype_float_string", "copy_true"],
+      "expected_behavior": "assert isinstance(result, pd.Index)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "dtype_matches_requested_float",
+      "source": "idx.astype('float') → Index([1.0, 2.0, 3.0], dtype='float64')",
+      "pre_condition": ["self_int64_index", "dtype_float_string", "copy_true"],
+      "expected_behavior": "assert result.dtype == np.dtype('float64')",
+      "confidence": "explicit"
+    },
+    {
+      "id": "values_preserved_after_cast",
+      "source": "idx.astype('float') → Index([1.0, 2.0, 3.0], dtype='float64') — values are numerically equal",
+      "pre_condition": ["self_int64_index", "dtype_float_string", "copy_true"],
+      "expected_behavior": "assert list(result) == [float(v) for v in self]",
+      "confidence": "explicit"
+    },
+    {
+      "id": "length_preserved",
+      "source": "Create an Index with values cast to dtypes — element count must not change",
+      "pre_condition": ["self_int64_index", "dtype_float_string", "copy_true"],
+      "expected_behavior": "assert len(result) == len(self)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "signed_int_normalized_to_int64",
+      "source": "any signed integer dtype is treated as 'int64', regardless of the size",
+      "pre_condition": ["self_int64_index", "dtype_int64_string", "copy_true"],
+      "expected_behavior": "assert result.dtype == np.dtype('int64')",
+      "confidence": "explicit"
+    },
+    {
+      "id": "unsigned_int_normalized_to_uint64",
+      "source": "any unsigned integer dtype is treated as 'uint64', regardless of the size",
+      "pre_condition": ["self_int64_index", "dtype_uint64_string", "copy_true"],
+      "expected_behavior": "assert result.dtype == np.dtype('uint64')",
+      "confidence": "explicit"
+    },
+    {
+      "id": "copy_true_returns_new_object",
+      "source": "By default, astype always returns a newly allocated object",
+      "pre_condition": ["self_int64_index", "dtype_float_string", "copy_true"],
+      "expected_behavior": "assert result is not self",
+      "confidence": "explicit"
+    },
+    {
+      "id": "copy_false_may_return_same_or_new",
+      "source": "If copy is set to False and internal requirements on dtype are satisfied, the original data is used to create a new Index or the original Index is returned",
+      "pre_condition": ["self_int64_index", "dtype_float_string", "copy_false"],
+      "expected_behavior": "assert isinstance(result, pd.Index)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "incompatible_dtype_raises_type_error",
+      "source": "When conversion is impossible, a TypeError exception is raised",
+      "pre_condition": ["self_string_index", "dtype_incompatible", "copy_true"],
+      "expected_behavior": "assert isinstance(result, TypeError)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "empty_index_returns_empty_index",
+      "source": "Create an Index with values cast to dtypes — zero elements in, zero elements out",
+      "pre_condition": ["self_empty_index", "dtype_float_string", "copy_true"],
+      "expected_behavior": "assert len(result) == 0 and isinstance(result, pd.Index)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "dtype_numpy_object_accepted",
+      "source": "dtypenumpy dtype or pandas type — numpy dtype objects are valid inputs",
+      "pre_condition": ["self_int64_index", "dtype_numpy_float_object", "copy_true"],
+      "expected_behavior": "assert result.dtype == np.dtype('float64')",
+      "confidence": "implicit"
+    },
+    {
+      "id": "result_dtype_is_requested_dtype_object",
+      "source": "Cast to object dtype preserves string Index values",
+      "pre_condition": ["self_string_index", "dtype_object_string", "copy_true"],
+      "expected_behavior": "assert result.dtype == np.dtype('O')",
+      "confidence": "implicit"
+    }
+  ]
+}

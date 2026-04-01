@@ -1,0 +1,3 @@
+{"id": "task-1", "prompt": "List all Python files in the current directory."}
+{"id": "task-2", "prompt": "Count the total number of lines across all Python files."}
+{"id": "task-3", "prompt": "Print the name and size of the largest file in the current directory."}

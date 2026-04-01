@@ -1,0 +1,204 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "mul",
+    "signature": "Series.mul(other, level=None, fill_value=None, axis=0)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.mul.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_numeric_no_nan",
+        "description": "A numeric Series with no missing values",
+        "constraints": "st.lists(st.floats(allow_nan=False, allow_infinity=False, min_value=-1e6, max_value=1e6), min_size=1, max_size=10).map(lambda x: pd.Series(x, dtype=float))"
+      },
+      {
+        "id": "self_numeric_with_nan",
+        "description": "A numeric Series with some NaN values",
+        "constraints": "st.lists(st.one_of(st.floats(allow_nan=False, allow_infinity=False, min_value=-1e6, max_value=1e6), st.just(float('nan'))), min_size=1, max_size=10).map(lambda x: pd.Series(x, dtype=float))"
+      },
+      {
+        "id": "self_with_string_index",
+        "description": "A numeric Series with a string index",
+        "constraints": "st.fixed_dictionaries({'a': st.floats(allow_nan=False, min_value=-1e6, max_value=1e6), 'b': st.floats(allow_nan=False, min_value=-1e6, max_value=1e6), 'c': st.floats(allow_nan=False, min_value=-1e6, max_value=1e6)}).map(lambda d: pd.Series(d))"
+      }
+    ],
+    "other": [
+      {
+        "id": "other_series_same_index",
+        "description": "Series with identical index to self",
+        "constraints": "st.lists(st.floats(allow_nan=False, allow_infinity=False, min_value=-1e6, max_value=1e6), min_size=1, max_size=10).map(lambda x: pd.Series(x, dtype=float))"
+      },
+      {
+        "id": "other_series_partial_overlap",
+        "description": "Series with partially overlapping index (alignment needed)",
+        "constraints": "st.fixed_dictionaries({'a': st.floats(allow_nan=False, min_value=-1e6, max_value=1e6), 'd': st.floats(allow_nan=False, min_value=-1e6, max_value=1e6)}).map(lambda d: pd.Series(d))"
+      },
+      {
+        "id": "other_series_with_nan",
+        "description": "Series with some NaN values",
+        "constraints": "st.lists(st.one_of(st.floats(allow_nan=False, allow_infinity=False, min_value=-1e6, max_value=1e6), st.just(float('nan'))), min_size=1, max_size=10).map(lambda x: pd.Series(x, dtype=float))"
+      },
+      {
+        "id": "other_scalar",
+        "description": "A scalar (float) value",
+        "constraints": "st.floats(allow_nan=False, allow_infinity=False, min_value=-1e6, max_value=1e6)"
+      },
+      {
+        "id": "other_scalar_zero",
+        "description": "Scalar value of zero",
+        "constraints": "st.just(0.0)"
+      }
+    ],
+    "fill_value": [
+      {
+        "id": "fill_value_none",
+        "description": "fill_value=None (NaN) — default; missing fills remain NaN",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "fill_value_zero",
+        "description": "fill_value=0 — fill missing with 0 before multiplication",
+        "constraints": "st.just(0.0)"
+      },
+      {
+        "id": "fill_value_float",
+        "description": "fill_value is a finite float",
+        "constraints": "st.floats(allow_nan=False, allow_infinity=False, min_value=-1e6, max_value=1e6)"
+      }
+    ],
+    "level": [
+      {
+        "id": "level_none",
+        "description": "level=None — no MultiIndex broadcast",
+        "constraints": "st.just(None)"
+      }
+    ],
+    "axis": [
+      {
+        "id": "axis_zero",
+        "description": "axis=0 or 'index' — only valid values per doc",
+        "constraints": "st.sampled_from([0, 'index'])"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "result_is_series",
+      "source": "Returns: Series — The result of the operation.",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_series_same_index", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert isinstance(result, pd.Series)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "mul_scalar_equiv_to_star_operator",
+      "source": "Equivalent to series*other",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_scalar", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result.equals(self * other)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "mul_series_equiv_to_star_operator",
+      "source": "Equivalent to series*other",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_series_same_index", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result.equals(self * other)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "element_wise_correctness",
+      "source": "element-wise (binary operator mul)",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_series_same_index", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert all(result[i] == self.iloc[i] * other.iloc[i] for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "fill_value_replaces_nan_before_multiply",
+      "source": "Fill existing missing (NaN) values, and any new element needed for successful Series alignment, with this value before computation.",
+      "pre_condition": {
+        "self_numeric_with_nan", "other_scalar", "fill_value_zero", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result[self.isna()].eq(0.0 * other).all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "both_nan_stays_nan_regardless_fill_value",
+      "source": "If data in both corresponding Series locations is missing the result of filling (at that location) will be missing.",
+      "pre_condition": {
+        "self_numeric_with_nan", "other_series_with_nan", "fill_value_zero", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result[self.isna() & other.reindex(self.index).isna()].isna().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "non_overlapping_index_with_fill_value_none_is_nan",
+      "source": "any new element needed for successful Series alignment, with this value before computation",
+      "pre_condition": {
+        "self_with_string_index", "other_series_partial_overlap", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result[~result.index.isin(self.index.intersection(other.index))].isna().all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "non_overlapping_index_with_fill_value_zero_is_zero",
+      "source": "Fill existing missing (NaN) values, and any new element needed for successful Series alignment, with this value before computation. >>> a.mul(5, fill_value=0) — d    0.0",
+      "pre_condition": {
+        "self_numeric_with_nan", "other_scalar", "fill_value_zero", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result[self.isna()].eq(0.0).all()",
+      "confidence": "explicit"
+    },
+    {
+      "id": "scalar_multiply_length_preserved",
+      "source": "element-wise (binary operator mul)",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_scalar", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert len(result) == len(self)",
+      "confidence": "implicit",
+      "implicit_reason": "Element-wise scalar multiplication cannot change the number of elements; follows logically from the definition of element-wise operations."
+    },
+    {
+      "id": "index_preserved_for_scalar",
+      "source": "",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_scalar", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result.index.equals(self.index)",
+      "confidence": "implicit",
+      "implicit_reason": "Scalar multiplication does not change alignment; the output index must match the input Series index."
+    },
+    {
+      "id": "multiply_by_zero_gives_zeros",
+      "source": "element-wise (binary operator mul)",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_scalar_zero", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert (result == 0.0).all()",
+      "confidence": "implicit",
+      "implicit_reason": "Any finite number multiplied by zero equals zero; follows from basic arithmetic applied element-wise."
+    },
+    {
+      "id": "commutativity_with_scalar",
+      "source": "See also: Series.rmul — Reverse of the Multiplication operator",
+      "pre_condition": {
+        "self_numeric_no_nan", "other_scalar", "fill_value_none", "level_none", "axis_zero"
+      },
+      "expected_behavior": "assert result.equals(self.rmul(other, fill_value=None))",
+      "confidence": "implicit",
+      "implicit_reason": "Multiplication is commutative; mul and rmul with the same inputs should yield the same result for scalars."
+    }
+  ]
+}

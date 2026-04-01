@@ -1,0 +1,207 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "Series.str.contains",
+    "signature": "Series.str.contains(pat, case=True, flags=0, na=<no_default>, regex=True)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.str.contains.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_non_null_strings",
+        "description": "Series containing only non-null string elements",
+        "constraints": "st.builds(pd.Series, st.lists(st.text(min_size=0, max_size=20), min_size=1, max_size=10))"
+      },
+      {
+        "id": "self_with_nan",
+        "description": "Series containing string elements mixed with NaN (np.nan or None)",
+        "constraints": "st.builds(pd.Series, st.lists(st.one_of(st.text(min_size=0, max_size=20), st.none()), min_size=2, max_size=10)).filter(lambda s: s.isna().any())"
+      }
+    ],
+    "pat": [
+      {
+        "id": "pat_literal_alphanumeric",
+        "description": "Character sequence without regex special characters",
+        "constraints": "st.text(alphabet=st.characters(whitelist_categories=('Ll', 'Lu', 'Nd')), min_size=1, max_size=5)"
+      },
+      {
+        "id": "pat_regex_metachar",
+        "description": "Valid regular expression with metacharacters such as \\d, .*, \\w+",
+        "constraints": "st.sampled_from([\"\\\\d\", \"[a-z]+\", \".*\", \"\\\\w+\", \".0\", \"^[A-Z]\"])"
+      },
+      {
+        "id": "pat_regex_alternation",
+        "description": "Regular expression using alternation operator |",
+        "constraints": "st.sampled_from([\"house|dog\", \"a|b\", \"cat|dog\", \"[0-9]|[a-z]\"])"
+      }
+    ],
+    "case": [
+      {
+        "id": "case_sensitive_true",
+        "description": "If True, case sensitive",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "case_insensitive_false",
+        "description": "If False, case insensitive matching",
+        "constraints": "st.just(False)"
+      }
+    ],
+    "flags": [
+      {
+        "id": "flags_none",
+        "description": "Default flags=0 (no flags)",
+        "constraints": "st.just(0)"
+      },
+      {
+        "id": "flags_ignorecase",
+        "description": "Flags to pass through to the re module, e.g. re.IGNORECASE",
+        "constraints": "st.just(re.IGNORECASE)"
+      }
+    ],
+    "na": [
+      {
+        "id": "na_explicit_false",
+        "description": "Fill value for missing values set to False",
+        "constraints": "st.just(False)"
+      },
+      {
+        "id": "na_explicit_true",
+        "description": "Fill value for missing values set to True",
+        "constraints": "st.just(True)"
+      }
+    ],
+    "regex": [
+      {
+        "id": "regex_true",
+        "description": "If True, assumes the pat is a regular expression",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "regex_false",
+        "description": "If False, treats the pat as a literal string",
+        "constraints": "st.just(False)"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "return_type_is_series",
+      "source": "Return boolean Series or Index based on whether a given pattern or regex is contained within a string of a Series or Index.",
+      "pre_condition": [
+        "self_non_null_strings",
+        "pat_literal_alphanumeric",
+        "regex_false",
+        "case_sensitive_true",
+        "flags_none"
+      ],
+      "expected_behavior": "assert isinstance(result, pd.Series)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_length_matches_input",
+      "source": "",
+      "pre_condition": [
+        "self_non_null_strings",
+        "pat_literal_alphanumeric",
+        "regex_false"
+      ],
+      "expected_behavior": "assert len(result) == len(self)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "literal_match_correctness",
+      "source": "Returning a Series of booleans using only a literal pattern. >>> s1.str.contains('og', regex=False)",
+      "pre_condition": [
+        "self_non_null_strings",
+        "pat_literal_alphanumeric",
+        "regex_false",
+        "case_sensitive_true",
+        "flags_none"
+      ],
+      "expected_behavior": "assert all(result.iloc[i] == (pat in self.iloc[i]) for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "regex_match_uses_re_search",
+      "source": "If True, assumes the pat is a regular expression.",
+      "pre_condition": [
+        "self_non_null_strings",
+        "pat_regex_metachar",
+        "regex_true",
+        "case_sensitive_true",
+        "flags_none"
+      ],
+      "expected_behavior": "assert all(result.iloc[i] == bool(re.search(pat, self.iloc[i])) for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "regex_alternation_matches_either_branch",
+      "source": "Returning 'house' or 'dog' when either expression occurs in a string. >>> s1.str.contains('house|dog', regex=True)",
+      "pre_condition": [
+        "self_non_null_strings",
+        "pat_regex_alternation",
+        "regex_true",
+        "case_sensitive_true",
+        "flags_none"
+      ],
+      "expected_behavior": "assert all(result.iloc[i] == bool(re.search(pat, self.iloc[i])) for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "case_false_ignores_case",
+      "source": "If True, case sensitive.",
+      "pre_condition": [
+        "self_non_null_strings",
+        "pat_literal_alphanumeric",
+        "regex_false",
+        "case_insensitive_false",
+        "flags_none"
+      ],
+      "expected_behavior": "assert all(result.iloc[i] == (pat.lower() in self.iloc[i].lower()) for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "flags_ignorecase_makes_regex_case_insensitive",
+      "source": "Ignoring case sensitivity using flags with regex. >>> s1.str.contains('PARROT', flags=re.IGNORECASE, regex=True)",
+      "pre_condition": [
+        "self_non_null_strings",
+        "pat_literal_alphanumeric",
+        "regex_true",
+        "case_sensitive_true",
+        "flags_ignorecase"
+      ],
+      "expected_behavior": "assert all(result.iloc[i] == bool(re.search(pat, self.iloc[i], re.IGNORECASE)) for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "na_fills_missing_value_positions",
+      "source": "Fill value for missing values.",
+      "pre_condition": [
+        "self_with_nan",
+        "pat_literal_alphanumeric",
+        "regex_false",
+        "na_explicit_false"
+      ],
+      "expected_behavior": "assert all(result.iloc[i] == na for i in range(len(self)) if pd.isna(self.iloc[i]))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "regex_false_dot_is_literal",
+      "source": "Ensure pat is a not a literal pattern when regex is set to True. However, '.0' as a regex matches any character followed by a 0.",
+      "pre_condition": [
+        "self_non_null_strings",
+        "regex_false",
+        "case_sensitive_true",
+        "flags_none"
+      ],
+      "expected_behavior": "assert all(result.iloc[i] == (pat in self.iloc[i]) for i in range(len(self)))",
+      "confidence": "explicit"
+    }
+  ]
+}

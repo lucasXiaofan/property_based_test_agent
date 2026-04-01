@@ -1,8 +1,7 @@
 ## Folder Structure Rule (Added)
-To align with `test_quality_metric`, every IR target must use:
 
 ```text
-ir2test_pipeline/
+experiments/oracle_generation//
   <library>/
     <module_or_class>/
       <function>/
@@ -20,4 +19,4 @@ References:
 - NumPy strategies: https://hypothesis.readthedocs.io/en/latest/reference/strategies.html#numpy
 - Pandas strategies: https://hypothesis.readthedocs.io/en/latest/reference/strategies.html#pandas
 
-you will be given with url and function name, and you need to generate test cases to exhaustively cover the important properties of the function.
+you will be given with url/doc and function name, and you need to generate test cases to exhaustively cover the important properties of the function.

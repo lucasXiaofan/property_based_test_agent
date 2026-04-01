@@ -1,0 +1,200 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "Index.shift",
+    "signature": "Index.shift(periods=1, freq=None)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Index.shift.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_datetime_index",
+        "description": "DatetimeIndex — one of the datetime-like index classes this method is implemented for",
+        "constraints": "st.just(pd.date_range('2011-01-01', periods=st.integers(min_value=1, max_value=20).example(), freq='D'))"
+      },
+      {
+        "id": "self_datetime_index_with_ms_freq",
+        "description": "DatetimeIndex with MonthStart freq, as shown in the examples",
+        "constraints": "st.builds(lambda n: pd.date_range('2011-01-01', periods=n, freq='MS'), n=st.integers(min_value=1, max_value=12))"
+      },
+      {
+        "id": "self_timedelta_index",
+        "description": "TimedeltaIndex — one of the datetime-like index classes this method is implemented for",
+        "constraints": "st.builds(lambda n: pd.timedelta_range('0 days', periods=n, freq='D'), n=st.integers(min_value=1, max_value=20))"
+      },
+      {
+        "id": "self_period_index",
+        "description": "PeriodIndex — one of the datetime-like index classes this method is implemented for",
+        "constraints": "st.builds(lambda n: pd.period_range('2011-01', periods=n, freq='M'), n=st.integers(min_value=1, max_value=12))"
+      }
+    ],
+    "periods": [
+      {
+        "id": "periods_default",
+        "description": "Default value is 1",
+        "constraints": "st.just(1)"
+      },
+      {
+        "id": "periods_positive_int",
+        "description": "Positive number of periods to shift by",
+        "constraints": "st.integers(min_value=1, max_value=100)"
+      },
+      {
+        "id": "periods_negative_int",
+        "description": "Negative number of periods to shift by, can be positive or negative",
+        "constraints": "st.integers(min_value=-100, max_value=-1)"
+      },
+      {
+        "id": "periods_zero",
+        "description": "Zero periods shift — zero is an integer, not excluded by doc",
+        "constraints": "st.just(0)"
+      }
+    ],
+    "freq": [
+      {
+        "id": "freq_none",
+        "description": "If None, the index is shifted by its own freq attribute",
+        "constraints": "st.none()"
+      },
+      {
+        "id": "freq_offset_alias_string",
+        "description": "Offset aliases are valid strings, e.g., 'D', 'W', 'M' etc.",
+        "constraints": "st.sampled_from(['D', 'W', 'MS', 'ME', 'h', 'min', 's'])"
+      },
+      {
+        "id": "freq_timedelta",
+        "description": "pandas.Timedelta as freq argument",
+        "constraints": "st.builds(pd.Timedelta, days=st.integers(min_value=1, max_value=30))"
+      },
+      {
+        "id": "freq_date_offset",
+        "description": "pandas.DateOffset as freq argument",
+        "constraints": "st.builds(pd.DateOffset, days=st.integers(min_value=1, max_value=30))"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "returns_pandas_index",
+      "source": "Returns: pandas.Index — Shifted index.",
+      "pre_condition": {
+        "self_datetime_index", "periods_positive_int", "freq_offset_alias_string"
+      },
+      "expected_behavior": "assert isinstance(result, pd.Index)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_same_length_as_self",
+      "source": "Shift index by desired number of time frequency increments.",
+      "pre_condition": {
+        "self_datetime_index", "periods_positive_int", "freq_offset_alias_string"
+      },
+      "expected_behavior": "assert len(result) == len(self)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "shift_with_freq_d_adds_days",
+      "source": "Shift the index by 10 days. >>> month_starts.shift(10, freq='D') DatetimeIndex(['2011-01-11', ...])",
+      "pre_condition": {
+        "self_datetime_index_with_ms_freq", "periods_positive_int", "freq_offset_alias_string"
+      },
+      "expected_behavior": "assert all(result[i] == self[i] + pd.Timedelta(days=periods) for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "shift_with_freq_none_uses_index_freq",
+      "source": "If None, the index is shifted by its own freq attribute. >>> month_starts.shift(10) DatetimeIndex(['2011-11-01', ...], freq='MS')",
+      "pre_condition": {
+        "self_datetime_index_with_ms_freq", "periods_positive_int", "freq_none"
+      },
+      "expected_behavior": "assert all(result[i] == self[i] + periods * self.freq for i in range(len(self)))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "shift_freq_none_preserves_freq_attribute",
+      "source": "The default value of freq is the freq attribute of the index, which is 'MS' (month start) in this example. >>> month_starts.shift(10) DatetimeIndex([...], freq='MS')",
+      "pre_condition": {
+        "self_datetime_index_with_ms_freq", "periods_positive_int", "freq_none"
+      },
+      "expected_behavior": "assert result.freq == self.freq",
+      "confidence": "explicit"
+    },
+    {
+      "id": "shift_with_explicit_freq_loses_freq_attribute",
+      "source": ">>> month_starts.shift(10, freq='D') DatetimeIndex([...], freq=None)",
+      "pre_condition": {
+        "self_datetime_index_with_ms_freq", "periods_positive_int", "freq_offset_alias_string"
+      },
+      "expected_behavior": "assert result.freq is None",
+      "confidence": "explicit"
+    },
+    {
+      "id": "shift_zero_periods_equals_self",
+      "source": "Number of periods (or increments) to shift by, can be positive or negative.",
+      "pre_condition": {
+        "self_datetime_index", "periods_zero", "freq_none"
+      },
+      "expected_behavior": "assert result.equals(self)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "shift_negative_moves_backward",
+      "source": "Number of periods (or increments) to shift by, can be positive or negative.",
+      "pre_condition": {
+        "self_datetime_index", "periods_negative_int", "freq_offset_alias_string"
+      },
+      "expected_behavior": "assert all(result[i] < self[i] for i in range(len(self)))",
+      "confidence": "implicit"
+    },
+    {
+      "id": "shift_positive_moves_forward",
+      "source": "Number of periods (or increments) to shift by, can be positive or negative.",
+      "pre_condition": {
+        "self_datetime_index", "periods_positive_int", "freq_offset_alias_string"
+      },
+      "expected_behavior": "assert all(result[i] > self[i] for i in range(len(self)))",
+      "confidence": "implicit"
+    },
+    {
+      "id": "shift_roundtrip_positive_negative",
+      "source": "Number of periods (or increments) to shift by, can be positive or negative.",
+      "pre_condition": {
+        "self_datetime_index", "periods_positive_int", "freq_offset_alias_string"
+      },
+      "expected_behavior": "assert self.shift(periods, freq=freq).shift(-periods, freq=freq).equals(self)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "result_dtype_preserved_for_datetime_index",
+      "source": "This method is only implemented for datetime-like index classes, i.e., DatetimeIndex, PeriodIndex and TimedeltaIndex.",
+      "pre_condition": {
+        "self_datetime_index", "periods_positive_int", "freq_none"
+      },
+      "expected_behavior": "assert isinstance(result, pd.DatetimeIndex)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "result_dtype_preserved_for_period_index",
+      "source": "This method is only implemented for datetime-like index classes, i.e., DatetimeIndex, PeriodIndex and TimedeltaIndex.",
+      "pre_condition": {
+        "self_period_index", "periods_positive_int", "freq_none"
+      },
+      "expected_behavior": "assert isinstance(result, pd.PeriodIndex)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "result_dtype_preserved_for_timedelta_index",
+      "source": "This method is only implemented for datetime-like index classes, i.e., DatetimeIndex, PeriodIndex and TimedeltaIndex.",
+      "pre_condition": {
+        "self_timedelta_index", "periods_positive_int", "freq_none"
+      },
+      "expected_behavior": "assert isinstance(result, pd.TimedeltaIndex)",
+      "confidence": "implicit"
+    }
+  ]
+}

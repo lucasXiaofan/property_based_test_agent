@@ -1,0 +1,361 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "DataFrame.groupby",
+    "signature": "DataFrame.groupby(by=None, level=None, *, as_index=True, sort=True, group_keys=True, observed=True, dropna=True)",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.DataFrame.groupby.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_basic_df_with_string_groupby_col",
+        "description": "Non-empty DataFrame with a string 'key' column suitable as a groupby key and a numeric 'val' column",
+        "constraints": "st.integers(min_value=2, max_value=8).flatmap(lambda n: st.fixed_dictionaries({'key': st.lists(st.sampled_from(['a', 'b', 'c']), min_size=n, max_size=n), 'val': st.lists(st.integers(), min_size=n, max_size=n)}).map(pd.DataFrame))"
+      },
+      {
+        "id": "self_multiindex_df",
+        "description": "DataFrame with a named two-level MultiIndex, for level-based groupby",
+        "constraints": "st.just(pd.DataFrame({'val': [1.0, 2.0, 3.0, 4.0]}, index=pd.MultiIndex.from_arrays([['a', 'a', 'b', 'b'], ['x', 'y', 'x', 'y']], names=['level0', 'level1'])))"
+      },
+      {
+        "id": "self_df_with_na_in_groupby_col",
+        "description": "DataFrame where the 'key' groupby column contains at least one NA value",
+        "constraints": "st.integers(min_value=3, max_value=8).flatmap(lambda n: st.fixed_dictionaries({'key': st.lists(st.one_of(st.just(None), st.sampled_from(['a', 'b'])), min_size=n, max_size=n), 'val': st.lists(st.integers(), min_size=n, max_size=n)}).filter(lambda d: any(k is None for k in d['key'])).map(pd.DataFrame))"
+      },
+      {
+        "id": "self_df_with_categorical_col",
+        "description": "DataFrame with a categorical 'key' column where not all categories are observed (categories=['a','b','c'] but only 'a','b' appear)",
+        "constraints": "st.integers(min_value=2, max_value=6).flatmap(lambda n: st.lists(st.sampled_from(['a', 'b']), min_size=n, max_size=n).map(lambda vals: pd.DataFrame({'key': pd.Categorical(vals, categories=['a', 'b', 'c']), 'val': list(range(len(vals)))})))"
+      }
+    ],
+
+    "by": [
+      {
+        "id": "by_single_column_label",
+        "description": "A label or list of labels may be passed to group by the columns in self",
+        "constraints": "st.just('key')"
+      },
+      {
+        "id": "by_list_of_column_labels",
+        "description": "A list of labels to group by multiple columns in self",
+        "constraints": "st.just(['key'])"
+      },
+      {
+        "id": "by_none",
+        "description": "by=None; must be used together with level when grouping by MultiIndex level",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "by_function_on_index",
+        "description": "If by is a function, it's called on each value of the object's index",
+        "constraints": "st.just(lambda x: x % 2)"
+      }
+    ],
+
+    "level": [
+      {
+        "id": "level_none",
+        "description": "Default; level is not used when by is specified",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "level_integer",
+        "description": "Group by a particular integer level of a MultiIndex; do not specify both by and level",
+        "constraints": "st.just(0)"
+      },
+      {
+        "id": "level_name_string",
+        "description": "Group by a named level of a MultiIndex; do not specify both by and level",
+        "constraints": "st.just('level0')"
+      }
+    ],
+
+    "as_index": [
+      {
+        "id": "as_index_true",
+        "description": "Return object with group labels as the index. Only relevant for DataFrame input.",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "as_index_false",
+        "description": "as_index=False is effectively 'SQL-style' grouped output",
+        "constraints": "st.just(False)"
+      }
+    ],
+
+    "sort": [
+      {
+        "id": "sort_true",
+        "description": "Sort group keys (default)",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "sort_false",
+        "description": "If False, the groups will appear in the same order as they did in the original DataFrame",
+        "constraints": "st.just(False)"
+      }
+    ],
+
+    "group_keys": [
+      {
+        "id": "group_keys_true",
+        "description": "When calling apply and by produces a like-indexed result, add group keys to index to identify pieces (default)",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "group_keys_false",
+        "description": "Do not add group keys to index when calling apply",
+        "constraints": "st.just(False)"
+      }
+    ],
+
+    "observed": [
+      {
+        "id": "observed_true",
+        "description": "Only show observed values for categorical groupers (default since 3.0.0)",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "observed_false",
+        "description": "Show all values for categorical groupers",
+        "constraints": "st.just(False)"
+      }
+    ],
+
+    "dropna": [
+      {
+        "id": "dropna_true",
+        "description": "NA values together with row/column will be dropped (default)",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "dropna_false",
+        "description": "NA values will also be treated as the key in groups",
+        "constraints": "st.just(False)"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "returns_dataframe_groupby_object",
+      "source": "Returns a groupby object that contains information about the groups.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "as_index_true",
+        "sort_true",
+        "group_keys_true",
+        "observed_true",
+        "dropna_true"
+      ],
+      "expected_behavior": "assert type(result).__name__ == 'DataFrameGroupBy'",
+      "confidence": "explicit"
+    },
+    {
+      "id": "group_labels_as_index_when_as_index_true",
+      "source": "Return object with group labels as the index. Only relevant for DataFrame input.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "as_index_true"
+      ],
+      "expected_behavior": "assert result.sum().index.name == 'key'",
+      "confidence": "explicit"
+    },
+    {
+      "id": "sql_style_output_when_as_index_false",
+      "source": "as_index=False is effectively 'SQL-style' grouped output.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "as_index_false"
+      ],
+      "expected_behavior": "agg = result.sum(); assert 'key' in agg.columns and isinstance(agg.index, pd.RangeIndex)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "group_keys_sorted_when_sort_true",
+      "source": "Sort group keys.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "sort_true"
+      ],
+      "expected_behavior": "keys = list(result.groups.keys()); assert keys == sorted(keys)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "groups_in_original_order_when_sort_false",
+      "source": "If False, the groups will appear in the same order as they did in the original DataFrame.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "sort_false"
+      ],
+      "expected_behavior": "keys = list(result.groups.keys()); assert keys == list(dict.fromkeys(df['key']))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "na_rows_dropped_from_groups_when_dropna_true",
+      "source": "If True, and if group keys contain NA values, NA values together with row/column will be dropped.",
+      "pre_condition": [
+        "self_df_with_na_in_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "dropna_true"
+      ],
+      "expected_behavior": "assert not any(pd.isna(k) for k in result.groups.keys())",
+      "confidence": "explicit"
+    },
+    {
+      "id": "na_treated_as_group_key_when_dropna_false",
+      "source": "If False, NA values will also be treated as the key in groups.",
+      "pre_condition": [
+        "self_df_with_na_in_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "dropna_false"
+      ],
+      "expected_behavior": "assert any(pd.isna(k) for k in result.groups.keys())",
+      "confidence": "explicit"
+    },
+    {
+      "id": "only_observed_categories_in_groups_when_observed_true",
+      "source": "If True: only show observed values for categorical groupers.",
+      "pre_condition": [
+        "self_df_with_categorical_col",
+        "by_single_column_label",
+        "level_none",
+        "observed_true"
+      ],
+      "expected_behavior": "assert set(result.groups.keys()) == set(df['key'].dropna().unique())",
+      "confidence": "explicit"
+    },
+    {
+      "id": "all_categories_in_groups_when_observed_false",
+      "source": "If False: show all values for categorical groupers.",
+      "pre_condition": [
+        "self_df_with_categorical_col",
+        "by_single_column_label",
+        "level_none",
+        "observed_false"
+      ],
+      "expected_behavior": "assert set(result.groups.keys()) == set(df['key'].cat.categories)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "row_order_preserved_within_each_group",
+      "source": "Groupby preserves the order of rows within each group.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none"
+      ],
+      "expected_behavior": "assert all(list(grp.index) == [i for i in df.index if i in set(grp.index)] for _, grp in result)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "all_rows_covered_by_groups_when_no_na",
+      "source": "",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "dropna_true"
+      ],
+      "expected_behavior": "assert sum(len(grp) for _, grp in result) == len(df)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "all_rows_including_na_covered_when_dropna_false",
+      "source": "",
+      "pre_condition": [
+        "self_df_with_na_in_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "dropna_false"
+      ],
+      "expected_behavior": "assert sum(len(grp) for _, grp in result) == len(df)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "group_count_equals_unique_non_na_key_values",
+      "source": "",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "dropna_true"
+      ],
+      "expected_behavior": "assert result.ngroups == df['key'].nunique(dropna=True)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "level_groupby_returns_dataframe_groupby",
+      "source": "If the axis is a MultiIndex (hierarchical), group by a particular level or levels. Do not specify both by and level.",
+      "pre_condition": [
+        "self_multiindex_df",
+        "by_none",
+        "level_integer"
+      ],
+      "expected_behavior": "assert type(result).__name__ == 'DataFrameGroupBy'",
+      "confidence": "explicit"
+    },
+    {
+      "id": "level_name_groupby_groups_by_named_level",
+      "source": "If the axis is a MultiIndex (hierarchical), group by a particular level or levels.",
+      "pre_condition": [
+        "self_multiindex_df",
+        "by_none",
+        "level_name_string"
+      ],
+      "expected_behavior": "assert set(result.groups.keys()) == {'a', 'b'}",
+      "confidence": "explicit"
+    },
+    {
+      "id": "group_keys_true_adds_keys_to_apply_result_index",
+      "source": "When calling apply and the by argument produces a like-indexed (i.e. a transform) result, add group keys to index to identify pieces.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "group_keys_true"
+      ],
+      "expected_behavior": "applied = result[['val']].apply(lambda x: x); assert isinstance(applied.index, pd.MultiIndex)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "group_keys_false_omits_keys_from_apply_result_index",
+      "source": "By default group keys are not included when the result's index (and column) labels match the inputs, and are included otherwise.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_single_column_label",
+        "level_none",
+        "group_keys_false"
+      ],
+      "expected_behavior": "applied = result[['val']].apply(lambda x: x); assert not isinstance(applied.index, pd.MultiIndex)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "by_function_groups_by_index_mapped_values",
+      "source": "If by is a function, it's called on each value of the object's index.",
+      "pre_condition": [
+        "self_basic_df_with_string_groupby_col",
+        "by_function_on_index",
+        "level_none"
+      ],
+      "expected_behavior": "assert set(result.groups.keys()) == set(df.index.map(lambda x: x % 2))",
+      "confidence": "explicit"
+    }
+  ]
+}

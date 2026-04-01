@@ -1,0 +1,443 @@
+{
+  "metadata": {
+    "library": "pandas",
+    "version": "3.0",
+    "function": "DataFrame.to_json",
+    "signature": "DataFrame.to_json(path_or_buf=None, *, orient=None, date_format=None, double_precision=10, force_ascii=True, date_unit='ms', default_handler=None, lines=False, compression='infer', index=None, indent=None, storage_options=None, mode='w')",
+    "reference_urls": [
+      "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.DataFrame.to_json.html"
+    ]
+  },
+
+  "pre_condition": {
+    "self": [
+      {
+        "id": "self_simple_string_df",
+        "description": "",
+        "constraints": "st.just(pd.DataFrame([['a', 'b'], ['c', 'd']], index=['row 1', 'row 2'], columns=['col 1', 'col 2']))"
+      },
+      {
+        "id": "self_df_with_nan",
+        "description": "NaN's and None will be converted to null",
+        "constraints": "st.just(pd.DataFrame({'a': [1.0, float('nan'), 3.0], 'b': [None, 'x', 'y']}))"
+      },
+      {
+        "id": "self_df_with_float",
+        "description": "The number of decimal places to use when encoding floating point values.",
+        "constraints": "st.builds(lambda vals: pd.DataFrame({'a': vals}), vals=st.lists(st.floats(allow_nan=False, allow_infinity=False, min_value=-1e10, max_value=1e10), min_size=1, max_size=5))"
+      },
+      {
+        "id": "self_df_with_datetime",
+        "description": "datetime objects will be converted to UNIX timestamps",
+        "constraints": "st.just(pd.DataFrame({'dt': pd.to_datetime(['2021-01-01', '2021-06-15'])}))"
+      },
+      {
+        "id": "self_empty_df",
+        "description": "",
+        "constraints": "st.just(pd.DataFrame())"
+      },
+      {
+        "id": "self_df_arbitrary",
+        "description": "",
+        "constraints": "st.builds(pd.DataFrame, data=st.fixed_dictionaries({'a': st.lists(st.integers(min_value=-100, max_value=100), min_size=1, max_size=5), 'b': st.lists(st.text(max_size=5), min_size=1, max_size=5)}))"
+      }
+    ],
+
+    "path_or_buf": [
+      {
+        "id": "path_or_buf_none",
+        "description": "If None, the result is returned as a string.",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "path_or_buf_file_path",
+        "description": "String, path object (implementing os.PathLike[str]), or file-like object implementing a write() function.",
+        "constraints": "st.just('/tmp/test_to_json_output.json')"
+      }
+    ],
+
+    "orient": [
+      {
+        "id": "orient_none_default",
+        "description": "default is 'columns' for DataFrame",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "orient_split",
+        "description": "'split': dict like {'index' -> [index], 'columns' -> [columns], 'data' -> [values]}",
+        "constraints": "st.just('split')"
+      },
+      {
+        "id": "orient_records",
+        "description": "'records': list like [{column -> value}, ..., {column -> value}]",
+        "constraints": "st.just('records')"
+      },
+      {
+        "id": "orient_index",
+        "description": "'index': dict like {index -> {column -> value}}",
+        "constraints": "st.just('index')"
+      },
+      {
+        "id": "orient_columns",
+        "description": "'columns': dict like {column -> {index -> value}}",
+        "constraints": "st.just('columns')"
+      },
+      {
+        "id": "orient_values",
+        "description": "'values': just the values array",
+        "constraints": "st.just('values')"
+      },
+      {
+        "id": "orient_table",
+        "description": "'table': dict like {'schema': {schema}, 'data': {data}} Describing the data, where data component is like orient='records'.",
+        "constraints": "st.just('table')"
+      }
+    ],
+
+    "date_format": [
+      {
+        "id": "date_format_none",
+        "description": "The default depends on the orient. For orient='table', the default is 'iso'. For all other orients, the default is 'epoch'.",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "date_format_iso",
+        "description": "'iso' = ISO8601",
+        "constraints": "st.just('iso')"
+      }
+    ],
+
+    "double_precision": [
+      {
+        "id": "double_precision_default",
+        "description": "The number of decimal places to use when encoding floating point values, default 10",
+        "constraints": "st.just(10)"
+      },
+      {
+        "id": "double_precision_valid_range",
+        "description": "The possible maximal value is 15.",
+        "constraints": "st.integers(min_value=0, max_value=15)"
+      },
+      {
+        "id": "double_precision_exceeds_max",
+        "description": "Passing double_precision greater than 15 will raise a ValueError.",
+        "constraints": "st.integers(min_value=16, max_value=100)"
+      }
+    ],
+
+    "force_ascii": [
+      {
+        "id": "force_ascii_true",
+        "description": "Force encoded string to be ASCII, default True",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "force_ascii_false",
+        "description": "Force encoded string to be ASCII set to False",
+        "constraints": "st.just(False)"
+      }
+    ],
+
+    "date_unit": [
+      {
+        "id": "date_unit_ms_default",
+        "description": "default 'ms' (milliseconds)",
+        "constraints": "st.just('ms')"
+      },
+      {
+        "id": "date_unit_valid",
+        "description": "One of 's', 'ms', 'us', 'ns' for second, millisecond, microsecond, and nanosecond respectively.",
+        "constraints": "st.sampled_from(['s', 'ms', 'us', 'ns'])"
+      }
+    ],
+
+    "lines": [
+      {
+        "id": "lines_false_default",
+        "description": "default False",
+        "constraints": "st.just(False)"
+      },
+      {
+        "id": "lines_true",
+        "description": "If 'orient' is 'records' write out line-delimited json format. Will throw ValueError if incorrect 'orient' since others are not list-like.",
+        "constraints": "st.just(True)"
+      }
+    ],
+
+    "index": [
+      {
+        "id": "index_none_default",
+        "description": "The index is only used when 'orient' is 'split', 'index', 'column', or 'table'. default None",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "index_true",
+        "description": "Include index in output",
+        "constraints": "st.just(True)"
+      },
+      {
+        "id": "index_false",
+        "description": "'index' and 'column' do not support index=False.",
+        "constraints": "st.just(False)"
+      }
+    ],
+
+    "indent": [
+      {
+        "id": "indent_none_default",
+        "description": "indent=None, no indentation",
+        "constraints": "st.just(None)"
+      },
+      {
+        "id": "indent_zero",
+        "description": "The behavior of indent=0 varies from the stdlib... Currently, indent=0 and the default indent=None are equivalent in pandas",
+        "constraints": "st.just(0)"
+      },
+      {
+        "id": "indent_positive",
+        "description": "Length of whitespace used to indent each record.",
+        "constraints": "st.integers(min_value=1, max_value=8)"
+      }
+    ],
+
+    "mode": [
+      {
+        "id": "mode_write_default",
+        "description": "default 'w' (writing)",
+        "constraints": "st.just('w')"
+      },
+      {
+        "id": "mode_append",
+        "description": "mode='a' is only supported when lines is True and orient is 'records'.",
+        "constraints": "st.just('a')"
+      }
+    ]
+  },
+
+  "post_condition": [
+    {
+      "id": "returns_string_when_path_or_buf_none",
+      "source": "If None, the result is returned as a string.",
+      "pre_condition": ["path_or_buf_none"],
+      "expected_behavior": "assert isinstance(result, str)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "returns_none_when_path_or_buf_file",
+      "source": "Otherwise returns None.",
+      "pre_condition": ["path_or_buf_file_path"],
+      "expected_behavior": "assert result is None",
+      "confidence": "explicit"
+    },
+    {
+      "id": "result_is_valid_json",
+      "source": "",
+      "pre_condition": ["path_or_buf_none"],
+      "expected_behavior": "assert json.loads(result) is not None",
+      "confidence": "implicit"
+    },
+    {
+      "id": "split_orient_has_required_keys",
+      "source": "'split': dict like {'index' -> [index], 'columns' -> [columns], 'data' -> [values]}",
+      "pre_condition": ["path_or_buf_none", "orient_split"],
+      "expected_behavior": "assert set(json.loads(result).keys()) == {'index', 'columns', 'data'}",
+      "confidence": "explicit"
+    },
+    {
+      "id": "split_orient_columns_matches_df",
+      "source": "'split': dict like {'index' -> [index], 'columns' -> [columns], 'data' -> [values]}",
+      "pre_condition": ["path_or_buf_none", "orient_split", "self_simple_string_df"],
+      "expected_behavior": "assert json.loads(result)['columns'] == list(self.columns)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "split_orient_index_matches_df",
+      "source": "'split': dict like {'index' -> [index], 'columns' -> [columns], 'data' -> [values]}",
+      "pre_condition": ["path_or_buf_none", "orient_split", "self_simple_string_df"],
+      "expected_behavior": "assert json.loads(result)['index'] == list(self.index)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "split_orient_data_shape_matches_df",
+      "source": "'split': dict like {'index' -> [index], 'columns' -> [columns], 'data' -> [values]}",
+      "pre_condition": ["path_or_buf_none", "orient_split"],
+      "expected_behavior": "assert len(json.loads(result)['data']) == len(self) and all(len(row) == len(self.columns) for row in json.loads(result)['data'])",
+      "confidence": "explicit"
+    },
+    {
+      "id": "records_orient_is_list",
+      "source": "'records': list like [{column -> value}, ..., {column -> value}]",
+      "pre_condition": ["path_or_buf_none", "orient_records"],
+      "expected_behavior": "assert isinstance(json.loads(result), list)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "records_orient_length_matches_rows",
+      "source": "'records': list like [{column -> value}, ..., {column -> value}]",
+      "pre_condition": ["path_or_buf_none", "orient_records"],
+      "expected_behavior": "assert len(json.loads(result)) == len(self)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "records_orient_keys_match_columns",
+      "source": "Note that index labels are not preserved with this encoding.",
+      "pre_condition": ["path_or_buf_none", "orient_records", "self_simple_string_df"],
+      "expected_behavior": "assert all(set(row.keys()) == {str(c) for c in self.columns} for row in json.loads(result))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "index_orient_is_dict_keyed_by_index",
+      "source": "'index': dict like {index -> {column -> value}}",
+      "pre_condition": ["path_or_buf_none", "orient_index", "self_simple_string_df"],
+      "expected_behavior": "assert set(json.loads(result).keys()) == {str(k) for k in self.index}",
+      "confidence": "explicit"
+    },
+    {
+      "id": "index_orient_inner_keys_match_columns",
+      "source": "'index': dict like {index -> {column -> value}}",
+      "pre_condition": ["path_or_buf_none", "orient_index", "self_simple_string_df"],
+      "expected_behavior": "assert all(set(v.keys()) == {str(c) for c in self.columns} for v in json.loads(result).values())",
+      "confidence": "explicit"
+    },
+    {
+      "id": "columns_orient_is_dict_keyed_by_columns",
+      "source": "'columns': dict like {column -> {index -> value}}",
+      "pre_condition": ["path_or_buf_none", "orient_columns", "self_simple_string_df"],
+      "expected_behavior": "assert set(json.loads(result).keys()) == {str(c) for c in self.columns}",
+      "confidence": "explicit"
+    },
+    {
+      "id": "columns_orient_inner_keys_match_index",
+      "source": "'columns': dict like {column -> {index -> value}}",
+      "pre_condition": ["path_or_buf_none", "orient_columns", "self_simple_string_df"],
+      "expected_behavior": "assert all(set(v.keys()) == {str(k) for k in self.index} for v in json.loads(result).values())",
+      "confidence": "explicit"
+    },
+    {
+      "id": "values_orient_is_list_of_lists",
+      "source": "'values': just the values array",
+      "pre_condition": ["path_or_buf_none", "orient_values"],
+      "expected_behavior": "assert isinstance(json.loads(result), list) and all(isinstance(row, list) for row in json.loads(result))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "values_orient_shape_matches_df",
+      "source": "'values': just the values array",
+      "pre_condition": ["path_or_buf_none", "orient_values"],
+      "expected_behavior": "assert len(json.loads(result)) == len(self) and all(len(row) == len(self.columns) for row in json.loads(result))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "table_orient_has_schema_and_data",
+      "source": "'table': dict like {'schema': {schema}, 'data': {data}}",
+      "pre_condition": ["path_or_buf_none", "orient_table"],
+      "expected_behavior": "assert set(json.loads(result).keys()) >= {'schema', 'data'}",
+      "confidence": "explicit"
+    },
+    {
+      "id": "table_orient_contains_pandas_version",
+      "source": "orient='table' contains a 'pandas_version' field under 'schema'.",
+      "pre_condition": ["path_or_buf_none", "orient_table"],
+      "expected_behavior": "assert 'pandas_version' in json.loads(result)['schema']",
+      "confidence": "explicit"
+    },
+    {
+      "id": "table_orient_data_is_records_like",
+      "source": "dict like {'schema': {schema}, 'data': {data}} Describing the data, where data component is like orient='records'.",
+      "pre_condition": ["path_or_buf_none", "orient_table"],
+      "expected_behavior": "assert isinstance(json.loads(result)['data'], list) and all(isinstance(row, dict) for row in json.loads(result)['data'])",
+      "confidence": "explicit"
+    },
+    {
+      "id": "default_orient_equivalent_to_columns",
+      "source": "default is 'columns' for DataFrame",
+      "pre_condition": ["path_or_buf_none", "orient_none_default"],
+      "expected_behavior": "assert json.loads(result) == json.loads(self.to_json(orient='columns'))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "nan_converted_to_null",
+      "source": "Note NaN's and None will be converted to null",
+      "pre_condition": ["path_or_buf_none", "self_df_with_nan"],
+      "expected_behavior": "assert 'null' in result",
+      "confidence": "explicit"
+    },
+    {
+      "id": "double_precision_exceeds_15_raises_value_error",
+      "source": "Passing double_precision greater than 15 will raise a ValueError.",
+      "pre_condition": ["path_or_buf_none", "double_precision_exceeds_max", "self_df_with_float"],
+      "expected_behavior": "raises ValueError",
+      "confidence": "explicit"
+    },
+    {
+      "id": "lines_true_with_non_records_orient_raises_value_error",
+      "source": "Will throw ValueError if incorrect 'orient' since others are not list-like.",
+      "pre_condition": ["path_or_buf_none", "lines_true", "orient_split"],
+      "expected_behavior": "raises ValueError",
+      "confidence": "explicit"
+    },
+    {
+      "id": "lines_true_with_records_is_line_delimited",
+      "source": "If 'orient' is 'records' write out line-delimited json format.",
+      "pre_condition": ["path_or_buf_none", "lines_true", "orient_records", "self_simple_string_df"],
+      "expected_behavior": "assert all(json.loads(line) is not None for line in result.strip().split('\\n'))",
+      "confidence": "explicit"
+    },
+    {
+      "id": "lines_true_records_row_count_equals_df_rows",
+      "source": "If 'orient' is 'records' write out line-delimited json format.",
+      "pre_condition": ["path_or_buf_none", "lines_true", "orient_records"],
+      "expected_behavior": "assert len(result.strip().split('\\n')) == len(self)",
+      "confidence": "implicit"
+    },
+    {
+      "id": "index_false_with_index_orient_raises_value_error",
+      "source": "'index' and 'column' do not support index=False.",
+      "pre_condition": ["path_or_buf_none", "index_false", "orient_index"],
+      "expected_behavior": "raises ValueError",
+      "confidence": "explicit"
+    },
+    {
+      "id": "index_false_with_columns_orient_raises_value_error",
+      "source": "'index' and 'column' do not support index=False.",
+      "pre_condition": ["path_or_buf_none", "index_false", "orient_columns"],
+      "expected_behavior": "raises ValueError",
+      "confidence": "explicit"
+    },
+    {
+      "id": "mode_append_without_lines_raises_error",
+      "source": "mode='a' is only supported when lines is True and orient is 'records'.",
+      "pre_condition": ["path_or_buf_file_path", "mode_append", "lines_false_default", "orient_records"],
+      "expected_behavior": "raises ValueError",
+      "confidence": "explicit"
+    },
+    {
+      "id": "mode_append_without_records_orient_raises_error",
+      "source": "mode='a' is only supported when lines is True and orient is 'records'.",
+      "pre_condition": ["path_or_buf_file_path", "mode_append", "lines_true", "orient_split"],
+      "expected_behavior": "raises ValueError",
+      "confidence": "explicit"
+    },
+    {
+      "id": "indent_none_and_zero_equivalent",
+      "source": "Currently, indent=0 and the default indent=None are equivalent in pandas, though this may change in a future release.",
+      "pre_condition": ["path_or_buf_none", "indent_none_default"],
+      "expected_behavior": "assert result == self.to_json(path_or_buf=None, indent=0)",
+      "confidence": "explicit"
+    },
+    {
+      "id": "indent_positive_produces_multiline_output",
+      "source": "Length of whitespace used to indent each record.",
+      "pre_condition": ["path_or_buf_none", "indent_positive"],
+      "expected_behavior": "assert '\\n' in result",
+      "confidence": "implicit"
+    },
+    {
+      "id": "table_orient_default_date_format_is_iso",
+      "source": "For orient='table', the default is 'iso'.",
+      "pre_condition": ["path_or_buf_none", "orient_table", "self_df_with_datetime", "date_format_none"],
+      "expected_behavior": "assert result == self.to_json(path_or_buf=None, orient='table', date_format='iso')",
+      "confidence": "explicit"
+    }
+  ]
+}
