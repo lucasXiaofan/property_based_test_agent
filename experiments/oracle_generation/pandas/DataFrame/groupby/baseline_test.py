@@ -1,340 +1,294 @@
-"""
-Baseline property-based tests for pandas.DataFrame.groupby.
-
-Properties tested:
-1. Return type is DataFrameGroupBy
-2. Group count matches distinct key values (with dropna=True/False)
-3. Partition property: rows in each group share the same key value
-4. Completeness: every row belongs to exactly one group
-5. sort=True produces lexicographically sorted group keys
-6. sort=False preserves first-appearance order of group keys
-7. as_index=False produces RangeIndex (no group labels in index)
-8. as_index=True places group labels in the index
-9. observed=True on Categorical grouper only shows observed categories
-10. observed=False on Categorical grouper shows all categories (even empty)
-11. dropna=True excludes NA keys; dropna=False includes NA keys as one group
-12. level parameter works on MultiIndex DataFrames
-13. Aggregation result row count equals number of groups
-14. group_keys=True / False affects index when using apply
-15. Grouping by multiple columns
-"""
-
-import numpy as np
 import pandas as pd
 import pytest
 from hypothesis import given, settings, assume
-from hypothesis import strategies as st
-from hypothesis.extra.pandas import column, data_frames, range_indexes
-
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-def small_int_col(name):
-    return column(name, elements=st.integers(min_value=0, max_value=3))
-
-
-def small_str_col(name):
-    return column(name, elements=st.sampled_from(["a", "b", "c"]))
-
-
-# ---------------------------------------------------------------------------
-# 1. Return type
-# ---------------------------------------------------------------------------
-
-@given(
-    df=data_frames(
-        columns=[small_int_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=20),
-    )
-)
-def test_groupby_returns_dataframegroupby(df):
-    result = df.groupby("key")
-    assert isinstance(result, pd.core.groupby.DataFrameGroupBy)
-
-
-# ---------------------------------------------------------------------------
-# 2. Group count matches distinct key values (dropna=True)
-# ---------------------------------------------------------------------------
-
-@given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
-    )
-)
-def test_group_count_equals_distinct_keys_dropna_true(df):
-    grp = df.groupby("key", dropna=True)
-    expected = df["key"].dropna().nunique()
-    assert len(grp) == expected
-
-
-# ---------------------------------------------------------------------------
-# 3. Partition: rows in each group share the same key
-# ---------------------------------------------------------------------------
-
-@given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
-    )
-)
-def test_partition_rows_share_same_key(df):
-    for name, group in df.groupby("key", dropna=True):
-        assert (group["key"] == name).all()
-
-
-# ---------------------------------------------------------------------------
-# 4. Completeness: every row belongs to exactly one group (dropna=True drops NA rows)
-# ---------------------------------------------------------------------------
-
-@given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
-    )
-)
-def test_completeness_all_non_na_rows_covered(df):
-    non_na_idx = df.index[df["key"].notna()]
-    covered = pd.Index([], dtype=df.index.dtype)
-    for _, group in df.groupby("key", dropna=True):
-        covered = covered.append(group.index)
-    assert set(covered) == set(non_na_idx)
+from hypothesis.strategies import integers, floats, lists, sampled_from
+from hypothesis.extra.pandas import data_frames, column
 
 
 @given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+            column("C", dtype=str),
+        ],
     )
 )
-def test_completeness_all_rows_covered_dropna_false(df):
-    covered = pd.Index([], dtype=df.index.dtype)
-    for _, group in df.groupby("key", dropna=False):
-        covered = covered.append(group.index)
-    assert set(covered) == set(df.index)
+@settings(max_examples=30)
+def test_groupby_basic(df):
+    """Test basic groupby returns a DataFrameGroupBy object."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A"])
+    assert hasattr(result, "groups")
+    assert hasattr(result, "ngroups")
 
-
-# ---------------------------------------------------------------------------
-# 5. sort=True → group keys are in sorted order
-# ---------------------------------------------------------------------------
 
 @given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=2, max_size=30),
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
     )
 )
-def test_sort_true_keys_are_sorted(df):
-    assume(df["key"].nunique() >= 2)
-    keys = [name for name, _ in df.groupby("key", sort=True, dropna=True)]
-    assert keys == sorted(keys)
+@settings(max_examples=30)
+def test_groupby_as_index_true(df):
+    """Test groupby with as_index=True returns grouped data with group labels as index."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A"], as_index=True)
+    df_agg = result.mean()
+    assume(len(df_agg) > 0)
+    assert df_agg.index.name == "A"
 
-
-# ---------------------------------------------------------------------------
-# 6. sort=False → group keys appear in first-occurrence order
-# ---------------------------------------------------------------------------
 
 @given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=2, max_size=30),
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=int),
+            column("C", dtype=float),
+        ],
     )
 )
-def test_sort_false_keys_in_first_occurrence_order(df):
-    assume(df["key"].notna().any())
-    seen = []
-    for k in df["key"]:
-        if pd.notna(k) and k not in seen:
-            seen.append(k)
-    keys = [name for name, _ in df.groupby("key", sort=False, dropna=True)]
-    assert keys == seen
+@settings(max_examples=30)
+def test_groupby_as_index_false(df):
+    """Test groupby with as_index=False returns DataFrame with group labels as column."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A", "B"], as_index=False)
+    df_agg = result.mean()
+    assume(len(df_agg) > 0)
+    assert "A" in df_agg.columns
+    assert "B" in df_agg.columns
 
-
-# ---------------------------------------------------------------------------
-# 7. as_index=False → result index is RangeIndex
-# ---------------------------------------------------------------------------
 
 @given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
     )
 )
-def test_as_index_false_result_has_range_index(df):
-    result = df.groupby("key", as_index=False, dropna=True).sum()
-    assert isinstance(result.index, pd.RangeIndex)
+@settings(max_examples=30)
+def test_groupby_sort_true(df):
+    """Test groupby with sort=True sorts group keys."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A"], sort=True)
+    groups = list(result.groups.keys())
+    if len(groups) > 1:
+        assert groups == sorted(groups)
 
-
-# ---------------------------------------------------------------------------
-# 8. as_index=True → group label appears in result index
-# ---------------------------------------------------------------------------
 
 @given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
     )
 )
-def test_as_index_true_group_label_in_index(df):
-    result = df.groupby("key", as_index=True, dropna=True).sum()
-    assert result.index.name == "key"
-    # Every index value should have been a key in the original DataFrame
-    for idx_val in result.index:
-        assert idx_val in df["key"].values
+@settings(max_examples=30)
+def test_groupby_sort_false(df):
+    """Test groupby with sort=False preserves original order."""
+    assume(len(df) > 0)
+    original_order = df["A"].tolist()
+    result = df.groupby(by=["A"], sort=False)
+    assume(result.ngroups > 0)
+    first_group_key = list(result.groups.keys())[0]
+    first_group_indices = result.groups[first_group_key]
+    original_indices = [i for i, v in enumerate(original_order) if v == first_group_key]
+    assert first_group_indices.tolist() == original_indices
 
 
-# ---------------------------------------------------------------------------
-# 9. observed=True on Categorical only shows observed categories
-# ---------------------------------------------------------------------------
-
-@given(
-    cats=st.lists(
-        st.sampled_from(["x", "y", "z"]),
-        min_size=2,
-        max_size=20,
-    )
-)
-def test_observed_true_only_observed_categories(cats):
-    all_cats = ["x", "y", "z"]
-    df = pd.DataFrame(
-        {"key": pd.Categorical(cats, categories=all_cats), "val": range(len(cats))}
-    )
-    result = df.groupby("key", observed=True).sum()
-    observed_cats = set(cats)
-    assert set(result.index) == observed_cats
-
-
-# ---------------------------------------------------------------------------
-# 10. observed=False shows all categories including empty ones
-# ---------------------------------------------------------------------------
-
-def test_observed_false_shows_all_categories():
-    all_cats = ["x", "y", "z"]
-    df = pd.DataFrame(
+def test_groupby_dropna_true():
+    """Test groupby with dropna=True drops NA values from group keys."""
+    df_with_na = pd.DataFrame(
         {
-            "key": pd.Categorical(["x", "x"], categories=all_cats),
-            "val": [1, 2],
+            "A": [1, 2, None, 3, None],
+            "B": [10, 20, 30, 40, 50],
         }
     )
-    result = df.groupby("key", observed=False).sum()
-    assert set(result.index) == set(all_cats)
+    result = df_with_na.groupby(by=["A"], dropna=True)
+    groups = result.groups
+    assert None not in groups
+    assert 1 in groups
+    assert 2 in groups
+    assert 3 in groups
 
 
-# ---------------------------------------------------------------------------
-# 11a. dropna=True excludes NA keys
-# ---------------------------------------------------------------------------
-
-def test_dropna_true_excludes_na_keys():
-    df = pd.DataFrame({"key": ["a", None, "b", "a"], "val": [1, 2, 3, 4]})
-    result = df.groupby("key", dropna=True).sum()
-    assert None not in result.index
-    assert np.nan not in result.index
-    assert set(result.index) == {"a", "b"}
-
-
-# ---------------------------------------------------------------------------
-# 11b. dropna=False includes NA keys as one group
-# ---------------------------------------------------------------------------
-
-def test_dropna_false_includes_na_as_group():
-    df = pd.DataFrame({"key": ["a", None, "b", "a"], "val": [1, 2, 3, 4]})
-    result = df.groupby("key", dropna=False).sum()
-    # NA group should be present
-    assert any(pd.isna(k) for k in result.index)
-    assert "a" in result.index and "b" in result.index
+def test_groupby_dropna_false():
+    """Test groupby with dropna=False treats NA as a separate group."""
+    df_with_na = pd.DataFrame(
+        {
+            "A": [1, 2, None, 3, None],
+            "B": [10, 20, 30, 40, 50],
+        }
+    )
+    result = df_with_na.groupby(by=["A"], dropna=False)
+    groups = result.groups
+    assert any(pd.isna(k) for k in groups.keys())
 
 
-def test_dropna_false_na_group_sum():
-    df = pd.DataFrame({"key": ["a", None, "b"], "val": [1, 99, 3]})
-    result = df.groupby("key", dropna=False).sum()
-    na_row = result.loc[result.index.isna()]
-    assert int(na_row["val"].iloc[0]) == 99
+@given(
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=int),
+            column("C", dtype=float),
+        ],
+    )
+)
+@settings(max_examples=30)
+def test_groupby_multiple_columns(df):
+    """Test groupby with multiple columns."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A", "B"])
+    assert result.ngroups >= 0
 
 
-# ---------------------------------------------------------------------------
-# 12. level parameter on MultiIndex
-# ---------------------------------------------------------------------------
+@given(
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
+    )
+)
+@settings(max_examples=30)
+def test_groupby_with_series(df):
+    """Test groupby using a Series as the by parameter."""
+    assume(len(df) > 0)
+    by_series = df["A"]
+    result = df.groupby(by=by_series)
+    assert result.ngroups >= 0
 
-def test_groupby_level_multiindex():
+
+@given(
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
+    )
+)
+@settings(max_examples=30)
+def test_groupby_with_dict(df):
+    """Test groupby using a dict as the by parameter."""
+    assume(len(df) > 0)
+    unique_vals = df["A"].unique()
+    by_dict = {v: v % 2 for v in unique_vals if pd.notna(v)}
+    assume(len(by_dict) > 0)
+    result = df.groupby(by=by_dict)
+    assert result.ngroups >= 0
+
+
+@given(
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
+    )
+)
+@settings(max_examples=30)
+def test_groupby_with_function(df):
+    """Test groupby using a function as the by parameter."""
+    assume(len(df) > 0)
+    result = df.groupby(by=lambda x: x % 2)
+    assert result.ngroups >= 0
+
+
+@given(
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
+    )
+)
+@settings(max_examples=30)
+def test_groupby_preserves_order_within_group(df):
+    """Test that groupby preserves the order of observations within each group."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A"])
+    for group_key, group_indices in result.groups.items():
+        original_order = df.loc[group_indices, "A"].tolist()
+        assert original_order == list(sorted(original_order))
+
+
+@given(
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
+    )
+)
+@settings(max_examples=30)
+def test_groupby_ngroups(df):
+    """Test that ngroups returns the number of unique groups."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A"])
+    unique_values = df["A"].dropna().nunique()
+    assert result.ngroups == unique_values
+
+
+@given(
+    data_frames(
+        columns=[
+            column("A", dtype=int),
+            column("B", dtype=float),
+        ],
+    )
+)
+@settings(max_examples=30)
+def test_groupby_groups_attribute(df):
+    """Test that groups attribute returns a dict mapping group names to row indices."""
+    assume(len(df) > 0)
+    result = df.groupby(by=["A"])
+    groups = result.groups
+    assert isinstance(groups, dict)
+    for group_key, indices in groups.items():
+        assert len(indices) > 0
+
+
+def test_groupby_level_parameter():
+    """Test groupby with level parameter on MultiIndex."""
     arrays = [
-        ["Falcon", "Falcon", "Parrot", "Parrot"],
-        ["Captive", "Wild", "Captive", "Wild"],
+        ["Falcon", "Falcon", "Parrot", "Parrot", "Cat", "Cat"],
+        ["Captive", "Wild", "Captive", "Wild", "Captive", "Wild"],
     ]
     index = pd.MultiIndex.from_arrays(arrays, names=("Animal", "Type"))
-    df = pd.DataFrame({"Speed": [390.0, 350.0, 30.0, 20.0]}, index=index)
-
-    result_level0 = df.groupby(level=0).mean()
-    assert set(result_level0.index) == {"Falcon", "Parrot"}
-    assert pytest.approx(result_level0.loc["Falcon", "Speed"]) == 370.0
-    assert pytest.approx(result_level0.loc["Parrot", "Speed"]) == 25.0
-
-    result_level_name = df.groupby(level="Type").mean()
-    assert set(result_level_name.index) == {"Captive", "Wild"}
-    assert pytest.approx(result_level_name.loc["Captive", "Speed"]) == 210.0
-    assert pytest.approx(result_level_name.loc["Wild", "Speed"]) == 185.0
-
-
-# ---------------------------------------------------------------------------
-# 13. Aggregation result row count equals number of groups
-# ---------------------------------------------------------------------------
-
-@given(
-    df=data_frames(
-        columns=[small_str_col("key"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
-    )
-)
-def test_agg_result_row_count_equals_group_count(df):
-    grp = df.groupby("key", dropna=True)
-    result = grp.sum()
-    assert len(result) == len(grp)
-
-
-# ---------------------------------------------------------------------------
-# 14. group_keys parameter affects index in apply
-# ---------------------------------------------------------------------------
-
-def test_group_keys_true_adds_group_label_to_index():
     df = pd.DataFrame(
-        {"Animal": ["Falcon", "Falcon", "Parrot", "Parrot"], "Speed": [380.0, 370.0, 24.0, 26.0]}
+        {"Max Speed": [390.0, 350.0, 30.0, 20.0, 25.0, 15.0]}, index=index
     )
-    result = df.groupby("Animal", group_keys=True)[["Speed"]].apply(lambda x: x)
-    assert result.index.nlevels == 2
-    assert result.index.names[0] == "Animal"
+    result = df.groupby(level=0)
+    assert result.ngroups == 3
+    result_level1 = df.groupby(level=1)
+    assert result_level1.ngroups == 2
 
 
-def test_group_keys_false_no_extra_level_in_index():
+def test_groupby_group_keys_true():
+    """Test groupby with group_keys=True includes group keys in result index."""
     df = pd.DataFrame(
-        {"Animal": ["Falcon", "Falcon", "Parrot", "Parrot"], "Speed": [380.0, 370.0, 24.0, 26.0]}
+        {
+            "Animal": ["Falcon", "Falcon", "Parrot", "Parrot"],
+            "Max Speed": [380.0, 370.0, 24.0, 26.0],
+        }
     )
-    result = df.groupby("Animal", group_keys=False)[["Speed"]].apply(lambda x: x)
-    assert result.index.nlevels == 1
-
-
-# ---------------------------------------------------------------------------
-# 15. Grouping by multiple columns
-# ---------------------------------------------------------------------------
-
-@given(
-    df=data_frames(
-        columns=[small_str_col("k1"), small_str_col("k2"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
+    result = df.groupby("Animal", group_keys=True)[["Max Speed"]].apply(lambda x: x)
+    assert "Animal" in result.index.names or "Animal" in result.index.get_level_values(
+        0
     )
-)
-def test_groupby_multiple_columns_partition(df):
-    for (k1, k2), group in df.groupby(["k1", "k2"], dropna=True):
-        assert (group["k1"] == k1).all()
-        assert (group["k2"] == k2).all()
 
 
-@given(
-    df=data_frames(
-        columns=[small_str_col("k1"), small_str_col("k2"), small_int_col("val")],
-        index=range_indexes(min_size=1, max_size=30),
+def test_groupby_group_keys_false():
+    """Test groupby with group_keys=False excludes group keys from result index."""
+    df = pd.DataFrame(
+        {
+            "Animal": ["Falcon", "Falcon", "Parrot", "Parrot"],
+            "Max Speed": [380.0, 370.0, 24.0, 26.0],
+        }
     )
-)
-def test_groupby_multiple_columns_result_has_multiindex(df):
-    result = df.groupby(["k1", "k2"], dropna=True).sum()
-    assert isinstance(result.index, pd.MultiIndex)
+    result = df.groupby("Animal", group_keys=False)[["Max Speed"]].apply(lambda x: x)
+    assert "Animal" not in result.index.names

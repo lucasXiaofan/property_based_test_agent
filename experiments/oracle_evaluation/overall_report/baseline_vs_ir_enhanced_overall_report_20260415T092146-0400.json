@@ -1,0 +1,809 @@
+{
+  "report_type": "baseline_vs_ir_enhanced_oracle_evaluation",
+  "generated_at": "2026-04-15T09:21:46.480256-04:00",
+  "scan_root": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas",
+  "repo_root": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+  "runtime": "local",
+  "pytest_args": [
+    "-q"
+  ],
+  "total_cases": 2,
+  "dimension_summaries": {
+    "line_branch_coverage": {
+      "cases_compared": 2,
+      "line_coverage": {
+        "winner": "tie",
+        "baseline_percent": 81.82,
+        "ir_enhanced_percent": 81.82,
+        "margin_percentage_points": 0.0,
+        "case_wins": {
+          "baseline": 0,
+          "ir_enhanced": 0,
+          "tie": 2
+        }
+      },
+      "branch_coverage": {
+        "winner": "tie",
+        "baseline_percent": 77.78,
+        "ir_enhanced_percent": 77.78,
+        "margin_percentage_points": 0.0,
+        "case_wins": {
+          "baseline": 0,
+          "ir_enhanced": 0,
+          "tie": 2
+        }
+      },
+      "overall_case_winner": {
+        "winner": "tie",
+        "case_wins": {
+          "baseline": 0,
+          "ir_enhanced": 0,
+          "tie": 2
+        }
+      }
+    },
+    "mutant_kill": {
+      "cases_compared": 2,
+      "mutants_tested": 4,
+      "kill_rate": {
+        "winner": "tie",
+        "baseline_percent": 50.0,
+        "ir_enhanced_percent": 50.0,
+        "margin_percentage_points": 0.0
+      },
+      "case_wins": {
+        "baseline": 0,
+        "ir_enhanced": 0,
+        "tie": 2,
+        "no_valid_baseline": 0
+      }
+    }
+  },
+  "top_level_summary": {
+    "line_branch_coverage": {
+      "cases_compared": 2,
+      "line_winner": "tie",
+      "line_margin_percentage_points": 0.0,
+      "branch_winner": "tie",
+      "branch_margin_percentage_points": 0.0,
+      "overall_case_winner": "tie"
+    },
+    "mutant_kill": {
+      "cases_compared": 2,
+      "mutants_tested": 4,
+      "winner": "tie",
+      "margin_percentage_points": 0.0
+    }
+  },
+  "case_reports": [
+    {
+      "case_id": "DataFrame/groupby",
+      "target_api": "pandas.DataFrame.groupby",
+      "line_branch_coverage": {
+        "case_id": "DataFrame/groupby",
+        "target_api": "pandas.DataFrame.groupby",
+        "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby",
+        "suites": {
+          "baseline": {
+            "command": [
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+              "--repo-root",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+              "--runtime",
+              "local",
+              "--api",
+              "pandas.DataFrame.groupby",
+              "--test",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py",
+              "--json-out",
+              "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpf556874j__groupby__baseline.json",
+              "--",
+              "-q"
+            ],
+            "returncode": 0,
+            "stdout": "Target API: pandas.DataFrame.groupby\nResolved method chain:\n  - pandas.DataFrame.groupby [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py:10592-10826)\n.................                                                        [100%]\n=============================== warnings summary ===============================\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:22: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert hasattr(result, \"groups\")\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:77: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = list(result.groups.keys())\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:97: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_key = list(result.groups.keys())[0]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:98: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_indices = result.groups[first_group_key]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:112: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:128: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:214: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:249: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n17 passed, 182 warnings in 4.81s\n\nMethod coverage:\n  - pandas.DataFrame.groupby [core]: lines 0/0 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py: lines 2/141 (1.4%), branches 1/50 (2.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpf556874j__groupby__baseline.json\n\npytest exit code: 0\n",
+            "stderr": "",
+            "coverage": {
+              "target_api": "pandas.DataFrame.groupby",
+              "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py",
+              "pytest_exit_code": 0,
+              "methods": [
+                {
+                  "label": "pandas.DataFrame.groupby",
+                  "implementation_role": "core",
+                  "delegates_to": null,
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                  "start_line": 10592,
+                  "end_line": 10826,
+                  "covered_lines": 0,
+                  "num_statements": 0,
+                  "line_coverage_percent": 100.0,
+                  "missing_lines": [],
+                  "covered_branches": 0,
+                  "num_branches": 0,
+                  "branch_coverage_percent": 100.0,
+                  "missing_branches": {}
+                }
+              ],
+              "files": [
+                {
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                  "covered_lines": 2,
+                  "num_statements": 141,
+                  "line_coverage_percent": 1.42,
+                  "covered_branches": 1,
+                  "num_branches": 50,
+                  "branch_coverage_percent": 2.0
+                }
+              ],
+              "method_totals": {
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0
+              },
+              "core_method_totals": {
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0
+              },
+              "totals": {
+                "covered_lines": 2,
+                "num_statements": 141,
+                "line_coverage_percent": 1.42,
+                "covered_branches": 1,
+                "num_branches": 50,
+                "branch_coverage_percent": 2.0
+              },
+              "runtime_requested": "local",
+              "runtime_used": "local",
+              "runtime_fallback_reason": null
+            }
+          },
+          "ir_enhanced": {
+            "command": [
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+              "--repo-root",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+              "--runtime",
+              "local",
+              "--api",
+              "pandas.DataFrame.groupby",
+              "--test",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py",
+              "--json-out",
+              "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpgahacu0p__groupby__ir_enhanced.json",
+              "--",
+              "-q"
+            ],
+            "returncode": 0,
+            "stdout": "Target API: pandas.DataFrame.groupby\nResolved method chain:\n  - pandas.DataFrame.groupby [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py:10592-10826)\n....................................                                     [100%]\n=============================== warnings summary ===============================\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:33: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert hasattr(result, \"groups\")\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:88: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = list(result.groups.keys())\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:108: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_key = list(result.groups.keys())[0]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:109: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_indices = result.groups[first_group_key]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_dropna_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:123: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:139: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:225: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:260: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:322: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:334: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\", \"c\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_preserves_row_order_within_group\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:453: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n36 passed, 185 warnings in 4.68s\n\nMethod coverage:\n  - pandas.DataFrame.groupby [core]: lines 0/0 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py: lines 2/141 (1.4%), branches 1/50 (2.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpgahacu0p__groupby__ir_enhanced.json\n\npytest exit code: 0\n",
+            "stderr": "",
+            "coverage": {
+              "target_api": "pandas.DataFrame.groupby",
+              "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py",
+              "pytest_exit_code": 0,
+              "methods": [
+                {
+                  "label": "pandas.DataFrame.groupby",
+                  "implementation_role": "core",
+                  "delegates_to": null,
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                  "start_line": 10592,
+                  "end_line": 10826,
+                  "covered_lines": 0,
+                  "num_statements": 0,
+                  "line_coverage_percent": 100.0,
+                  "missing_lines": [],
+                  "covered_branches": 0,
+                  "num_branches": 0,
+                  "branch_coverage_percent": 100.0,
+                  "missing_branches": {}
+                }
+              ],
+              "files": [
+                {
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                  "covered_lines": 2,
+                  "num_statements": 141,
+                  "line_coverage_percent": 1.42,
+                  "covered_branches": 1,
+                  "num_branches": 50,
+                  "branch_coverage_percent": 2.0
+                }
+              ],
+              "method_totals": {
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0
+              },
+              "core_method_totals": {
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0
+              },
+              "totals": {
+                "covered_lines": 2,
+                "num_statements": 141,
+                "line_coverage_percent": 1.42,
+                "covered_branches": 1,
+                "num_branches": 50,
+                "branch_coverage_percent": 2.0
+              },
+              "runtime_requested": "local",
+              "runtime_used": "local",
+              "runtime_fallback_reason": null
+            }
+          }
+        },
+        "winner": {
+          "line": "tie",
+          "branch": "tie",
+          "overall": "tie"
+        }
+      },
+      "mutant_kill": {
+        "case_id": "DataFrame/groupby",
+        "target_api": "pandas.DataFrame.groupby",
+        "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby",
+        "mutant_wrapper": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/mutant_wrapper.py",
+        "mutant_count": 2,
+        "winner": "tie",
+        "method_summaries": {
+          "baseline": {
+            "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py",
+            "baseline_passed": true,
+            "baseline_run": {
+              "passed": true,
+              "returncode": 0,
+              "duration_seconds": 3.26137113571167,
+              "failing_tests": [],
+              "stdout_tail": "ration/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:77: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = list(result.groups.keys())\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:97: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_key = list(result.groups.keys())[0]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:98: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_indices = result.groups[first_group_key]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:112: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:128: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:214: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:249: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n17 passed, 182 warnings in 2.53s\n"
+            },
+            "valid_mutants": 2,
+            "killed_mutants": 1,
+            "survived_mutants": 1,
+            "invalid_mutants": 0,
+            "kill_rate": 0.5,
+            "killed_mutant_ids": [
+              "M2"
+            ],
+            "survived_mutant_ids": [
+              "M1"
+            ],
+            "invalid_mutant_ids": []
+          },
+          "ir_enhanced": {
+            "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py",
+            "baseline_passed": true,
+            "baseline_run": {
+              "passed": true,
+              "returncode": 0,
+              "duration_seconds": 3.244516134262085,
+              "failing_tests": [],
+              "stdout_tail": "e_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:123: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:139: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:225: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:260: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:322: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:334: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\", \"c\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_preserves_row_order_within_group\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:453: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n36 passed, 185 warnings in 2.56s\n"
+            },
+            "valid_mutants": 2,
+            "killed_mutants": 1,
+            "survived_mutants": 1,
+            "invalid_mutants": 0,
+            "kill_rate": 0.5,
+            "killed_mutant_ids": [
+              "M2"
+            ],
+            "survived_mutant_ids": [
+              "M1"
+            ],
+            "invalid_mutant_ids": []
+          }
+        },
+        "mutants": [
+          {
+            "mutant_id": "M1",
+            "mutant_name": "force_sort_true",
+            "description": "Force group keys to be sorted even when the caller requests sort=False.",
+            "doc_anchor": "sort bool, default True",
+            "methods": {
+              "baseline": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": true,
+                  "returncode": 0,
+                  "duration_seconds": 3.277371883392334,
+                  "failing_tests": [],
+                  "stdout_tail": "ration/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:77: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = list(result.groups.keys())\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:97: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_key = list(result.groups.keys())[0]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:98: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_indices = result.groups[first_group_key]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:112: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:128: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:214: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:249: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n17 passed, 182 warnings in 2.58s\n"
+                },
+                "killed": false,
+                "status": "survived"
+              },
+              "ir_enhanced": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": true,
+                  "returncode": 0,
+                  "duration_seconds": 3.2795228958129883,
+                  "failing_tests": [],
+                  "stdout_tail": "e_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:123: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:139: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:225: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:260: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:322: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:334: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\", \"c\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_preserves_row_order_within_group\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:453: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n36 passed, 185 warnings in 2.58s\n"
+                },
+                "killed": false,
+                "status": "survived"
+              }
+            }
+          },
+          {
+            "mutant_id": "M2",
+            "mutant_name": "force_dropna_true",
+            "description": "Drop NA groups even when the caller requests dropna=False.",
+            "doc_anchor": "dropna bool, default True",
+            "methods": {
+              "baseline": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": false,
+                  "returncode": 1,
+                  "duration_seconds": 3.2970988750457764,
+                  "failing_tests": [
+                    "experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_false"
+                  ],
+                  "stdout_tail": "t.py:77: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = list(result.groups.keys())\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:97: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_key = list(result.groups.keys())[0]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:98: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    first_group_indices = result.groups[first_group_key]\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:112: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:128: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:214: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:249: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_groupby_dropna_false\n1 failed, 16 passed, 182 warnings in 2.63s\n"
+                },
+                "killed": true,
+                "status": "killed"
+              },
+              "ir_enhanced": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": false,
+                  "returncode": 1,
+                  "duration_seconds": 3.407142162322998,
+                  "failing_tests": [
+                    "experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_all_rows_covered_with_na",
+                    "experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_dropna_false"
+                  ],
+                  "stdout_tail": "s`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_dropna_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:139: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:225: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py: 30 warnings\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:260: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (A,) , instead of a scalar, e.g. A, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    groups = result.groups\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_true\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:322: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_categorical_observed_false\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:334: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    assert set(result.groups.keys()) == {\"a\", \"b\", \"c\"}\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_preserves_row_order_within_group\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py:453: Pandas4Warning: In a future version, the keys of `groups` will be a tuple with a single element, e.g. (key,) , instead of a scalar, e.g. key, when grouping by a list with a single element. Use ``df.groupby(by='a').groups`` instead of ``df.groupby(by=['a']).groups`` to avoid this warning\n    for group_key, group_indices in result.groups.items():\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_dropna_false\nFAILED experiments/oracle_generation/pandas/DataFrame/groupby/ir_enhanced_test.py::test_groupby_all_rows_covered_with_na\n2 failed, 34 passed, 185 warnings in 2.73s\n"
+                },
+                "killed": true,
+                "status": "killed"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "DataFrame/reindex",
+      "target_api": "pandas.DataFrame.reindex",
+      "line_branch_coverage": {
+        "case_id": "DataFrame/reindex",
+        "target_api": "pandas.DataFrame.reindex",
+        "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex",
+        "suites": {
+          "baseline": {
+            "command": [
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+              "--repo-root",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+              "--runtime",
+              "local",
+              "--api",
+              "pandas.DataFrame.reindex",
+              "--test",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py",
+              "--json-out",
+              "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpcr8i1rz7__reindex__baseline.json",
+              "--",
+              "-q"
+            ],
+            "returncode": 0,
+            "stdout": "Target API: pandas.DataFrame.reindex\nResolved method chain:\n  - pandas.DataFrame.reindex [wrapper] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py:5843-6089, delegates_to=super().reindex)\n  - pandas.core.generic.NDFrame.reindex [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:5201-5478)\n...........                                                              [100%]\n11 passed in 9.57s\n\nMethod coverage:\n  - pandas.DataFrame.reindex [wrapper]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n  - pandas.core.generic.NDFrame.reindex [core]: lines 14/22 (63.6%), branches 10/18 (55.6%), missing_lines=[5437, 5441, 5444, 5448, 5449, 5451, 5453, 5469], missing_branches={5430: [5437], 5440: [5441], 5443: [5444], 5447: [5448], 5448: [5449, 5451], 5452: [5453], 5464: [5469]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py: lines 66/2281 (2.9%), branches 30/1048 (2.9%)\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 70/2106 (3.3%), branches 27/912 (3.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpcr8i1rz7__reindex__baseline.json\n\npytest exit code: 0\n",
+            "stderr": "",
+            "coverage": {
+              "target_api": "pandas.DataFrame.reindex",
+              "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py",
+              "pytest_exit_code": 0,
+              "methods": [
+                {
+                  "label": "pandas.DataFrame.reindex",
+                  "implementation_role": "wrapper",
+                  "delegates_to": "super().reindex",
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                  "start_line": 5843,
+                  "end_line": 6089,
+                  "covered_lines": 1,
+                  "num_statements": 1,
+                  "line_coverage_percent": 100.0,
+                  "missing_lines": [],
+                  "covered_branches": 0,
+                  "num_branches": 0,
+                  "branch_coverage_percent": 100.0,
+                  "missing_branches": {}
+                },
+                {
+                  "label": "pandas.core.generic.NDFrame.reindex",
+                  "implementation_role": "core",
+                  "delegates_to": null,
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                  "start_line": 5201,
+                  "end_line": 5478,
+                  "covered_lines": 14,
+                  "num_statements": 22,
+                  "line_coverage_percent": 63.64,
+                  "missing_lines": [
+                    5437,
+                    5441,
+                    5444,
+                    5448,
+                    5449,
+                    5451,
+                    5453,
+                    5469
+                  ],
+                  "covered_branches": 10,
+                  "num_branches": 18,
+                  "branch_coverage_percent": 55.56,
+                  "missing_branches": {
+                    "5430": [
+                      5437
+                    ],
+                    "5440": [
+                      5441
+                    ],
+                    "5443": [
+                      5444
+                    ],
+                    "5447": [
+                      5448
+                    ],
+                    "5448": [
+                      5449,
+                      5451
+                    ],
+                    "5452": [
+                      5453
+                    ],
+                    "5464": [
+                      5469
+                    ]
+                  }
+                }
+              ],
+              "files": [
+                {
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                  "covered_lines": 66,
+                  "num_statements": 2281,
+                  "line_coverage_percent": 2.89,
+                  "covered_branches": 30,
+                  "num_branches": 1048,
+                  "branch_coverage_percent": 2.86
+                },
+                {
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                  "covered_lines": 70,
+                  "num_statements": 2106,
+                  "line_coverage_percent": 3.32,
+                  "covered_branches": 27,
+                  "num_branches": 912,
+                  "branch_coverage_percent": 2.96
+                }
+              ],
+              "method_totals": {
+                "covered_lines": 15,
+                "num_statements": 23,
+                "line_coverage_percent": 65.22,
+                "covered_branches": 10,
+                "num_branches": 18,
+                "branch_coverage_percent": 55.56
+              },
+              "core_method_totals": {
+                "covered_lines": 14,
+                "num_statements": 22,
+                "line_coverage_percent": 63.64,
+                "covered_branches": 10,
+                "num_branches": 18,
+                "branch_coverage_percent": 55.56
+              },
+              "totals": {
+                "covered_lines": 136,
+                "num_statements": 4387,
+                "line_coverage_percent": 3.1,
+                "covered_branches": 57,
+                "num_branches": 1960,
+                "branch_coverage_percent": 2.91
+              },
+              "runtime_requested": "local",
+              "runtime_used": "local",
+              "runtime_fallback_reason": null
+            }
+          },
+          "ir_enhanced": {
+            "command": [
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+              "--repo-root",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+              "--runtime",
+              "local",
+              "--api",
+              "pandas.DataFrame.reindex",
+              "--test",
+              "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py",
+              "--json-out",
+              "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpor78aw02__reindex__ir_enhanced.json",
+              "--",
+              "-q"
+            ],
+            "returncode": 0,
+            "stdout": "Target API: pandas.DataFrame.reindex\nResolved method chain:\n  - pandas.DataFrame.reindex [wrapper] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py:5843-6089, delegates_to=super().reindex)\n  - pandas.core.generic.NDFrame.reindex [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:5201-5478)\n...........................                                              [100%]\n27 passed in 11.68s\n\nMethod coverage:\n  - pandas.DataFrame.reindex [wrapper]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n  - pandas.core.generic.NDFrame.reindex [core]: lines 14/22 (63.6%), branches 10/18 (55.6%), missing_lines=[5437, 5441, 5444, 5448, 5449, 5451, 5469, 5473], missing_branches={5430: [5437], 5440: [5441], 5443: [5444], 5447: [5448], 5448: [5449, 5451], 5464: [5469], 5472: [5473]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py: lines 144/2281 (6.3%), branches 61/1048 (5.8%)\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 111/2106 (5.3%), branches 41/912 (4.5%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpor78aw02__reindex__ir_enhanced.json\n\npytest exit code: 0\n",
+            "stderr": "",
+            "coverage": {
+              "target_api": "pandas.DataFrame.reindex",
+              "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py",
+              "pytest_exit_code": 0,
+              "methods": [
+                {
+                  "label": "pandas.DataFrame.reindex",
+                  "implementation_role": "wrapper",
+                  "delegates_to": "super().reindex",
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                  "start_line": 5843,
+                  "end_line": 6089,
+                  "covered_lines": 1,
+                  "num_statements": 1,
+                  "line_coverage_percent": 100.0,
+                  "missing_lines": [],
+                  "covered_branches": 0,
+                  "num_branches": 0,
+                  "branch_coverage_percent": 100.0,
+                  "missing_branches": {}
+                },
+                {
+                  "label": "pandas.core.generic.NDFrame.reindex",
+                  "implementation_role": "core",
+                  "delegates_to": null,
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                  "start_line": 5201,
+                  "end_line": 5478,
+                  "covered_lines": 14,
+                  "num_statements": 22,
+                  "line_coverage_percent": 63.64,
+                  "missing_lines": [
+                    5437,
+                    5441,
+                    5444,
+                    5448,
+                    5449,
+                    5451,
+                    5469,
+                    5473
+                  ],
+                  "covered_branches": 10,
+                  "num_branches": 18,
+                  "branch_coverage_percent": 55.56,
+                  "missing_branches": {
+                    "5430": [
+                      5437
+                    ],
+                    "5440": [
+                      5441
+                    ],
+                    "5443": [
+                      5444
+                    ],
+                    "5447": [
+                      5448
+                    ],
+                    "5448": [
+                      5449,
+                      5451
+                    ],
+                    "5464": [
+                      5469
+                    ],
+                    "5472": [
+                      5473
+                    ]
+                  }
+                }
+              ],
+              "files": [
+                {
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                  "covered_lines": 144,
+                  "num_statements": 2281,
+                  "line_coverage_percent": 6.31,
+                  "covered_branches": 61,
+                  "num_branches": 1048,
+                  "branch_coverage_percent": 5.82
+                },
+                {
+                  "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                  "covered_lines": 111,
+                  "num_statements": 2106,
+                  "line_coverage_percent": 5.27,
+                  "covered_branches": 41,
+                  "num_branches": 912,
+                  "branch_coverage_percent": 4.5
+                }
+              ],
+              "method_totals": {
+                "covered_lines": 15,
+                "num_statements": 23,
+                "line_coverage_percent": 65.22,
+                "covered_branches": 10,
+                "num_branches": 18,
+                "branch_coverage_percent": 55.56
+              },
+              "core_method_totals": {
+                "covered_lines": 14,
+                "num_statements": 22,
+                "line_coverage_percent": 63.64,
+                "covered_branches": 10,
+                "num_branches": 18,
+                "branch_coverage_percent": 55.56
+              },
+              "totals": {
+                "covered_lines": 255,
+                "num_statements": 4387,
+                "line_coverage_percent": 5.81,
+                "covered_branches": 102,
+                "num_branches": 1960,
+                "branch_coverage_percent": 5.2
+              },
+              "runtime_requested": "local",
+              "runtime_used": "local",
+              "runtime_fallback_reason": null
+            }
+          }
+        },
+        "winner": {
+          "line": "tie",
+          "branch": "tie",
+          "overall": "tie"
+        }
+      },
+      "mutant_kill": {
+        "case_id": "DataFrame/reindex",
+        "target_api": "pandas.DataFrame.reindex",
+        "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex",
+        "mutant_wrapper": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/mutant_wrapper.py",
+        "mutant_count": 2,
+        "winner": "tie",
+        "method_summaries": {
+          "baseline": {
+            "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py",
+            "baseline_passed": true,
+            "baseline_run": {
+              "passed": true,
+              "returncode": 0,
+              "duration_seconds": 5.545805931091309,
+              "failing_tests": [],
+              "stdout_tail": "...........                                                              [100%]\n11 passed in 4.86s\n"
+            },
+            "valid_mutants": 2,
+            "killed_mutants": 1,
+            "survived_mutants": 1,
+            "invalid_mutants": 0,
+            "kill_rate": 0.5,
+            "killed_mutant_ids": [
+              "M1"
+            ],
+            "survived_mutant_ids": [
+              "M2"
+            ],
+            "invalid_mutant_ids": []
+          },
+          "ir_enhanced": {
+            "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py",
+            "baseline_passed": true,
+            "baseline_run": {
+              "passed": true,
+              "returncode": 0,
+              "duration_seconds": 6.794500827789307,
+              "failing_tests": [],
+              "stdout_tail": "...........................                                              [100%]\n27 passed in 6.20s\n"
+            },
+            "valid_mutants": 2,
+            "killed_mutants": 1,
+            "survived_mutants": 1,
+            "invalid_mutants": 0,
+            "kill_rate": 0.5,
+            "killed_mutant_ids": [
+              "M1"
+            ],
+            "survived_mutant_ids": [
+              "M2"
+            ],
+            "invalid_mutant_ids": []
+          }
+        },
+        "mutants": [
+          {
+            "mutant_id": "M1",
+            "mutant_name": "ignore_fill_value",
+            "description": "Remove caller-specified fill_value handling and fall back to NaN.",
+            "doc_anchor": "fill_value scalar, default np.nan",
+            "methods": {
+              "baseline": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": false,
+                  "returncode": 1,
+                  "duration_seconds": 9.688111066818237,
+                  "failing_tests": [
+                    "experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py::test_reindex_fill_value"
+                  ],
+                  "stdout_tail": "..F........                                                              [100%]\n=================================== FAILURES ===================================\n___________________________ test_reindex_fill_value ____________________________\nexperiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py:43: in test_reindex_fill_value\n    index=lists(integers(), min_size=1, max_size=10, unique=True),\n               ^^^\nexperiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py:57: in test_reindex_fill_value\n    assert result.loc[idx, \"value\"] == fill_value\nE   assert np.float64(nan) == 0.0\nE   Falsifying example: test_reindex_fill_value(\nE       # The test always failed when commented parts were varied together.\nE       index=[0],  # or any other generated value\nE       new_index=[1],\nE       fill_value=0.0,  # or any other generated value\nE   )\nE   Explanation:\nE       These lines were always and only run by failing examples:\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py:57\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/arrays/string_.py:241\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/arrays/string_.py:267\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/dtypes/base.py:195\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/dtypes/common.py:1242\nE           (and 12 more with settings.verbosity >= verbose)\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-15--194c9da1.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py::test_reindex_fill_value\n1 failed, 10 passed in 8.91s\n"
+                },
+                "killed": true,
+                "status": "killed"
+              },
+              "ir_enhanced": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": false,
+                  "returncode": 1,
+                  "duration_seconds": 7.70691990852356,
+                  "failing_tests": [
+                    "experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_all_new_labels_get_fill_value",
+                    "experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_fill_value_string_replaces_missing",
+                    "experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_new_labels_filled_with_fill_value"
+                  ],
+                  "stdout_tail": "github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/dtypes/base.py:195\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/dtypes/common.py:1242\nE           (and 12 more with settings.verbosity >= verbose)\n__________________ test_ir_fill_value_string_replaces_missing __________________\nexperiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py:124: in test_ir_fill_value_string_replaces_missing\n    index=lists(integers(), min_size=1, max_size=10, unique=True),\n               ^^^\nexperiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py:137: in test_ir_fill_value_string_replaces_missing\n    assert (result.loc[new_labels] == \"missing\").all().all()\nE   AssertionError: assert np.False_\nE    +  where np.False_ = all()\nE    +    where all = value    False\\ndtype: bool.all\nE    +      where value    False\\ndtype: bool = all()\nE    +        where all =    value\\n1    NaN == 'missing'.all\nE   Falsifying example: test_ir_fill_value_string_replaces_missing(\nE       index=[0],\nE       new_index=[1],\nE   )\nE   Explanation:\nE       These lines were always and only run by failing examples:\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py:137\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/_config/config.py:279\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/_config/config.py:285\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/_config/config.py:500\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/_config/config.py:512\nE           (and 185 more with settings.verbosity >= verbose)\n____________________ test_ir_all_new_labels_get_fill_value _____________________\nexperiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py:355: in test_ir_all_new_labels_get_fill_value\n    index=lists(integers(), min_size=1, max_size=10, unique=True),\n               ^^^\nexperiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py:367: in test_ir_all_new_labels_get_fill_value\n    assert (result[\"value\"] == -1).all()\nE   assert np.False_\nE    +  where np.False_ = all()\nE    +    where all = 1   NaN\\nName: value, dtype: float64 == -1.all\nE   Falsifying example: test_ir_all_new_labels_get_fill_value(\nE       # The test always failed when commented parts were varied together.\nE       index=[0],  # or any other generated value\nE       new_index=[1],  # or any other generated value\nE   )\n=============================== warnings summary ===============================\nexperiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_empty_df_reindex\nexperiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_empty_df_reindex\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py:7866: RuntimeWarning: overflow encountered in scalar subtract\n    diff = np_sequence[1] - np_sequence[0]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-15--fc15f9d1.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_new_labels_filled_with_fill_value\nFAILED experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_fill_value_string_replaces_missing\nFAILED experiments/oracle_generation/pandas/DataFrame/reindex/ir_enhanced_test.py::test_ir_all_new_labels_get_fill_value\n3 failed, 24 passed, 2 warnings in 7.35s\n"
+                },
+                "killed": true,
+                "status": "killed"
+              }
+            }
+          },
+          {
+            "mutant_id": "M2",
+            "mutant_name": "raise_multi_column_string_fill",
+            "description": "Raise a TypeError when reindexing columns with a string fill_value and multiple missing columns.",
+            "doc_anchor": "Conform DataFrame to new index with optional filling logic",
+            "methods": {
+              "baseline": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": true,
+                  "returncode": 0,
+                  "duration_seconds": 5.71035099029541,
+                  "failing_tests": [],
+                  "stdout_tail": "...........                                                              [100%]\n11 passed in 5.01s\n"
+                },
+                "killed": false,
+                "status": "survived"
+              },
+              "ir_enhanced": {
+                "baseline_passed": true,
+                "mutant_run": {
+                  "passed": true,
+                  "returncode": 0,
+                  "duration_seconds": 3.3970999717712402,
+                  "failing_tests": [],
+                  "stdout_tail": "...........................                                              [100%]\n27 passed in 3.06s\n"
+                },
+                "killed": false,
+                "status": "survived"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

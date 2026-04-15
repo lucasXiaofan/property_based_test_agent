@@ -1,7 +1,7 @@
 ## Folder Structure Rule (Added)
 
 ```text
-experiments/oracle_generation//
+experiments/oracle_generation/
   <library>/
     <module_or_class>/
       <function>/

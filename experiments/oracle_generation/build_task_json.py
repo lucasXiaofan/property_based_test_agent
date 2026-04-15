@@ -7,10 +7,11 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent
+PANDAS_ORACLE_DIR = BASE_DIR / "pandas"
 DEFAULT_DOCS_DIR = (
     BASE_DIR.parent / "python_library_bug_analysis" / "downloaded_docs"
 )
-DEFAULT_OUTPUT_PATH = BASE_DIR / "task.json"
+DEFAULT_OUTPUT_PATH = BASE_DIR / "tasks.json"
 DEFAULT_LIMIT = 3
 
 CONSTRAINT_PATH = BASE_DIR / "code_agent_constraint.md"
@@ -20,6 +21,50 @@ BASELINE_GUIDELINE_PATH = BASE_DIR / "baseline_test_generation_guideline.md"
 
 def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+def find_function_folders_without_baseline(
+    root_dir: Path = PANDAS_ORACLE_DIR,
+) -> list[Path]:
+    candidates = sorted(path.parent for path in root_dir.rglob("ir_v2.json"))
+    missing = [folder for folder in candidates if not (folder / "baseline_test.py").exists()]
+    if not missing:
+        raise ValueError(f"no function folder under {root_dir} is missing baseline_test.py")
+    return missing
+
+
+def build_target_folder_task(target_folder: Path) -> list[dict[str, str]]:
+    target_folder_str = str(target_folder.resolve())
+    prompt = (
+        f"Given `{BASELINE_GUIDELINE_PATH}`, read the function doc markdown from the "
+        "target function folder and make the baseline test without referencing other "
+        "existing files. "
+        f"Target function folder: {target_folder_str}\n\n"
+        "Run all code with `uv`.\n\n"
+        "After finishing the baseline test and making sure it runs, utilize the "
+        "`ir_v2.json` in that folder to make a copy of the baseline test named "
+        "`ir_enhanced_test.py`. Make sure you use the IR to generate unique tests "
+        "beyond the baseline — not just happy path tests, but high-stakes edge cases.\n\n"
+        "In `ir_enhanced_test.py`, add comments indicating which test cases are new "
+        "(inspired by the IR) and which are from the baseline."
+    )
+    return [
+        {
+            "task": f"baseline-and-ir-enhanced-{slugify(target_folder_str)}",
+            "prompt": prompt,
+        }
+    ]
+
+
+def write_target_folder_task(output_path: Path = DEFAULT_OUTPUT_PATH) -> Path:
+    task_items: list[dict[str, str]] = []
+    for folder in find_function_folders_without_baseline():
+        task_items.extend(build_target_folder_task(folder))
+    output_path.write_text(
+        json.dumps(task_items, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return output_path
 
 
 def derive_target_parts(doc_path: Path) -> tuple[str, str, str]:
@@ -187,11 +232,24 @@ def parse_args() -> argparse.Namespace:
         default=[],
         help="Existing task JSON to exclude already-covered documentation paths from.",
     )
+    parser.add_argument(
+        "--target-folder-task",
+        action="store_true",
+        help=(
+            "Write task.json for all function folders under "
+            "experiments/oracle_generation/pandas that has ir_v2.json but no baseline_test.py."
+        ),
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    if args.target_folder_task:
+        output_path = write_target_folder_task(args.output)
+        print(f"wrote tasks to {output_path}")
+        return 0
+
     excluded_doc_paths: set[str] = set()
     for task_json_path in args.exclude_task_json:
         excluded_doc_paths.update(extract_doc_paths_from_task_json(task_json_path))
