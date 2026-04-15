@@ -290,8 +290,8 @@ def test_na_param_does_not_affect_non_null_elements(s, pat):
 
 
 def test_na_default_propagates_nan_in_result():
-    """When na is omitted, NaN input positions must produce NaN (not False/True) in output."""
-    s = pd.Series(["dog", None, "cat"])
+    """For object dtype, omitted na preserves missing values in the result."""
+    s = pd.Series(["dog", None, "cat"], dtype=object)
     result = s.str.contains("dog")
     assert result.iloc[0] == True
     assert pd.isna(result.iloc[1])

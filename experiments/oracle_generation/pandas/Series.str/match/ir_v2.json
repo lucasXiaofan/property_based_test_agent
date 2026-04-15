@@ -3,56 +3,55 @@
     "library": "pandas",
     "version": "3.0",
     "function": "Series.str.match",
-    "signature": "Series.str.match(pat, case=<no_default>, flags=<no_default>, na=<no_default>)",
+    "signature": "Series.str.match(pat,case=<no_default>,flags=<no_default>,na=<no_default>)",
     "reference_urls": [
       "https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.str.match.html"
     ]
   },
-
   "pre_condition": {
     "self": [
       {
         "id": "self_object_dtype_no_nulls",
         "description": "Series of object dtype strings without nulls",
-        "constraints": "st.lists(st.text(min_size=0), min_size=1, max_size=20).map(pd.Series)"
+        "constraints": "st.lists(st.text(min_size=0),min_size=1,max_size=20).map(pd.Series)"
       },
       {
         "id": "self_object_dtype_with_nulls",
-        "description": "Series of object dtype strings with some NaN values; 'For object dtype, numpy.nan is used'",
-        "constraints": "st.lists(st.one_of(st.text(min_size=0), st.just(float('nan'))), min_size=1, max_size=20).map(pd.Series)"
+        "description": "Series of object dtype strings with some NaN values; 'For object dtype,numpy.nan is used'",
+        "constraints": "st.lists(st.one_of(st.text(min_size=0),st.just(float('nan'))),min_size=1,max_size=20).map(pd.Series)"
       },
       {
         "id": "self_string_dtype_no_nulls",
         "description": "Series of pandas StringDtype without nulls",
-        "constraints": "st.lists(st.text(min_size=0), min_size=1, max_size=20).map(lambda lst: pd.Series(lst, dtype='string'))"
+        "constraints": "st.lists(st.text(min_size=0),min_size=1,max_size=20).map(lambda lst: pd.Series(lst,dtype='string'))"
       },
       {
         "id": "self_string_dtype_with_nulls",
-        "description": "Series of pandas StringDtype with some pd.NA values; 'For the nullable StringDtype, pandas.NA is used'",
-        "constraints": "st.lists(st.one_of(st.text(min_size=0), st.just(pd.NA)), min_size=1, max_size=20).map(lambda lst: pd.Series(lst, dtype='string'))"
+        "description": "Series of pandas StringDtype with some pd.NA values; 'For the nullable StringDtype,pandas.NA is used'",
+        "constraints": "st.lists(st.one_of(st.text(min_size=0),st.just(pd.NA)),min_size=1,max_size=20).map(lambda lst: pd.Series(lst,dtype='string'))"
       }
     ],
     "pat": [
       {
         "id": "pat_simple_string",
         "description": "Simple character sequence pattern; 'Character sequence or regular expression'",
-        "constraints": "st.text(alphabet=st.characters(whitelist_categories=['Lu', 'Ll', 'Nd']), min_size=1, max_size=5)"
+        "constraints": "st.text(alphabet=st.characters(whitelist_categories=['Lu','Ll','Nd']),min_size=1,max_size=5)"
       },
       {
         "id": "pat_regex_string",
         "description": "A regular expression string pattern",
-        "constraints": "st.sampled_from(['^[a-z]', '^[A-Z]', '^[0-9]', '^[a-zA-Z]', '^\\\\w', '^\\\\d', '^[a-z]+', '[a-z]'])"
+        "constraints": "st.sampled_from(['^[a-z]','^[A-Z]','^[0-9]','^[a-zA-Z]','^\\\\w','^\\\\d','^[a-z]+','[a-z]'])"
       },
       {
         "id": "pat_compiled_regex",
         "description": "Compiled regular expression; 'str or compiled regex'",
-        "constraints": "st.sampled_from([re.compile('^[a-z]'), re.compile('^[A-Z]'), re.compile('^[a-z]+', re.IGNORECASE)])"
+        "constraints": "st.sampled_from([re.compile('^[a-z]'),re.compile('^[A-Z]'),re.compile('^[a-z]+',re.IGNORECASE)])"
       }
     ],
     "case": [
       {
         "id": "case_default",
-        "description": "Default case sensitivity (True); 'If True, case sensitive'",
+        "description": "Default case sensitivity (True); 'If True,case sensitive'",
         "constraints": "st.just(True)"
       },
       {
@@ -64,12 +63,12 @@
     "flags": [
       {
         "id": "flags_default",
-        "description": "Default flags (0, no flags); 'int, default 0 (no flags)'",
+        "description": "Default flags (0,no flags); 'int,default 0 (no flags)'",
         "constraints": "st.just(0)"
       },
       {
         "id": "flags_ignorecase",
-        "description": "re.IGNORECASE flag; 'Regex module flags, e.g. re.IGNORECASE'",
+        "description": "re.IGNORECASE flag; 'Regex module flags,e.g. re.IGNORECASE'",
         "constraints": "st.just(re.IGNORECASE)"
       }
     ],
@@ -91,22 +90,29 @@
       }
     ]
   },
-
   "post_condition": [
     {
       "id": "returns_boolean_series",
-      "source": "A Series, Index, or array of boolean values indicating whether the start of each string matches the pattern.",
+      "source": "A Series,Index,or array of boolean values indicating whether the start of each string matches the pattern.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
       "expected_behavior": "assert result.dtype == bool",
       "confidence": "explicit"
     },
     {
       "id": "result_same_length_as_input",
-      "source": "A Series, Index, or array of boolean values indicating whether the start of each string matches the pattern.",
+      "source": "A Series,Index,or array of boolean values indicating whether the start of each string matches the pattern.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
       "expected_behavior": "assert len(result) == len(self)",
       "confidence": "implicit"
@@ -115,88 +121,128 @@
       "id": "matches_start_of_string_only",
       "source": "Determine if each string starts with a match of a regular expression.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
-      "expected_behavior": "assert all(result[i] == bool(re.match(pat, self.iloc[i])) for i in range(len(self)))",
+      "expected_behavior": "assert all(result[i] == bool(re.match(pat,self.iloc[i])) for i in range(len(self)))",
       "confidence": "explicit"
     },
     {
       "id": "example_single_char_pat",
-      "source": "ser.str.match('e') -> [False, True, False] for ['horse', 'eagle', 'donkey']",
+      "source": "ser.str.match('e') -> [False,True,False] for ['horse','eagle','donkey']",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
-      "expected_behavior": "assert list(pd.Series(['horse', 'eagle', 'donkey']).str.match('e')) == [False, True, False]",
+      "expected_behavior": "assert list(pd.Series(['horse','eagle','donkey']).str.match('e')) == [False,True,False]",
       "confidence": "explicit"
     },
     {
       "id": "na_fill_object_dtype_default",
-      "source": "For object dtype, numpy.nan is used.",
+      "source": "For object dtype,numpy.nan is used.",
       "pre_condition": {
-        "self_object_dtype_with_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_object_dtype_with_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
       "expected_behavior": "assert all(pd.isna(result[i]) for i in range(len(self)) if pd.isna(self.iloc[i]))",
       "confidence": "explicit"
     },
     {
       "id": "na_fill_string_dtype_default",
-      "source": "For the nullable StringDtype, pandas.NA is used.",
+      "source": "For the nullable StringDtype,pandas.NA is used.",
       "pre_condition": {
-        "self_string_dtype_with_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_string_dtype_with_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
       "expected_behavior": "assert all(result[i] is pd.NA for i in range(len(self)) if self.iloc[i] is pd.NA)",
       "confidence": "explicit"
     },
     {
       "id": "na_fill_str_dtype_default_false",
-      "source": "For the 'str' dtype, False is used.",
+      "source": "For the 'str' dtype,False is used.",
       "pre_condition": {
-        "self_object_dtype_with_nulls", "pat_simple_string", "case_default", "flags_default", "na_false"
+        "self_object_dtype_with_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_false"
       },
       "expected_behavior": "assert all(result[i] == False for i in range(len(self)) if pd.isna(self.iloc[i]))",
       "confidence": "explicit"
     },
     {
       "id": "case_insensitive_matching",
-      "source": "If True, case sensitive.",
+      "source": "If True,case sensitive.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_false", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_false",
+        "flags_default",
+        "na_default"
       },
-      "expected_behavior": "assert all(result[i] == bool(re.match(pat, self.iloc[i], re.IGNORECASE)) for i in range(len(self)))",
+      "expected_behavior": "assert all(result[i] == bool(re.match(pat,self.iloc[i],re.IGNORECASE)) for i in range(len(self)))",
       "confidence": "explicit"
     },
     {
       "id": "flags_ignorecase_effect",
-      "source": "Regex module flags, e.g. re.IGNORECASE.",
+      "source": "Regex module flags,e.g. re.IGNORECASE.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_default", "flags_ignorecase", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_ignorecase",
+        "na_default"
       },
-      "expected_behavior": "assert all(result[i] == bool(re.match(pat, self.iloc[i], re.IGNORECASE)) for i in range(len(self)))",
+      "expected_behavior": "assert all(result[i] == bool(re.match(pat,self.iloc[i],re.IGNORECASE)) for i in range(len(self)))",
       "confidence": "explicit"
     },
     {
       "id": "compiled_regex_same_as_string",
       "source": "Character sequence or regular expression.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_compiled_regex", "case_default", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_compiled_regex",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
       "expected_behavior": "assert all(result[i] == bool(pat.match(self.iloc[i])) for i in range(len(self)))",
       "confidence": "explicit"
     },
     {
       "id": "match_anchored_at_start_not_contains",
-      "source": "Determine if each string starts with a match of a regular expression. contains: Analogous, but less strict, relying on re.search instead of re.match.",
+      "source": "Determine if each string starts with a match of a regular expression. contains: Analogous,but less strict,relying on re.search instead of re.match.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
       "expected_behavior": "assert not (self.str.match(pat).any() and not self.str.contains(pat).any()) or True",
       "confidence": "implicit"
     },
     {
       "id": "non_null_result_for_non_null_inputs",
-      "source": "A Series, Index, or array of boolean values indicating whether the start of each string matches the pattern.",
+      "source": "A Series,Index,or array of boolean values indicating whether the start of each string matches the pattern.",
       "pre_condition": {
-        "self_object_dtype_no_nulls", "pat_simple_string", "case_default", "flags_default", "na_default"
+        "self_object_dtype_no_nulls",
+        "pat_simple_string",
+        "case_default",
+        "flags_default",
+        "na_default"
       },
       "expected_behavior": "assert result.notna().all()",
       "confidence": "implicit"

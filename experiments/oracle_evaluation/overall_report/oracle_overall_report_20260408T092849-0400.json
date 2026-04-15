@@ -1,0 +1,177 @@
+{
+  "report_type": "oracle_evaluation_overall_report",
+  "generated_at": "2026-04-08T09:28:49.175266-04:00",
+  "overall_dimension_summary": {
+    "line_branch_coverage": {
+      "total_cases_compared": 10,
+      "line_coverage_winner": "baseline",
+      "line_coverage_margin_percentage_points": 10.46,
+      "branch_coverage_winner": "baseline",
+      "branch_coverage_margin_percentage_points": 0.55
+    },
+    "mutant_kill": {
+      "total_cases_compared": 10,
+      "winner": "ir_generated",
+      "margin_percentage_points": 20.0,
+      "winner_relative_advantage_percent": 26.67
+    },
+    "property_count": {
+      "total_cases_compared": 10,
+      "winner": "baseline",
+      "margin_count": 29,
+      "winner_relative_advantage_percent": 30.21
+    }
+  },
+  "inputs": {
+    "line_branch_coverage": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/line_branch_coverage/pandas_line_branch_coverage_report_20260408T082639-0400.json",
+    "mutant_kill": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/mutant_kill/pandas_mutant_comparison_20260408T084520-0400.json",
+    "property_count": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/property_count/pandas_unique_property_count_report_20260408T090945-0400.json"
+  },
+  "test_inventory": {
+    "total_cases": 10,
+    "total_tests_by_method": {
+      "baseline": 208,
+      "ir_generated": 157
+    },
+    "cases": [
+      {
+        "case_id": "DataFrame/groupby",
+        "test_counts": {
+          "baseline": 20,
+          "ir_generated": 11
+        }
+      },
+      {
+        "case_id": "DataFrame/reindex",
+        "test_counts": {
+          "baseline": 26,
+          "ir_generated": 10
+        }
+      },
+      {
+        "case_id": "DataFrame/to_json",
+        "test_counts": {
+          "baseline": 31,
+          "ir_generated": 13
+        }
+      },
+      {
+        "case_id": "Index/astype",
+        "test_counts": {
+          "baseline": 24,
+          "ir_generated": 10
+        }
+      },
+      {
+        "case_id": "Index/shift",
+        "test_counts": {
+          "baseline": 23,
+          "ir_generated": 14
+        }
+      },
+      {
+        "case_id": "Series.str/contains",
+        "test_counts": {
+          "baseline": 15,
+          "ir_generated": 35
+        }
+      },
+      {
+        "case_id": "Series.str/match",
+        "test_counts": {
+          "baseline": 16,
+          "ir_generated": 32
+        }
+      },
+      {
+        "case_id": "Series/factorize",
+        "test_counts": {
+          "baseline": 21,
+          "ir_generated": 11
+        }
+      },
+      {
+        "case_id": "Series/mean",
+        "test_counts": {
+          "baseline": 12,
+          "ir_generated": 10
+        }
+      },
+      {
+        "case_id": "Series/mul",
+        "test_counts": {
+          "baseline": 20,
+          "ir_generated": 11
+        }
+      }
+    ]
+  },
+  "dimension_summaries": {
+    "line_branch_coverage": {
+      "cases_compared": 10,
+      "tests_tested_by_method": {
+        "baseline": 208,
+        "ir_generated": 157
+      },
+      "line_coverage": {
+        "winner": "baseline",
+        "baseline_percent": 84.26,
+        "ir_generated_percent": 73.8,
+        "margin_percent": 10.46,
+        "margin_percentage_points": 10.46
+      },
+      "branch_coverage": {
+        "winner": "baseline",
+        "baseline_percent": 76.46,
+        "ir_generated_percent": 75.91,
+        "margin_percent": 0.55,
+        "margin_percentage_points": 0.55
+      }
+    },
+    "mutant_kill": {
+      "functions_compared": 10,
+      "mutants_tested": 20,
+      "tests_tested_by_method": {
+        "baseline": 208,
+        "ir_generated": 157
+      },
+      "kill_rate": {
+        "winner": "ir_generated",
+        "baseline_percent": 75.0,
+        "ir_generated_percent": 95.0,
+        "margin_percent": 20.0,
+        "margin_percentage_points": 20.0,
+        "winner_relative_advantage_percent": 26.67
+      },
+      "functions_won": {
+        "baseline": 0,
+        "ir_generated": 4,
+        "ties": 6
+      }
+    },
+    "property_count": {
+      "functions_compared": 10,
+      "tests_tested_by_method": {
+        "baseline": 208,
+        "ir_generated": 157
+      },
+      "unique_property_count": {
+        "winner": "baseline",
+        "baseline_count": 125,
+        "ir_generated_count": 96,
+        "margin_count": 29,
+        "winner_relative_advantage_percent": 30.21
+      },
+      "functions_won": {
+        "baseline": 7,
+        "ir_generated": 3,
+        "ties": 0
+      }
+    }
+  },
+  "winner_scorecard": {
+    "baseline": 3,
+    "ir_generated": 1,
+    "tie": 0
+  }
+}

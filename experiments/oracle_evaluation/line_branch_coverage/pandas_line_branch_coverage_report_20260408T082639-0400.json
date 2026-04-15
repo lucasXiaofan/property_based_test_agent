@@ -1,0 +1,2176 @@
+{
+  "report_type": "pandas_line_branch_coverage_batch",
+  "generated_at": "2026-04-08T08:27:33.813562-04:00",
+  "scan_root": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas",
+  "repo_root": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+  "runtime": "local",
+  "pytest_args": [
+    "-q"
+  ],
+  "totals": {
+    "num_cases": 10,
+    "num_suites": 20,
+    "passing_suites": 20,
+    "failing_suites": 0,
+    "average_baseline_core_line_coverage": 84.26,
+    "average_baseline_core_branch_coverage": 76.46,
+    "average_ir_generated_core_line_coverage": 73.8,
+    "average_ir_generated_core_branch_coverage": 75.91,
+    "cases_where_ir_improves_core_line_coverage": 0,
+    "cases_where_ir_improves_core_branch_coverage": 0,
+    "cases_where_baseline_is_better": 2,
+    "cases_where_ir_generated_is_better": 0,
+    "cases_that_tie": 8,
+    "better_test_method_overall": "baseline"
+  },
+  "case_details": [
+    {
+      "case_id": "DataFrame/groupby",
+      "target_api": "pandas.DataFrame.groupby",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.DataFrame.groupby",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp6uok_eic__DataFrame__groupby__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.DataFrame.groupby\nResolved method chain:\n  - pandas.DataFrame.groupby [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py:10592-10826)\n....................                                                     [100%]\n20 passed in 6.67s\n\nMethod coverage:\n  - pandas.DataFrame.groupby [core]: lines 0/0 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py: lines 2/141 (1.4%), branches 1/50 (2.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp6uok_eic__DataFrame__groupby__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.DataFrame.groupby",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.DataFrame.groupby",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "start_line": 10592,
+                "end_line": 10826,
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "covered_lines": 2,
+                "num_statements": 141,
+                "line_coverage_percent": 1.42,
+                "covered_branches": 1,
+                "num_branches": 50,
+                "branch_coverage_percent": 2.0
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 0,
+              "num_statements": 0,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 0,
+              "num_statements": 0,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 2,
+              "num_statements": 141,
+              "line_coverage_percent": 1.42,
+              "covered_branches": 1,
+              "num_branches": 50,
+              "branch_coverage_percent": 2.0
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.DataFrame.groupby",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp9xkgdafe__DataFrame__groupby__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.DataFrame.groupby\nResolved method chain:\n  - pandas.DataFrame.groupby [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py:10592-10826)\n...........                                                              [100%]\n11 passed in 1.80s\n\nMethod coverage:\n  - pandas.DataFrame.groupby [core]: lines 0/0 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py: lines 11/141 (7.8%), branches 4/50 (8.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp9xkgdafe__DataFrame__groupby__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.DataFrame.groupby",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.DataFrame.groupby",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "start_line": 10592,
+                "end_line": 10826,
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "covered_lines": 11,
+                "num_statements": 141,
+                "line_coverage_percent": 7.8,
+                "covered_branches": 4,
+                "num_branches": 50,
+                "branch_coverage_percent": 8.0
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 0,
+              "num_statements": 0,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 0,
+              "num_statements": 0,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 11,
+              "num_statements": 141,
+              "line_coverage_percent": 7.8,
+              "covered_branches": 4,
+              "num_branches": 50,
+              "branch_coverage_percent": 8.0
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": 6.38,
+        "file_branch_coverage_delta": 6.0,
+        "better_test_method": "tie"
+      }
+    },
+    {
+      "case_id": "DataFrame/reindex",
+      "target_api": "pandas.DataFrame.reindex",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.DataFrame.reindex",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpcfm6t_4e__DataFrame__reindex__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.DataFrame.reindex\nResolved method chain:\n  - pandas.DataFrame.reindex [wrapper] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py:5843-6089, delegates_to=super().reindex)\n  - pandas.core.generic.NDFrame.reindex [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:5201-5478)\n..........................                                               [100%]\n26 passed in 7.69s\n\nMethod coverage:\n  - pandas.DataFrame.reindex [wrapper]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n  - pandas.core.generic.NDFrame.reindex [core]: lines 16/22 (72.7%), branches 12/18 (66.7%), missing_lines=[5437, 5441, 5444, 5448, 5449, 5451], missing_branches={5430: [5437], 5440: [5441], 5443: [5444], 5447: [5448], 5448: [5449, 5451]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py: lines 93/2281 (4.1%), branches 34/1048 (3.2%)\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 112/2106 (5.3%), branches 50/912 (5.5%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpcfm6t_4e__DataFrame__reindex__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.DataFrame.reindex",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.DataFrame.reindex",
+                "implementation_role": "wrapper",
+                "delegates_to": "super().reindex",
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                "start_line": 5843,
+                "end_line": 6089,
+                "covered_lines": 1,
+                "num_statements": 1,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              },
+              {
+                "label": "pandas.core.generic.NDFrame.reindex",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 5201,
+                "end_line": 5478,
+                "covered_lines": 16,
+                "num_statements": 22,
+                "line_coverage_percent": 72.73,
+                "missing_lines": [
+                  5437,
+                  5441,
+                  5444,
+                  5448,
+                  5449,
+                  5451
+                ],
+                "covered_branches": 12,
+                "num_branches": 18,
+                "branch_coverage_percent": 66.67,
+                "missing_branches": {
+                  "5430": [
+                    5437
+                  ],
+                  "5440": [
+                    5441
+                  ],
+                  "5443": [
+                    5444
+                  ],
+                  "5447": [
+                    5448
+                  ],
+                  "5448": [
+                    5449,
+                    5451
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                "covered_lines": 93,
+                "num_statements": 2281,
+                "line_coverage_percent": 4.08,
+                "covered_branches": 34,
+                "num_branches": 1048,
+                "branch_coverage_percent": 3.24
+              },
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "covered_lines": 112,
+                "num_statements": 2106,
+                "line_coverage_percent": 5.32,
+                "covered_branches": 50,
+                "num_branches": 912,
+                "branch_coverage_percent": 5.48
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 17,
+              "num_statements": 23,
+              "line_coverage_percent": 73.91,
+              "covered_branches": 12,
+              "num_branches": 18,
+              "branch_coverage_percent": 66.67
+            },
+            "core_method_totals": {
+              "covered_lines": 16,
+              "num_statements": 22,
+              "line_coverage_percent": 72.73,
+              "covered_branches": 12,
+              "num_branches": 18,
+              "branch_coverage_percent": 66.67
+            },
+            "totals": {
+              "covered_lines": 205,
+              "num_statements": 4387,
+              "line_coverage_percent": 4.67,
+              "covered_branches": 84,
+              "num_branches": 1960,
+              "branch_coverage_percent": 4.29
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.DataFrame.reindex",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpnesalhy7__DataFrame__reindex__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.DataFrame.reindex\nResolved method chain:\n  - pandas.DataFrame.reindex [wrapper] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py:5843-6089, delegates_to=super().reindex)\n  - pandas.core.generic.NDFrame.reindex [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:5201-5478)\n..........                                                               [100%]\n10 passed in 0.81s\n\nMethod coverage:\n  - pandas.DataFrame.reindex [wrapper]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n  - pandas.core.generic.NDFrame.reindex [core]: lines 15/22 (68.2%), branches 11/18 (61.1%), missing_lines=[5437, 5441, 5444, 5448, 5449, 5451, 5473], missing_branches={5430: [5437], 5440: [5441], 5443: [5444], 5447: [5448], 5448: [5449, 5451], 5472: [5473]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py: lines 125/2281 (5.5%), branches 47/1048 (4.5%)\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 96/2106 (4.6%), branches 37/912 (4.1%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpnesalhy7__DataFrame__reindex__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.DataFrame.reindex",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.DataFrame.reindex",
+                "implementation_role": "wrapper",
+                "delegates_to": "super().reindex",
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                "start_line": 5843,
+                "end_line": 6089,
+                "covered_lines": 1,
+                "num_statements": 1,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              },
+              {
+                "label": "pandas.core.generic.NDFrame.reindex",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 5201,
+                "end_line": 5478,
+                "covered_lines": 15,
+                "num_statements": 22,
+                "line_coverage_percent": 68.18,
+                "missing_lines": [
+                  5437,
+                  5441,
+                  5444,
+                  5448,
+                  5449,
+                  5451,
+                  5473
+                ],
+                "covered_branches": 11,
+                "num_branches": 18,
+                "branch_coverage_percent": 61.11,
+                "missing_branches": {
+                  "5430": [
+                    5437
+                  ],
+                  "5440": [
+                    5441
+                  ],
+                  "5443": [
+                    5444
+                  ],
+                  "5447": [
+                    5448
+                  ],
+                  "5448": [
+                    5449,
+                    5451
+                  ],
+                  "5472": [
+                    5473
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/frame.py",
+                "covered_lines": 125,
+                "num_statements": 2281,
+                "line_coverage_percent": 5.48,
+                "covered_branches": 47,
+                "num_branches": 1048,
+                "branch_coverage_percent": 4.48
+              },
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "covered_lines": 96,
+                "num_statements": 2106,
+                "line_coverage_percent": 4.56,
+                "covered_branches": 37,
+                "num_branches": 912,
+                "branch_coverage_percent": 4.06
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 16,
+              "num_statements": 23,
+              "line_coverage_percent": 69.57,
+              "covered_branches": 11,
+              "num_branches": 18,
+              "branch_coverage_percent": 61.11
+            },
+            "core_method_totals": {
+              "covered_lines": 15,
+              "num_statements": 22,
+              "line_coverage_percent": 68.18,
+              "covered_branches": 11,
+              "num_branches": 18,
+              "branch_coverage_percent": 61.11
+            },
+            "totals": {
+              "covered_lines": 221,
+              "num_statements": 4387,
+              "line_coverage_percent": 5.04,
+              "covered_branches": 84,
+              "num_branches": 1960,
+              "branch_coverage_percent": 4.29
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": -4.55,
+        "core_branch_coverage_delta": -5.56,
+        "file_line_coverage_delta": 0.37,
+        "file_branch_coverage_delta": 0.0,
+        "better_test_method": "baseline"
+      }
+    },
+    {
+      "case_id": "DataFrame/to_json",
+      "target_api": "pandas.DataFrame.to_json",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.DataFrame.to_json",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpiof3_42u__DataFrame__to_json__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.DataFrame.to_json\nResolved method chain:\n  - pandas.DataFrame.to_json [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:2323-2650)\n  - pandas.core.generic.NDFrame.to_json [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:2323-2650)\n...............................                                          [100%]\n=============================== warnings summary ===============================\nexperiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py::test_date_format_epoch_deprecated_but_functional\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py:280: Pandas4Warning: 'epoch' date format is deprecated and will be removed in a future version, please use 'iso' date format instead.\n    parsed = json.loads(df.to_json(orient=\"records\", date_format=\"epoch\"))\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n31 passed, 1 warning in 3.10s\n\nMethod coverage:\n  - pandas.DataFrame.to_json [core]: lines 12/13 (92.3%), branches 7/8 (87.5%), missing_lines=[2617], missing_branches={2616: [2617]}\n  - pandas.core.generic.NDFrame.to_json [core]: lines 12/13 (92.3%), branches 7/8 (87.5%), missing_lines=[2617], missing_branches={2616: [2617]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 62/2106 (2.9%), branches 21/912 (2.3%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpiof3_42u__DataFrame__to_json__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.DataFrame.to_json",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.DataFrame.to_json",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 2323,
+                "end_line": 2650,
+                "covered_lines": 12,
+                "num_statements": 13,
+                "line_coverage_percent": 92.31,
+                "missing_lines": [
+                  2617
+                ],
+                "covered_branches": 7,
+                "num_branches": 8,
+                "branch_coverage_percent": 87.5,
+                "missing_branches": {
+                  "2616": [
+                    2617
+                  ]
+                }
+              },
+              {
+                "label": "pandas.core.generic.NDFrame.to_json",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 2323,
+                "end_line": 2650,
+                "covered_lines": 12,
+                "num_statements": 13,
+                "line_coverage_percent": 92.31,
+                "missing_lines": [
+                  2617
+                ],
+                "covered_branches": 7,
+                "num_branches": 8,
+                "branch_coverage_percent": 87.5,
+                "missing_branches": {
+                  "2616": [
+                    2617
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "covered_lines": 62,
+                "num_statements": 2106,
+                "line_coverage_percent": 2.94,
+                "covered_branches": 21,
+                "num_branches": 912,
+                "branch_coverage_percent": 2.3
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 24,
+              "num_statements": 26,
+              "line_coverage_percent": 92.31,
+              "covered_branches": 14,
+              "num_branches": 16,
+              "branch_coverage_percent": 87.5
+            },
+            "core_method_totals": {
+              "covered_lines": 24,
+              "num_statements": 26,
+              "line_coverage_percent": 92.31,
+              "covered_branches": 14,
+              "num_branches": 16,
+              "branch_coverage_percent": 87.5
+            },
+            "totals": {
+              "covered_lines": 62,
+              "num_statements": 2106,
+              "line_coverage_percent": 2.94,
+              "covered_branches": 21,
+              "num_branches": 912,
+              "branch_coverage_percent": 2.3
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.DataFrame.to_json",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmputkk6d7i__DataFrame__to_json__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.DataFrame.to_json\nResolved method chain:\n  - pandas.DataFrame.to_json [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:2323-2650)\n  - pandas.core.generic.NDFrame.to_json [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:2323-2650)\n.............                                                            [100%]\n13 passed in 1.34s\n\nMethod coverage:\n  - pandas.DataFrame.to_json [core]: lines 12/13 (92.3%), branches 7/8 (87.5%), missing_lines=[2617], missing_branches={2616: [2617]}\n  - pandas.core.generic.NDFrame.to_json [core]: lines 12/13 (92.3%), branches 7/8 (87.5%), missing_lines=[2617], missing_branches={2616: [2617]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 55/2106 (2.6%), branches 16/912 (1.8%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmputkk6d7i__DataFrame__to_json__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.DataFrame.to_json",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.DataFrame.to_json",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 2323,
+                "end_line": 2650,
+                "covered_lines": 12,
+                "num_statements": 13,
+                "line_coverage_percent": 92.31,
+                "missing_lines": [
+                  2617
+                ],
+                "covered_branches": 7,
+                "num_branches": 8,
+                "branch_coverage_percent": 87.5,
+                "missing_branches": {
+                  "2616": [
+                    2617
+                  ]
+                }
+              },
+              {
+                "label": "pandas.core.generic.NDFrame.to_json",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 2323,
+                "end_line": 2650,
+                "covered_lines": 12,
+                "num_statements": 13,
+                "line_coverage_percent": 92.31,
+                "missing_lines": [
+                  2617
+                ],
+                "covered_branches": 7,
+                "num_branches": 8,
+                "branch_coverage_percent": 87.5,
+                "missing_branches": {
+                  "2616": [
+                    2617
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "covered_lines": 55,
+                "num_statements": 2106,
+                "line_coverage_percent": 2.61,
+                "covered_branches": 16,
+                "num_branches": 912,
+                "branch_coverage_percent": 1.75
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 24,
+              "num_statements": 26,
+              "line_coverage_percent": 92.31,
+              "covered_branches": 14,
+              "num_branches": 16,
+              "branch_coverage_percent": 87.5
+            },
+            "core_method_totals": {
+              "covered_lines": 24,
+              "num_statements": 26,
+              "line_coverage_percent": 92.31,
+              "covered_branches": 14,
+              "num_branches": 16,
+              "branch_coverage_percent": 87.5
+            },
+            "totals": {
+              "covered_lines": 55,
+              "num_statements": 2106,
+              "line_coverage_percent": 2.61,
+              "covered_branches": 16,
+              "num_branches": 912,
+              "branch_coverage_percent": 1.75
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": -0.33,
+        "file_branch_coverage_delta": -0.55,
+        "better_test_method": "tie"
+      }
+    },
+    {
+      "case_id": "Index/astype",
+      "target_api": "pandas.Index.astype",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Index.astype",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpmvrv2dpb__Index__astype__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Index.astype\nResolved method chain:\n  - pandas.Index.astype [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py:1111-1180)\n........................                                                 [100%]\n24 passed in 2.32s\n\nMethod coverage:\n  - pandas.Index.astype [core]: lines 13/17 (76.5%), branches 7/10 (70.0%), missing_lines=[1158, 1159, 1178, 1179], missing_branches={1149: [1152], 1157: [1158], 1173: [1178]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py: lines 98/2353 (4.2%), branches 51/1100 (4.6%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpmvrv2dpb__Index__astype__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Index.astype",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Index.astype",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "start_line": 1111,
+                "end_line": 1180,
+                "covered_lines": 13,
+                "num_statements": 17,
+                "line_coverage_percent": 76.47,
+                "missing_lines": [
+                  1158,
+                  1159,
+                  1178,
+                  1179
+                ],
+                "covered_branches": 7,
+                "num_branches": 10,
+                "branch_coverage_percent": 70.0,
+                "missing_branches": {
+                  "1149": [
+                    1152
+                  ],
+                  "1157": [
+                    1158
+                  ],
+                  "1173": [
+                    1178
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "covered_lines": 98,
+                "num_statements": 2353,
+                "line_coverage_percent": 4.16,
+                "covered_branches": 51,
+                "num_branches": 1100,
+                "branch_coverage_percent": 4.64
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 13,
+              "num_statements": 17,
+              "line_coverage_percent": 76.47,
+              "covered_branches": 7,
+              "num_branches": 10,
+              "branch_coverage_percent": 70.0
+            },
+            "core_method_totals": {
+              "covered_lines": 13,
+              "num_statements": 17,
+              "line_coverage_percent": 76.47,
+              "covered_branches": 7,
+              "num_branches": 10,
+              "branch_coverage_percent": 70.0
+            },
+            "totals": {
+              "covered_lines": 98,
+              "num_statements": 2353,
+              "line_coverage_percent": 4.16,
+              "covered_branches": 51,
+              "num_branches": 1100,
+              "branch_coverage_percent": 4.64
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Index.astype",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpde6s088a__Index__astype__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Index.astype\nResolved method chain:\n  - pandas.Index.astype [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py:1111-1180)\n..........                                                               [100%]\n10 passed in 0.93s\n\nMethod coverage:\n  - pandas.Index.astype [core]: lines 13/17 (76.5%), branches 7/10 (70.0%), missing_lines=[1162, 1165, 1178, 1179], missing_branches={1149: [1152], 1161: [1162], 1173: [1178]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py: lines 113/2353 (4.8%), branches 64/1100 (5.8%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpde6s088a__Index__astype__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Index.astype",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Index.astype",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "start_line": 1111,
+                "end_line": 1180,
+                "covered_lines": 13,
+                "num_statements": 17,
+                "line_coverage_percent": 76.47,
+                "missing_lines": [
+                  1162,
+                  1165,
+                  1178,
+                  1179
+                ],
+                "covered_branches": 7,
+                "num_branches": 10,
+                "branch_coverage_percent": 70.0,
+                "missing_branches": {
+                  "1149": [
+                    1152
+                  ],
+                  "1161": [
+                    1162
+                  ],
+                  "1173": [
+                    1178
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "covered_lines": 113,
+                "num_statements": 2353,
+                "line_coverage_percent": 4.8,
+                "covered_branches": 64,
+                "num_branches": 1100,
+                "branch_coverage_percent": 5.82
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 13,
+              "num_statements": 17,
+              "line_coverage_percent": 76.47,
+              "covered_branches": 7,
+              "num_branches": 10,
+              "branch_coverage_percent": 70.0
+            },
+            "core_method_totals": {
+              "covered_lines": 13,
+              "num_statements": 17,
+              "line_coverage_percent": 76.47,
+              "covered_branches": 7,
+              "num_branches": 10,
+              "branch_coverage_percent": 70.0
+            },
+            "totals": {
+              "covered_lines": 113,
+              "num_statements": 2353,
+              "line_coverage_percent": 4.8,
+              "covered_branches": 64,
+              "num_branches": 1100,
+              "branch_coverage_percent": 5.82
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": 0.64,
+        "file_branch_coverage_delta": 1.18,
+        "better_test_method": "tie"
+      }
+    },
+    {
+      "case_id": "Index/shift",
+      "target_api": "pandas.Index.shift",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Index.shift",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpw485dvpc__Index__shift__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Index.shift\nResolved method chain:\n  - pandas.Index.shift [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py:5990-6049)\n.......................                                                  [100%]\n23 passed in 1.06s\n\nMethod coverage:\n  - pandas.Index.shift [core]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py: lines 97/2353 (4.1%), branches 46/1100 (4.2%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpw485dvpc__Index__shift__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Index.shift",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Index.shift",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "start_line": 5990,
+                "end_line": 6049,
+                "covered_lines": 1,
+                "num_statements": 1,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "covered_lines": 97,
+                "num_statements": 2353,
+                "line_coverage_percent": 4.12,
+                "covered_branches": 46,
+                "num_branches": 1100,
+                "branch_coverage_percent": 4.18
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 97,
+              "num_statements": 2353,
+              "line_coverage_percent": 4.12,
+              "covered_branches": 46,
+              "num_branches": 1100,
+              "branch_coverage_percent": 4.18
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Index.shift",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmphdv88zot__Index__shift__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Index.shift\nResolved method chain:\n  - pandas.Index.shift [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py:5990-6049)\n..............                                                           [100%]\n14 passed in 0.72s\n\nMethod coverage:\n  - pandas.Index.shift [core]: lines 0/1 (0.0%), branches 0/0 (100.0%), missing_lines=[6046], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py: lines 83/2353 (3.5%), branches 30/1100 (2.7%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmphdv88zot__Index__shift__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Index.shift",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Index.shift",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "start_line": 5990,
+                "end_line": 6049,
+                "covered_lines": 0,
+                "num_statements": 1,
+                "line_coverage_percent": 0.0,
+                "missing_lines": [
+                  6046
+                ],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/indexes/base.py",
+                "covered_lines": 83,
+                "num_statements": 2353,
+                "line_coverage_percent": 3.53,
+                "covered_branches": 30,
+                "num_branches": 1100,
+                "branch_coverage_percent": 2.73
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 0,
+              "num_statements": 1,
+              "line_coverage_percent": 0.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 0,
+              "num_statements": 1,
+              "line_coverage_percent": 0.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 83,
+              "num_statements": 2353,
+              "line_coverage_percent": 3.53,
+              "covered_branches": 30,
+              "num_branches": 1100,
+              "branch_coverage_percent": 2.73
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": -100.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": -0.59,
+        "file_branch_coverage_delta": -1.45,
+        "better_test_method": "baseline"
+      }
+    },
+    {
+      "case_id": "Series/factorize",
+      "target_api": "pandas.Series.factorize",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.factorize",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp100b4raf__Series__factorize__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.factorize\nResolved method chain:\n  - pandas.Series.factorize [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py:1329-1476)\n  - pandas.core.base.IndexOpsMixin.factorize [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py:1329-1476)\n.....................                                                    [100%]\n21 passed in 2.24s\n\nMethod coverage:\n  - pandas.Series.factorize [core]: lines 7/13 (53.8%), branches 2/6 (33.3%), missing_lines=[1458, 1462, 1464, 1466, 1472, 1475], missing_branches={1457: [1458], 1460: [1462], 1462: [1464, 1466]}\n  - pandas.core.base.IndexOpsMixin.factorize [core]: lines 7/13 (53.8%), branches 2/6 (33.3%), missing_lines=[1458, 1462, 1464, 1466, 1472, 1475], missing_branches={1457: [1458], 1460: [1462], 1462: [1464, 1466]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py: lines 22/272 (8.1%), branches 7/76 (9.2%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp100b4raf__Series__factorize__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.factorize",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Series.factorize",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py",
+                "start_line": 1329,
+                "end_line": 1476,
+                "covered_lines": 7,
+                "num_statements": 13,
+                "line_coverage_percent": 53.85,
+                "missing_lines": [
+                  1458,
+                  1462,
+                  1464,
+                  1466,
+                  1472,
+                  1475
+                ],
+                "covered_branches": 2,
+                "num_branches": 6,
+                "branch_coverage_percent": 33.33,
+                "missing_branches": {
+                  "1457": [
+                    1458
+                  ],
+                  "1460": [
+                    1462
+                  ],
+                  "1462": [
+                    1464,
+                    1466
+                  ]
+                }
+              },
+              {
+                "label": "pandas.core.base.IndexOpsMixin.factorize",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py",
+                "start_line": 1329,
+                "end_line": 1476,
+                "covered_lines": 7,
+                "num_statements": 13,
+                "line_coverage_percent": 53.85,
+                "missing_lines": [
+                  1458,
+                  1462,
+                  1464,
+                  1466,
+                  1472,
+                  1475
+                ],
+                "covered_branches": 2,
+                "num_branches": 6,
+                "branch_coverage_percent": 33.33,
+                "missing_branches": {
+                  "1457": [
+                    1458
+                  ],
+                  "1460": [
+                    1462
+                  ],
+                  "1462": [
+                    1464,
+                    1466
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py",
+                "covered_lines": 22,
+                "num_statements": 272,
+                "line_coverage_percent": 8.09,
+                "covered_branches": 7,
+                "num_branches": 76,
+                "branch_coverage_percent": 9.21
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 14,
+              "num_statements": 26,
+              "line_coverage_percent": 53.85,
+              "covered_branches": 4,
+              "num_branches": 12,
+              "branch_coverage_percent": 33.33
+            },
+            "core_method_totals": {
+              "covered_lines": 14,
+              "num_statements": 26,
+              "line_coverage_percent": 53.85,
+              "covered_branches": 4,
+              "num_branches": 12,
+              "branch_coverage_percent": 33.33
+            },
+            "totals": {
+              "covered_lines": 22,
+              "num_statements": 272,
+              "line_coverage_percent": 8.09,
+              "covered_branches": 7,
+              "num_branches": 76,
+              "branch_coverage_percent": 9.21
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.factorize",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp53_beism__Series__factorize__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.factorize\nResolved method chain:\n  - pandas.Series.factorize [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py:1329-1476)\n  - pandas.core.base.IndexOpsMixin.factorize [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py:1329-1476)\n...........                                                              [100%]\n11 passed in 1.22s\n\nMethod coverage:\n  - pandas.Series.factorize [core]: lines 7/13 (53.8%), branches 2/6 (33.3%), missing_lines=[1458, 1462, 1464, 1466, 1472, 1475], missing_branches={1457: [1458], 1460: [1462], 1462: [1464, 1466]}\n  - pandas.core.base.IndexOpsMixin.factorize [core]: lines 7/13 (53.8%), branches 2/6 (33.3%), missing_lines=[1458, 1462, 1464, 1466, 1472, 1475], missing_branches={1457: [1458], 1460: [1462], 1462: [1464, 1466]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py: lines 10/272 (3.7%), branches 3/76 (3.9%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp53_beism__Series__factorize__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.factorize",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Series.factorize",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py",
+                "start_line": 1329,
+                "end_line": 1476,
+                "covered_lines": 7,
+                "num_statements": 13,
+                "line_coverage_percent": 53.85,
+                "missing_lines": [
+                  1458,
+                  1462,
+                  1464,
+                  1466,
+                  1472,
+                  1475
+                ],
+                "covered_branches": 2,
+                "num_branches": 6,
+                "branch_coverage_percent": 33.33,
+                "missing_branches": {
+                  "1457": [
+                    1458
+                  ],
+                  "1460": [
+                    1462
+                  ],
+                  "1462": [
+                    1464,
+                    1466
+                  ]
+                }
+              },
+              {
+                "label": "pandas.core.base.IndexOpsMixin.factorize",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py",
+                "start_line": 1329,
+                "end_line": 1476,
+                "covered_lines": 7,
+                "num_statements": 13,
+                "line_coverage_percent": 53.85,
+                "missing_lines": [
+                  1458,
+                  1462,
+                  1464,
+                  1466,
+                  1472,
+                  1475
+                ],
+                "covered_branches": 2,
+                "num_branches": 6,
+                "branch_coverage_percent": 33.33,
+                "missing_branches": {
+                  "1457": [
+                    1458
+                  ],
+                  "1460": [
+                    1462
+                  ],
+                  "1462": [
+                    1464,
+                    1466
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/base.py",
+                "covered_lines": 10,
+                "num_statements": 272,
+                "line_coverage_percent": 3.68,
+                "covered_branches": 3,
+                "num_branches": 76,
+                "branch_coverage_percent": 3.95
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 14,
+              "num_statements": 26,
+              "line_coverage_percent": 53.85,
+              "covered_branches": 4,
+              "num_branches": 12,
+              "branch_coverage_percent": 33.33
+            },
+            "core_method_totals": {
+              "covered_lines": 14,
+              "num_statements": 26,
+              "line_coverage_percent": 53.85,
+              "covered_branches": 4,
+              "num_branches": 12,
+              "branch_coverage_percent": 33.33
+            },
+            "totals": {
+              "covered_lines": 10,
+              "num_statements": 272,
+              "line_coverage_percent": 3.68,
+              "covered_branches": 3,
+              "num_branches": 76,
+              "branch_coverage_percent": 3.95
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": -4.41,
+        "file_branch_coverage_delta": -5.26,
+        "better_test_method": "tie"
+      }
+    },
+    {
+      "case_id": "Series/mean",
+      "target_api": "pandas.Series.mean",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.mean",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpt3v1kejy__Series__mean__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.mean\nResolved method chain:\n  - pandas.Series.mean [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py:8063-8115)\n  - pandas.core.generic.NDFrame.mean [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:11823-11833, delegates_to=self._stat_function)\n............                                                             [100%]\n12 passed in 1.57s\n\nMethod coverage:\n  - pandas.Series.mean [core]: lines 0/0 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n  - pandas.core.generic.NDFrame.mean [core]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 49/2106 (2.3%), branches 12/912 (1.3%)\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py: lines 2/141 (1.4%), branches 1/50 (2.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpt3v1kejy__Series__mean__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.mean",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Series.mean",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "start_line": 8063,
+                "end_line": 8115,
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              },
+              {
+                "label": "pandas.core.generic.NDFrame.mean",
+                "implementation_role": "core",
+                "delegates_to": "self._stat_function",
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 11823,
+                "end_line": 11833,
+                "covered_lines": 1,
+                "num_statements": 1,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "covered_lines": 49,
+                "num_statements": 2106,
+                "line_coverage_percent": 2.33,
+                "covered_branches": 12,
+                "num_branches": 912,
+                "branch_coverage_percent": 1.32
+              },
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "covered_lines": 2,
+                "num_statements": 141,
+                "line_coverage_percent": 1.42,
+                "covered_branches": 1,
+                "num_branches": 50,
+                "branch_coverage_percent": 2.0
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 51,
+              "num_statements": 2247,
+              "line_coverage_percent": 2.27,
+              "covered_branches": 13,
+              "num_branches": 962,
+              "branch_coverage_percent": 1.35
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.mean",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpl5ykmgr5__Series__mean__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.mean\nResolved method chain:\n  - pandas.Series.mean [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py:8063-8115)\n  - pandas.core.generic.NDFrame.mean [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py:11823-11833, delegates_to=self._stat_function)\n..........                                                               [100%]\n10 passed in 1.17s\n\nMethod coverage:\n  - pandas.Series.mean [core]: lines 0/0 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n  - pandas.core.generic.NDFrame.mean [core]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py: lines 45/2106 (2.1%), branches 11/912 (1.2%)\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py: lines 6/141 (4.3%), branches 2/50 (4.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpl5ykmgr5__Series__mean__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.mean",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Series.mean",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "start_line": 8063,
+                "end_line": 8115,
+                "covered_lines": 0,
+                "num_statements": 0,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              },
+              {
+                "label": "pandas.core.generic.NDFrame.mean",
+                "implementation_role": "core",
+                "delegates_to": "self._stat_function",
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "start_line": 11823,
+                "end_line": 11833,
+                "covered_lines": 1,
+                "num_statements": 1,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/generic.py",
+                "covered_lines": 45,
+                "num_statements": 2106,
+                "line_coverage_percent": 2.14,
+                "covered_branches": 11,
+                "num_branches": 912,
+                "branch_coverage_percent": 1.21
+              },
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/util/_decorators.py",
+                "covered_lines": 6,
+                "num_statements": 141,
+                "line_coverage_percent": 4.26,
+                "covered_branches": 2,
+                "num_branches": 50,
+                "branch_coverage_percent": 4.0
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 51,
+              "num_statements": 2247,
+              "line_coverage_percent": 2.27,
+              "covered_branches": 13,
+              "num_branches": 962,
+              "branch_coverage_percent": 1.35
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": 0.0,
+        "file_branch_coverage_delta": 0.0,
+        "better_test_method": "tie"
+      }
+    },
+    {
+      "case_id": "Series/mul",
+      "target_api": "pandas.Series.mul",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.mul",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp0fucwp5a__Series__mul__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.mul\nResolved method chain:\n  - pandas.Series.mul [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py:7192-7264, delegates_to=self._flex_method)\n....................                                                     [100%]\n20 passed in 2.33s\n\nMethod coverage:\n  - pandas.Series.mul [core]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py: lines 127/1058 (12.0%), branches 61/360 (16.9%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp0fucwp5a__Series__mul__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.mul",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Series.mul",
+                "implementation_role": "core",
+                "delegates_to": "self._flex_method",
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py",
+                "start_line": 7192,
+                "end_line": 7264,
+                "covered_lines": 1,
+                "num_statements": 1,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py",
+                "covered_lines": 127,
+                "num_statements": 1058,
+                "line_coverage_percent": 12.0,
+                "covered_branches": 61,
+                "num_branches": 360,
+                "branch_coverage_percent": 16.94
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 127,
+              "num_statements": 1058,
+              "line_coverage_percent": 12.0,
+              "covered_branches": 61,
+              "num_branches": 360,
+              "branch_coverage_percent": 16.94
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.mul",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpqcowx382__Series__mul__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.mul\nResolved method chain:\n  - pandas.Series.mul [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py:7192-7264, delegates_to=self._flex_method)\n...........                                                              [100%]\n11 passed in 1.49s\n\nMethod coverage:\n  - pandas.Series.mul [core]: lines 1/1 (100.0%), branches 0/0 (100.0%), missing_lines=[], missing_branches={}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py: lines 148/1058 (14.0%), branches 71/360 (19.7%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmpqcowx382__Series__mul__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.mul",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.Series.mul",
+                "implementation_role": "core",
+                "delegates_to": "self._flex_method",
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py",
+                "start_line": 7192,
+                "end_line": 7264,
+                "covered_lines": 1,
+                "num_statements": 1,
+                "line_coverage_percent": 100.0,
+                "missing_lines": [],
+                "covered_branches": 0,
+                "num_branches": 0,
+                "branch_coverage_percent": 100.0,
+                "missing_branches": {}
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/series.py",
+                "covered_lines": 148,
+                "num_statements": 1058,
+                "line_coverage_percent": 13.99,
+                "covered_branches": 71,
+                "num_branches": 360,
+                "branch_coverage_percent": 19.72
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "core_method_totals": {
+              "covered_lines": 1,
+              "num_statements": 1,
+              "line_coverage_percent": 100.0,
+              "covered_branches": 0,
+              "num_branches": 0,
+              "branch_coverage_percent": 100.0
+            },
+            "totals": {
+              "covered_lines": 148,
+              "num_statements": 1058,
+              "line_coverage_percent": 13.99,
+              "covered_branches": 71,
+              "num_branches": 360,
+              "branch_coverage_percent": 19.72
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": 1.99,
+        "file_branch_coverage_delta": 2.78,
+        "better_test_method": "tie"
+      }
+    },
+    {
+      "case_id": "Series.str/contains",
+      "target_api": "pandas.Series.str.contains",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.str.contains",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp3ky01w0e__Series_str__contains__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.str.contains\nResolved method chain:\n  - pandas.core.strings.accessor.StringMethods.contains [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py:1362-1492)\n...............                                                          [100%]\n15 passed in 1.63s\n\nMethod coverage:\n  - pandas.core.strings.accessor.StringMethods.contains [core]: lines 3/4 (75.0%), branches 1/2 (50.0%), missing_lines=[1484], missing_branches={1483: [1484]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py: lines 53/604 (8.8%), branches 22/214 (10.3%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp3ky01w0e__Series_str__contains__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.str.contains",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.core.strings.accessor.StringMethods.contains",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "start_line": 1362,
+                "end_line": 1492,
+                "covered_lines": 3,
+                "num_statements": 4,
+                "line_coverage_percent": 75.0,
+                "missing_lines": [
+                  1484
+                ],
+                "covered_branches": 1,
+                "num_branches": 2,
+                "branch_coverage_percent": 50.0,
+                "missing_branches": {
+                  "1483": [
+                    1484
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "covered_lines": 53,
+                "num_statements": 604,
+                "line_coverage_percent": 8.77,
+                "covered_branches": 22,
+                "num_branches": 214,
+                "branch_coverage_percent": 10.28
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 3,
+              "num_statements": 4,
+              "line_coverage_percent": 75.0,
+              "covered_branches": 1,
+              "num_branches": 2,
+              "branch_coverage_percent": 50.0
+            },
+            "core_method_totals": {
+              "covered_lines": 3,
+              "num_statements": 4,
+              "line_coverage_percent": 75.0,
+              "covered_branches": 1,
+              "num_branches": 2,
+              "branch_coverage_percent": 50.0
+            },
+            "totals": {
+              "covered_lines": 53,
+              "num_statements": 604,
+              "line_coverage_percent": 8.77,
+              "covered_branches": 22,
+              "num_branches": 214,
+              "branch_coverage_percent": 10.28
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.str.contains",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp7otu2gi5__Series_str__contains__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.str.contains\nResolved method chain:\n  - pandas.core.strings.accessor.StringMethods.contains [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py:1362-1492)\n...................................                                      [100%]\n35 passed in 2.83s\n\nMethod coverage:\n  - pandas.core.strings.accessor.StringMethods.contains [core]: lines 3/4 (75.0%), branches 1/2 (50.0%), missing_lines=[1484], missing_branches={1483: [1484]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py: lines 51/604 (8.4%), branches 19/214 (8.9%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp7otu2gi5__Series_str__contains__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.str.contains",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.core.strings.accessor.StringMethods.contains",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "start_line": 1362,
+                "end_line": 1492,
+                "covered_lines": 3,
+                "num_statements": 4,
+                "line_coverage_percent": 75.0,
+                "missing_lines": [
+                  1484
+                ],
+                "covered_branches": 1,
+                "num_branches": 2,
+                "branch_coverage_percent": 50.0,
+                "missing_branches": {
+                  "1483": [
+                    1484
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "covered_lines": 51,
+                "num_statements": 604,
+                "line_coverage_percent": 8.44,
+                "covered_branches": 19,
+                "num_branches": 214,
+                "branch_coverage_percent": 8.88
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 3,
+              "num_statements": 4,
+              "line_coverage_percent": 75.0,
+              "covered_branches": 1,
+              "num_branches": 2,
+              "branch_coverage_percent": 50.0
+            },
+            "core_method_totals": {
+              "covered_lines": 3,
+              "num_statements": 4,
+              "line_coverage_percent": 75.0,
+              "covered_branches": 1,
+              "num_branches": 2,
+              "branch_coverage_percent": 50.0
+            },
+            "totals": {
+              "covered_lines": 51,
+              "num_statements": 604,
+              "line_coverage_percent": 8.44,
+              "covered_branches": 19,
+              "num_branches": 214,
+              "branch_coverage_percent": 8.88
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": -0.33,
+        "file_branch_coverage_delta": -1.4,
+        "better_test_method": "tie"
+      }
+    },
+    {
+      "case_id": "Series.str/match",
+      "target_api": "pandas.Series.str.match",
+      "case_dir": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match",
+      "suites": {
+        "baseline": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.str.match",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/baseline_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp9_yensyr__Series_str__match__baseline.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.str.match\nResolved method chain:\n  - pandas.core.strings.accessor.StringMethods.match [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py:1494-1581)\n................                                                         [100%]\n16 passed in 1.50s\n\nMethod coverage:\n  - pandas.core.strings.accessor.StringMethods.match [core]: lines 13/18 (72.2%), branches 8/14 (57.1%), missing_lines=[1552, 1553, 1572, 1573, 1575], missing_branches={1551: [1552], 1552: [1553, 1561], 1571: [1572], 1573: [1575, 1580]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py: lines 68/604 (11.3%), branches 30/214 (14.0%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp9_yensyr__Series_str__match__baseline.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.str.match",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/baseline_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.core.strings.accessor.StringMethods.match",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "start_line": 1494,
+                "end_line": 1581,
+                "covered_lines": 13,
+                "num_statements": 18,
+                "line_coverage_percent": 72.22,
+                "missing_lines": [
+                  1552,
+                  1553,
+                  1572,
+                  1573,
+                  1575
+                ],
+                "covered_branches": 8,
+                "num_branches": 14,
+                "branch_coverage_percent": 57.14,
+                "missing_branches": {
+                  "1551": [
+                    1552
+                  ],
+                  "1552": [
+                    1553,
+                    1561
+                  ],
+                  "1571": [
+                    1572
+                  ],
+                  "1573": [
+                    1575,
+                    1580
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "covered_lines": 68,
+                "num_statements": 604,
+                "line_coverage_percent": 11.26,
+                "covered_branches": 30,
+                "num_branches": 214,
+                "branch_coverage_percent": 14.02
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 13,
+              "num_statements": 18,
+              "line_coverage_percent": 72.22,
+              "covered_branches": 8,
+              "num_branches": 14,
+              "branch_coverage_percent": 57.14
+            },
+            "core_method_totals": {
+              "covered_lines": 13,
+              "num_statements": 18,
+              "line_coverage_percent": 72.22,
+              "covered_branches": 8,
+              "num_branches": 14,
+              "branch_coverage_percent": 57.14
+            },
+            "totals": {
+              "covered_lines": 68,
+              "num_statements": 604,
+              "line_coverage_percent": 11.26,
+              "covered_branches": 30,
+              "num_branches": 214,
+              "branch_coverage_percent": 14.02
+            }
+          }
+        },
+        "ir_generated": {
+          "command": [
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/bin/python",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_api_coverage.py",
+            "--repo-root",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas",
+            "--runtime",
+            "local",
+            "--api",
+            "pandas.Series.str.match",
+            "--test",
+            "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py",
+            "--json-out",
+            "/var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp6ybja1f8__Series_str__match__ir_generated.json",
+            "--",
+            "-q"
+          ],
+          "returncode": 0,
+          "stdout": "Target API: pandas.Series.str.match\nResolved method chain:\n  - pandas.core.strings.accessor.StringMethods.match [core] (/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py:1494-1581)\n................................                                         [100%]\n32 passed in 1.36s\n\nMethod coverage:\n  - pandas.core.strings.accessor.StringMethods.match [core]: lines 13/18 (72.2%), branches 8/14 (57.1%), missing_lines=[1552, 1553, 1572, 1573, 1575], missing_branches={1551: [1552], 1552: [1553, 1561], 1571: [1572], 1573: [1575, 1580]}\n\nFile line/branch coverage:\n  - /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py: lines 64/604 (10.6%), branches 27/214 (12.6%)\n\nWrote JSON summary to /var/folders/hw/1kq_7bd16wv_5p4mkp17dl2h0000gn/T/tmp6ybja1f8__Series_str__match__ir_generated.json\n\npytest exit code: 0\n",
+          "stderr": "",
+          "coverage": {
+            "target_api": "pandas.Series.str.match",
+            "test_target": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py",
+            "pytest_exit_code": 0,
+            "methods": [
+              {
+                "label": "pandas.core.strings.accessor.StringMethods.match",
+                "implementation_role": "core",
+                "delegates_to": null,
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "start_line": 1494,
+                "end_line": 1581,
+                "covered_lines": 13,
+                "num_statements": 18,
+                "line_coverage_percent": 72.22,
+                "missing_lines": [
+                  1552,
+                  1553,
+                  1572,
+                  1573,
+                  1575
+                ],
+                "covered_branches": 8,
+                "num_branches": 14,
+                "branch_coverage_percent": 57.14,
+                "missing_branches": {
+                  "1551": [
+                    1552
+                  ],
+                  "1552": [
+                    1553,
+                    1561
+                  ],
+                  "1571": [
+                    1572
+                  ],
+                  "1573": [
+                    1575,
+                    1580
+                  ]
+                }
+              }
+            ],
+            "files": [
+              {
+                "file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/local_pandas/pandas/pandas/core/strings/accessor.py",
+                "covered_lines": 64,
+                "num_statements": 604,
+                "line_coverage_percent": 10.6,
+                "covered_branches": 27,
+                "num_branches": 214,
+                "branch_coverage_percent": 12.62
+              }
+            ],
+            "method_totals": {
+              "covered_lines": 13,
+              "num_statements": 18,
+              "line_coverage_percent": 72.22,
+              "covered_branches": 8,
+              "num_branches": 14,
+              "branch_coverage_percent": 57.14
+            },
+            "core_method_totals": {
+              "covered_lines": 13,
+              "num_statements": 18,
+              "line_coverage_percent": 72.22,
+              "covered_branches": 8,
+              "num_branches": 14,
+              "branch_coverage_percent": 57.14
+            },
+            "totals": {
+              "covered_lines": 64,
+              "num_statements": 604,
+              "line_coverage_percent": 10.6,
+              "covered_branches": 27,
+              "num_branches": 214,
+              "branch_coverage_percent": 12.62
+            }
+          }
+        }
+      },
+      "comparison": {
+        "has_both": true,
+        "baseline_present": true,
+        "ir_generated_present": true,
+        "core_line_coverage_delta": 0.0,
+        "core_branch_coverage_delta": 0.0,
+        "file_line_coverage_delta": -0.66,
+        "file_branch_coverage_delta": -1.4,
+        "better_test_method": "tie"
+      }
+    }
+  ]
+}

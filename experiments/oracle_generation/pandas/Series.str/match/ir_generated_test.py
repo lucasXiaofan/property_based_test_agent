@@ -225,7 +225,7 @@ def test_string_dtype_null_propagates_as_pd_na_by_default(lst, pat):
 def test_na_false_fills_null_positions_with_false(lst, pat):
     """na=False → NaN positions in result become False."""
     assume(any(isinstance(v, float) and np.isnan(v) for v in lst))
-    s = pd.Series(lst)
+    s = pd.Series(lst, dtype=object)
     result = s.str.match(pat, na=False)
     for i, val in enumerate(s):
         if pd.isna(val):
@@ -246,7 +246,7 @@ def test_na_false_fills_null_positions_with_false(lst, pat):
 def test_na_true_fills_null_positions_with_true(lst, pat):
     """na=True → NaN positions in result become True."""
     assume(any(isinstance(v, float) and np.isnan(v) for v in lst))
-    s = pd.Series(lst)
+    s = pd.Series(lst, dtype=object)
     result = s.str.match(pat, na=True)
     for i, val in enumerate(s):
         if pd.isna(val):
@@ -257,14 +257,14 @@ def test_na_true_fills_null_positions_with_true(lst, pat):
 
 def test_all_null_series_na_false_gives_all_false():
     """All-NaN series with na=False → all False."""
-    s = pd.Series([np.nan, np.nan, np.nan])
+    s = pd.Series([np.nan, np.nan, np.nan], dtype=object)
     result = s.str.match("abc", na=False)
     assert list(result) == [False, False, False]
 
 
 def test_all_null_series_na_true_gives_all_true():
     """All-NaN series with na=True → all True."""
-    s = pd.Series([np.nan, np.nan, np.nan])
+    s = pd.Series([np.nan, np.nan, np.nan], dtype=object)
     result = s.str.match("abc", na=True)
     assert list(result) == [True, True, True]
 
@@ -283,7 +283,7 @@ def test_na_parameter_does_not_affect_non_null_results():
     na= must only affect null positions, not non-null ones.
     Bug surface: na parameter leaking into non-null computations.
     """
-    s = pd.Series(["abc", np.nan, "xyz"])
+    s = pd.Series(["abc", np.nan, "xyz"], dtype=object)
     result_na_false = s.str.match("^a", na=False)
     result_na_true = s.str.match("^a", na=True)
     # Non-null positions identical regardless of na value
@@ -436,7 +436,7 @@ def test_single_element_series():
 
 def test_single_null_series_na_false():
     """Single-element all-null series with na=False returns [False]."""
-    s = pd.Series([np.nan])
+    s = pd.Series([np.nan], dtype=object)
     result = s.str.match("^a", na=False)
     assert len(result) == 1
     assert result.iloc[0] == False
@@ -457,7 +457,7 @@ def test_idempotent_double_call(lst, pat):
 
 def test_mixed_nulls_and_non_nulls_object_dtype():
     """Mixed series: non-null positions correct, null positions NaN."""
-    s = pd.Series(["abc", np.nan, "xyz", np.nan])
+    s = pd.Series(["abc", np.nan, "xyz", np.nan], dtype=object)
     result = s.str.match("^a")
     assert result.iloc[0] == True
     assert pd.isna(result.iloc[1])

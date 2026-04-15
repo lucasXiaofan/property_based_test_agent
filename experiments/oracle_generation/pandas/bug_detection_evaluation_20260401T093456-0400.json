@@ -1,0 +1,315 @@
+{
+  "generated_at": "2026-04-01T09:34:56.871002-04:00",
+  "pandas_version": "3.0.0",
+  "bug_inventory": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/pandas_3_0_0_confirmed_bug_inventory.json",
+  "apis": [
+    {
+      "case_dir": "DataFrame/groupby",
+      "function": "pandas.DataFrame.groupby",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.groupby.md",
+      "issues": [
+        {
+          "issue": 61356,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/61356",
+          "issue_title": "groupby.groups fails with categorical + NaN + dropna=False",
+          "hypothesis_sketch": "st.just(pd.DataFrame({'cat': pd.Categorical(['a', np.nan, 'a'], categories=['a', 'b', 'd']), 'vals': [1, 2, 3]}))",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline groupby suite does not specifically combine categorical keys, NaN values, dropna=False, and .groups inspection."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR groupby suite covers dropna=False and categorical grouping, but it validates aggregations rather than the reported .groups failure path."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "DataFrame/reindex",
+      "function": "pandas.DataFrame.reindex",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.reindex.md",
+      "issues": [
+        {
+          "issue": 63993,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/63993",
+          "issue_title": "DataFrame.reindex crashes with multi-column string fill_value",
+          "hypothesis_sketch": "st.lists(st.text(min_size=1), min_size=2, max_size=5, unique=True).map(lambda extra: (pd.DataFrame({'a': [0]}), ['a'] + extra, 'missing'))",
+          "local_status": "bug_reproduced",
+          "baseline": {
+            "detected": false,
+            "reason": "Not detected on local pandas 3.0.0 because the suite still passes even though the issue reproduces locally. The baseline reindex suite uses numeric fill_value and separate column-structure checks, so it misses the multi-column string-fill crash path."
+          },
+          "ir_generated": {
+            "detected": false,
+            "reason": "Not detected on local pandas 3.0.0 because the suite still passes even though the issue reproduces locally. The IR reindex suite uses a string fill_value for row insertion and column reindexing separately, but not the reported column reindex plus string fill_value combination with multiple new columns."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 1,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "DataFrame/to_json",
+      "function": "pandas.DataFrame.to_json",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.to_json.md",
+      "issues": [
+        {
+          "issue": 63236,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/63236",
+          "issue_title": "to_json stringifies non-ns TimedeltaIndex with wrong units",
+          "hypothesis_sketch": "st.sampled_from(['us', 'ms', 's']).map(lambda unit: pd.DataFrame([[1]], columns=[pd.Timedelta('1D').as_unit(unit)]))",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline to_json suite checks general orient and JSON shape behavior, not non-ns TimedeltaIndex unit preservation."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR to_json suite checks epoch scaling for datetime values, but not TimedeltaIndex column-label unit serialization."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "Index/astype",
+      "function": "pandas.Index.astype",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Index.astype.md",
+      "issues": [
+        {
+          "issue": 61099,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/61099",
+          "issue_title": "Series comparison fails for object-index vs string-index",
+          "hypothesis_sketch": "st.lists(st.text(min_size=1), min_size=1, max_size=5, unique=True).map(lambda labels: (pd.Series(range(len(labels)), index=labels), pd.Index(labels).astype('string')))",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline astype suite checks dtype conversion and copy behavior, not downstream Series comparison across object vs string indexes."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR astype suite checks dtype conversion and identity semantics, not Series comparison behavior after astype('string')."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "Index/shift",
+      "function": "pandas.Index.shift",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Index.shift.md",
+      "issues": [
+        {
+          "issue": 62094,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/62094",
+          "issue_title": "TimedeltaIndex.shift regressed on computed freq-less indexes",
+          "hypothesis_sketch": "st.dates(min_value=pd.Timestamp('2000-01-01').date(), max_value=pd.Timestamp('2030-01-01').date()).map(lambda d: pd.date_range(d, periods=5) - pd.Timestamp('2019-01-03'))",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline shift suite mostly exercises ordinary frequency-aware indexes and generic shift properties."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR shift suite checks freqless indexes, but it expects NullFrequencyError for nonzero freqless TimedeltaIndex shifts rather than the reported arithmetic regression setup."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "Series/factorize",
+      "function": "pandas.Series.factorize",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.factorize.md",
+      "issues": [
+        {
+          "issue": 62888,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/62888",
+          "issue_title": "factorize collapses 0/False and 1/True in object dtype",
+          "hypothesis_sketch": "st.permutations([0, 1, True, False]).map(lambda xs: pd.Series(list(xs)))",
+          "local_status": "bug_reproduced",
+          "baseline": {
+            "detected": false,
+            "reason": "Not detected on local pandas 3.0.0 because the suite still passes even though the issue reproduces locally. The baseline factorize suite never mixes ints and bools in the same object Series, so the hash/equality collision bug is outside its input space."
+          },
+          "ir_generated": {
+            "detected": false,
+            "reason": "Not detected on local pandas 3.0.0 because the suite still passes even though the issue reproduces locally. The IR factorize suite focuses on strings, missing values, and categoricals; it never generates the mixed int/bool object values that reproduce the bug."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 1,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "Series/mean",
+      "function": "pandas.Series.mean",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.mean.md",
+      "issues": [
+        {
+          "issue": 59965,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/59965",
+          "issue_title": "FloatingArray reductions do not skip NaN correctly",
+          "hypothesis_sketch": "st.lists(st.one_of(st.floats(allow_nan=False, allow_infinity=False), st.integers()), min_size=4, max_size=4).map(lambda xs: pd.Series(xs).convert_dtypes())",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline suite exercises skipna but does not target nullable FloatingArray conversions that triggered the report."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR suite exercises skipna and order invariants, but it also stays on ordinary float/bool Series instead of nullable FloatingArray inputs."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "Series/mul",
+      "function": "pandas.Series.mul",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.mul.md",
+      "issues": [
+        {
+          "issue": 62595,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/62595",
+          "issue_title": "Arrow-backed string Series multiply behaves differently from python strings",
+          "hypothesis_sketch": "st.just(pd.Series(['a', 'b', 'c']))",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline mul suite is numeric, so it never exercises string backends or bool-string multiplication semantics."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR mul suite is also numeric-only and does not probe string backends or bool operands."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "Series.str/contains",
+      "function": "pandas.Series.str.contains",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.str.contains.md",
+      "issues": [
+        {
+          "issue": 62240,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/62240",
+          "issue_title": "Compiled regex handling in str.match/str.contains is inconsistent",
+          "hypothesis_sketch": "st.just((re.compile('foo', flags=re.IGNORECASE), pd.Series(['Foo', 'foo', 'Bar', '_Foo_', '_foo_'])))",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline string-method suite focuses on plain strings and basic regex/literal behavior, not compiled patterns with flags."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR string-method suite stresses regex behavior, but it does not construct compiled regex objects with embedded flags."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    },
+    {
+      "case_dir": "Series.str/match",
+      "function": "pandas.Series.str.match",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.str.match.md",
+      "issues": [
+        {
+          "issue": 62240,
+          "issue_url": "https://github.com/pandas-dev/pandas/issues/62240",
+          "issue_title": "Compiled regex handling in str.match/str.contains is inconsistent",
+          "hypothesis_sketch": "st.just((re.compile('foo', flags=re.IGNORECASE), pd.Series(['Foo', 'foo', 'Bar', '_Foo_', '_foo_'])))",
+          "local_status": "not_reproduced",
+          "baseline": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The baseline string-method suite focuses on plain strings and basic regex/literal behavior, not compiled patterns with flags."
+          },
+          "ir_generated": {
+            "detected": null,
+            "reason": "Not evaluated dynamically because the local inventory marks this issue as not_reproduced. The IR string-method suite stresses regex behavior, but it does not construct compiled regex objects with embedded flags."
+          }
+        }
+      ],
+      "summary": {
+        "reproduced_issues": 0,
+        "baseline_detected": 0,
+        "ir_generated_detected": 0,
+        "baseline_detection_rate": 0.0,
+        "ir_generated_detection_rate": 0.0,
+        "higher_quality": "tie"
+      }
+    }
+  ],
+  "overall": {
+    "reproduced_issues_evaluated": 2,
+    "baseline_detected": 0,
+    "ir_generated_detected": 0,
+    "baseline_detection_rate": 0.0,
+    "ir_generated_detection_rate": 0.0,
+    "higher_quality": "tie"
+  }
+}

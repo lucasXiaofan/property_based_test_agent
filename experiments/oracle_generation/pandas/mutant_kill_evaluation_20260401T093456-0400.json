@@ -1,0 +1,700 @@
+{
+  "generated_at": "2026-04-01T09:34:56.908888-04:00",
+  "pandas_version": "3.0.0",
+  "mutants_catalog": "experiments/oracle_generation/pandas/doc_wrapper_mutants.json",
+  "apis": [
+    {
+      "case_dir": "DataFrame/groupby",
+      "function": "pandas.DataFrame.groupby",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.groupby.md",
+      "mutants": [
+        {
+          "id": "force_sort_true",
+          "title": "Ignore sort=False",
+          "doc_anchor": "sortbool, default True",
+          "description": "Force group keys to be sorted even when the caller requests sort=False."
+        },
+        {
+          "id": "force_dropna_true",
+          "title": "Ignore dropna=False",
+          "doc_anchor": "dropnabool, default True",
+          "description": "Drop NA groups even when the caller requests dropna=False."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "force_sort_true",
+            "title": "Ignore sort=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "     df=data_frames(\n            columns=[small_str_col(\"key\"), small_int_col(\"val\")],\n            index=range_indexes(min_size=2, max_size=30),\n        )\n    )\n    def test_sort_false_keys_in_first_occurrence_order(df):\n        assume(df[\"key\"].notna().any())\n        seen = []\n        for k in df[\"key\"]:\n            if pd.notna(k) and k not in seen:\n                seen.append(k)\n        keys = [name for name, _ in df.groupby(\"key\", sort=False, dropna=True)]\n>       assert keys == seen\nE       AssertionError: assert ['a', 'b'] == ['b', 'a']\nE         \nE         At index 0 diff: 'a' != 'b'\nE         Use -v to get more diff\nE       Falsifying example: test_sort_false_keys_in_first_occurrence_order(\nE           df=  key  val\nE           0   b    0\nE           1   a    0,\nE       )\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:152: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_sort_false_keys_in_first_occurrence_order\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 6 passed in 3.08s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "force_dropna_true",
+            "title": "Ignore dropna=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "............F\n=================================== FAILURES ===================================\n____________________ test_dropna_false_includes_na_as_group ____________________\n\n    def test_dropna_false_includes_na_as_group():\n        df = pd.DataFrame({\"key\": [\"a\", None, \"b\", \"a\"], \"val\": [1, 2, 3, 4]})\n        result = df.groupby(\"key\", dropna=False).sum()\n        # NA group should be present\n>       assert any(pd.isna(k) for k in result.index)\nE       assert False\nE        +  where False = any(<generator object test_dropna_false_includes_na_as_group.<locals>.<genexpr> at 0x10e316dc0>)\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py:245: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/groupby/baseline_test.py::test_dropna_false_includes_na_as_group\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 12 passed in 2.76s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "force_sort_true",
+            "title": "Ignore sort=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "roupby/ir_generated_test.py:48: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\ndf =   key  val\n0   b    0\n1   a    0\n\n    @given(key_val_frames())\n    def test_sort_flag_controls_group_key_order(df):\n        first_seen = list(dict.fromkeys(df[\"key\"]))\n        sorted_keys = sorted(first_seen)\n    \n        unsorted = list(df.groupby(\"key\", sort=False).groups)\n        ordered = list(df.groupby(\"key\", sort=True).groups)\n    \n>       assert unsorted == first_seen\nE       AssertionError: assert ['a', 'b'] == ['b', 'a']\nE         \nE         At index 0 diff: 'a' != 'b'\nE         Use -v to get more diff\nE       Falsifying example: test_sort_flag_controls_group_key_order(\nE           df=  key  val\nE           0   b    0\nE           1   a    0,\nE       )\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_generated_test.py:55: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/groupby/ir_generated_test.py::test_sort_flag_controls_group_key_order\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 1 passed in 0.41s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "force_dropna_true",
+            "title": "Ignore dropna=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "ing with an explicit non-null surrogate.\n        sentinel = \"__missing__\"\n        with_na = df.groupby(\"key\", dropna=False).sum(numeric_only=True)\n        explicit = df.assign(key=df[\"key\"].fillna(sentinel)).groupby(\"key\").sum(numeric_only=True)\n        normalized = {\n            (sentinel if pd.isna(key) else key): value\n            for key, value in with_na[\"val\"].items()\n        }\n>       assert normalized == explicit[\"val\"].to_dict()\nE       AssertionError: assert {} == {'__missing__': 1}\nE         \nE         Right contains 1 more item:\nE         {'__missing__': 1}\nE         Use -v to get more diff\nE       Falsifying example: test_dropna_false_matches_fillna_sentinel_grouping(\nE           df=    key  val\nE           0  None    1\nE           1  None    0,\nE       )\n\nexperiments/oracle_generation/pandas/DataFrame/groupby/ir_generated_test.py:77: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/groupby/ir_generated_test.py::test_dropna_false_matches_fillna_sentinel_grouping\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed in 1.42s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "tie"
+    },
+    {
+      "case_dir": "DataFrame/reindex",
+      "function": "pandas.DataFrame.reindex",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.reindex.md",
+      "mutants": [
+        {
+          "id": "ignore_fill_value",
+          "title": "Ignore fill_value",
+          "doc_anchor": "fill_value scalar, default np.nan",
+          "description": "Remove caller-specified fill_value and fall back to NaN-filled entries."
+        },
+        {
+          "id": "raise_multi_column_string_fill",
+          "title": "Crash on multi-column string fill",
+          "doc_anchor": "Conform DataFrame to new index with optional filling logic",
+          "description": "Raise a TypeError when reindexing columns with a string fill_value and two or more missing output columns."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py",
+        "killed_mutants": 1,
+        "total_mutants": 2,
+        "kill_rate": 0.5,
+        "mutants": [
+          {
+            "mutant_id": "ignore_fill_value",
+            "title": "Ignore fill_value",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": " max_size=4),\n        fill_val=st.floats(-999, 999, allow_nan=False, allow_infinity=False),\n    )\n    @settings(max_examples=100)\n    def test_fill_value_used_for_missing(df, extra, fill_val):\n        new_idx = pd.Index(extra)\n        result = df.reindex(new_idx, fill_value=fill_val)\n>       assert (result[\"v\"] == fill_val).all()\nE       assert np.False_\nE        +  where np.False_ = all()\nE        +    where all = 50   NaN\\nName: v, dtype: float64 == 0.0.all\nE       Falsifying example: test_fill_value_used_for_missing(\nE           # The test always failed when commented parts were varied together.\nE           df=     v\nE           0  0.0,  # or any other generated value\nE           extra=[50],  # or any other generated value\nE           fill_val=0.0,  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py:125: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/reindex/baseline_test.py::test_fill_value_used_for_missing\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed in 7.92s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "raise_multi_column_string_fill",
+            "title": "Crash on multi-column string fill",
+            "killed": false,
+            "return_code": 0,
+            "stdout_tail": "..........................                                               [100%]\n26 passed in 4.24s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_generated_test.py",
+        "killed_mutants": 1,
+        "total_mutants": 2,
+        "kill_rate": 0.5,
+        "mutants": [
+          {
+            "mutant_id": "ignore_fill_value",
+            "title": "Ignore fill_value",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "      assert (result.loc[new_labels] == \"missing\").all().all()\nE       AssertionError: assert np.False_\nE        +  where np.False_ = all()\nE        +    where all = http_status      False\\nresponse_time    False\\ndtype: bool.all\nE        +      where http_status      False\\nresponse_time    False\\ndtype: bool = all()\nE        +        where all =           http_status  response_time\\n__new__0          NaN            NaN == 'missing'.all\nE       Falsifying example: test_fill_value_string_only_affects_new_rows(\nE           # The test always failed when commented parts were varied together.\nE           df=   http_status  response_time\nE           A          0.0            0.0,  # or any other generated value\nE           extra_count=1,  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/DataFrame/reindex/ir_generated_test.py:94: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/reindex/ir_generated_test.py::test_fill_value_string_only_affects_new_rows\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 2 passed in 3.16s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "raise_multi_column_string_fill",
+            "title": "Crash on multi-column string fill",
+            "killed": false,
+            "return_code": 0,
+            "stdout_tail": "..........                                                               [100%]\n10 passed in 0.35s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "tie"
+    },
+    {
+      "case_dir": "DataFrame/to_json",
+      "function": "pandas.DataFrame.to_json",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.to_json.md",
+      "mutants": [
+        {
+          "id": "force_ascii_true",
+          "title": "Ignore force_ascii=False",
+          "doc_anchor": "force_ascii bool, default True",
+          "description": "Serialize with ASCII escaping even when the caller disables it."
+        },
+        {
+          "id": "corrupt_epoch_date_unit",
+          "title": "Break epoch unit scaling",
+          "doc_anchor": "date_unit controls timestamp unit",
+          "description": "Corrupt epoch-based datetime units by scaling numeric timestamps incorrectly."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py",
+        "killed_mutants": 1,
+        "total_mutants": 2,
+        "kill_rate": 0.5,
+        "mutants": [
+          {
+            "mutant_id": "force_ascii_true",
+            "title": "Ignore force_ascii=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "................F\n=================================== FAILURES ===================================\n___________________ test_force_ascii_false_preserves_unicode ___________________\n\n    def test_force_ascii_false_preserves_unicode():\n        df = pd.DataFrame({\"col\": [\"caf\u00e9\"]})\n        result = df.to_json(force_ascii=False)\n>       assert \"caf\u00e9\" in result\nE       assert 'caf\u00e9' in '{\"col\":{\"0\":\"caf\\\\u00e9\"}}'\n\nexperiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py:227: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py::test_force_ascii_false_preserves_unicode\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 16 passed in 1.08s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "corrupt_epoch_date_unit",
+            "title": "Break epoch unit scaling",
+            "killed": false,
+            "return_code": 0,
+            "stdout_tail": "...............................                                          [100%]\n=============================== warnings summary ===============================\nexperiments/oracle_generation/pandas/DataFrame/to_json/baseline_test.py::test_date_format_epoch_deprecated_but_functional\n  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_evaluation/run_mutant_kill_evaluation.py:102: Pandas4Warning: 'epoch' date format is deprecated and will be removed in a future version, please use 'iso' date format instead.\n    result = original(self, *args, **kwargs)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n31 passed, 1 warning in 1.59s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "force_ascii_true",
+            "title": "Ignore force_ascii=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "..F\n=================================== FAILURES ===================================\n__________________ test_force_ascii_controls_unicode_escaping __________________\n\n    def test_force_ascii_controls_unicode_escaping():\n        df = pd.DataFrame({\"text\": [\"caf\u00e9\", \"\u6771\u4eac\"]})\n    \n        ascii_json = df.to_json(force_ascii=True)\n        unicode_json = df.to_json(force_ascii=False)\n    \n        assert \"\\\\u00e9\" in ascii_json\n>       assert \"caf\u00e9\" in unicode_json\nE       assert 'caf\u00e9' in '{\"text\":{\"0\":\"caf\\\\u00e9\",\"1\":\"\\\\u6771\\\\u4eac\"}}'\n\nexperiments/oracle_generation/pandas/DataFrame/to_json/ir_generated_test.py:72: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/to_json/ir_generated_test.py::test_force_ascii_controls_unicode_escaping\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 2 passed in 0.24s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "corrupt_epoch_date_unit",
+            "title": "Break epoch unit scaling",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "    \n        records_s = json.loads(df.to_json(orient=\"records\", date_format=\"epoch\", date_unit=\"s\"))\n        records_ms = json.loads(df.to_json(orient=\"records\", date_format=\"epoch\", date_unit=\"ms\"))\n        records_us = json.loads(df.to_json(orient=\"records\", date_format=\"epoch\", date_unit=\"us\"))\n        records_ns = json.loads(df.to_json(orient=\"records\", date_format=\"epoch\", date_unit=\"ns\"))\n    \n>       assert [row[\"dt\"] for row in records_s] == seconds\nE       assert [10] == [1]\nE         \nE         At index 0 diff: 10 != 1\nE         Use -v to get more diff\nE       Falsifying example: test_date_unit_scales_epoch_output_for_second_aligned_datetimes(\nE           df_and_seconds=(                   dt\nE            0 1970-01-01 00:00:01, [1]),\nE       )\n\nexperiments/oracle_generation/pandas/DataFrame/to_json/ir_generated_test.py:132: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/DataFrame/to_json/ir_generated_test.py::test_date_unit_scales_epoch_output_for_second_aligned_datetimes\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 9 passed in 0.79s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "ir_generated"
+    },
+    {
+      "case_dir": "Index/astype",
+      "function": "pandas.Index.astype",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Index.astype.md",
+      "mutants": [
+        {
+          "id": "ignore_dtype_change",
+          "title": "Ignore requested dtype",
+          "doc_anchor": "dtype str or dtype",
+          "description": "Return the original index unchanged when the caller asks for a different dtype."
+        },
+        {
+          "id": "copy_false_still_copies",
+          "title": "Ignore copy=False identity",
+          "doc_anchor": "copy bool, default True",
+          "description": "Return a distinct object even when astype is a no-op with copy=False."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype/baseline_test.py",
+        "killed_mutants": 1,
+        "total_mutants": 2,
+        "kill_rate": 0.5,
+        "mutants": [
+          {
+            "mutant_id": "ignore_dtype_change",
+            "title": "Ignore requested dtype",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "YPES),\n    )\n    def test_result_dtype_matches_requested_float(idx, target):\n        result = idx.astype(target)\n>       assert result.dtype == target\nE       AssertionError: assert dtype('int64') == dtype('float32')\nE        +  where dtype('int64') = Index([], dtype='int64').dtype\nE       Falsifying example: test_result_dtype_matches_requested_float(\nE           # The test always failed when commented parts were varied together.\nE           idx=(lambda vals: pd.Index(vals, dtype='int64'))(\nE               []),  # or any other generated value\nE           target=dtype('float32'),  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/Index/astype/baseline_test.py:91: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--c93fab3c.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Index/astype/baseline_test.py::test_result_dtype_matches_requested_float\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed in 0.86s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "copy_false_still_copies",
+            "title": "Ignore copy=False identity",
+            "killed": false,
+            "return_code": 0,
+            "stdout_tail": "........................                                                 [100%]\n24 passed in 1.27s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "ignore_dtype_change",
+            "title": "Ignore requested dtype",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "s):\n        idx = pd.Index(values, dtype=\"int64\")\n    \n        result = idx.astype(\"float\", copy=True)\n    \n        assert isinstance(result, pd.Index)\n>       assert result.dtype == np.dtype(\"float64\")\nE       AssertionError: assert dtype('int64') == dtype('float64')\nE        +  where dtype('int64') = Index([], dtype='int64').dtype\nE        +  and   dtype('float64') = <class 'numpy.dtype'>('float64')\nE        +    where <class 'numpy.dtype'> = np.dtype\nE       Falsifying example: test_astype_float_preserves_order_length_and_numeric_values(\nE           values=[],  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/Index/astype/ir_generated_test.py:38: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--5a9c0800.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Index/astype/ir_generated_test.py::test_astype_float_preserves_order_length_and_numeric_values\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.56s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "copy_false_still_copies",
+            "title": "Ignore copy=False identity",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "s/Index/astype/ir_generated_test.py:78: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nvalues = []\n\n    @given(INT_VALUES)\n    def test_copy_false_with_same_dtype_can_return_original_index(values):\n        idx = pd.Index(values, dtype=\"int64\")\n    \n        result = idx.astype(\"int64\", copy=False)\n    \n>       assert result is idx\nE       AssertionError: assert Index([], dtype='int64') is Index([], dtype='int64')\nE       Falsifying example: test_copy_false_with_same_dtype_can_return_original_index(\nE           values=[],  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/Index/astype/ir_generated_test.py:83: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--5cac4991.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Index/astype/ir_generated_test.py::test_copy_false_with_same_dtype_can_return_original_index\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 4 passed in 0.67s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "ir_generated"
+    },
+    {
+      "case_dir": "Index/shift",
+      "function": "pandas.Index.shift",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Index.shift.md",
+      "mutants": [
+        {
+          "id": "negate_periods",
+          "title": "Reverse shift direction",
+          "doc_anchor": "periods int, can be positive or negative",
+          "description": "Apply the opposite shift direction from the caller-provided periods."
+        },
+        {
+          "id": "ignore_explicit_freq",
+          "title": "Ignore explicit freq",
+          "doc_anchor": "freq DateOffset, timedelta, or str, optional",
+          "description": "Discard an explicit freq argument and reuse implicit index frequency behavior instead."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift/baseline_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "negate_periods",
+            "title": "Reverse shift direction",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": ".........F\n=================================== FAILURES ===================================\n___________ test_explicit_freq_shifts_each_element_by_correct_amount ___________\n\n    def test_explicit_freq_shifts_each_element_by_correct_amount():\n        \"\"\"Each element in result should be exactly periods * freq ahead of original.\"\"\"\n        idx = pd.date_range(\"2011-01-01\", periods=5, freq=\"MS\")\n        periods = 10\n        result = idx.shift(periods, freq=\"D\")\n        expected_delta = pd.Timedelta(days=10)\n        for orig, shifted in zip(idx, result):\n>           assert shifted == orig + expected_delta\nE           AssertionError: assert Timestamp('2010-12-22 00:00:00') == (Timestamp('2011-01-01 00:00:00') + Timedelta('10 days 00:00:00'))\n\nexperiments/oracle_generation/pandas/Index/shift/baseline_test.py:198: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Index/shift/baseline_test.py::test_explicit_freq_shifts_each_element_by_correct_amount\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 9 passed in 0.42s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "ignore_explicit_freq",
+            "title": "Ignore explicit freq",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": ".........F\n=================================== FAILURES ===================================\n___________ test_explicit_freq_shifts_each_element_by_correct_amount ___________\n\n    def test_explicit_freq_shifts_each_element_by_correct_amount():\n        \"\"\"Each element in result should be exactly periods * freq ahead of original.\"\"\"\n        idx = pd.date_range(\"2011-01-01\", periods=5, freq=\"MS\")\n        periods = 10\n        result = idx.shift(periods, freq=\"D\")\n        expected_delta = pd.Timedelta(days=10)\n        for orig, shifted in zip(idx, result):\n>           assert shifted == orig + expected_delta\nE           AssertionError: assert Timestamp('2011-11-01 00:00:00') == (Timestamp('2011-01-01 00:00:00') + Timedelta('10 days 00:00:00'))\n\nexperiments/oracle_generation/pandas/Index/shift/baseline_test.py:198: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Index/shift/baseline_test.py::test_explicit_freq_shifts_each_element_by_correct_amount\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 9 passed in 0.42s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "negate_periods",
+            "title": "Reverse shift direction",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "ches_period_arithmetic(n, periods):\n        idx = pd.period_range(\"2011-01\", periods=n, freq=\"M\")\n    \n        result = idx.shift(periods)\n        expected = idx + periods\n    \n>       pd.testing.assert_index_equal(result, expected)\nE       AssertionError: Index are different\nE       \nE       Index values are different (100.0 %)\nE       [left]:  PeriodIndex(['2010-12'], dtype='period[M]')\nE       [right]: PeriodIndex(['2011-02'], dtype='period[M]')\nE       Falsifying example: test_period_index_shift_matches_period_arithmetic(\nE           n=1,  # or any other generated value\nE           periods=1,\nE       )\n\nexperiments/oracle_generation/pandas/Index/shift/ir_generated_test.py:75: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--efec4159.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Index/shift/ir_generated_test.py::test_period_index_shift_matches_period_arithmetic\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 6 passed in 0.31s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "ignore_explicit_freq",
+            "title": "Ignore explicit freq",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "dex_rejects_explicit_freq(periods):\n                   ^^^\n\nexperiments/oracle_generation/pandas/Index/shift/ir_generated_test.py:50: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nperiods = 1\n\n    @given(periods=st.integers(min_value=-12, max_value=12).filter(lambda x: x != 0))\n    def test_period_index_rejects_explicit_freq(periods):\n        idx = pd.period_range(\"2011-01\", periods=4, freq=\"M\")\n    \n>       with pytest.raises(TypeError):\nE       Failed: DID NOT RAISE <class 'TypeError'>\nE       Falsifying example: test_period_index_rejects_explicit_freq(\nE           periods=1,\nE       )\n\nexperiments/oracle_generation/pandas/Index/shift/ir_generated_test.py:53: Failed\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--6573397b.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Index/shift/ir_generated_test.py::test_period_index_rejects_explicit_freq\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 4 passed in 0.31s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "tie"
+    },
+    {
+      "case_dir": "Series/factorize",
+      "function": "pandas.Series.factorize",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.factorize.md",
+      "mutants": [
+        {
+          "id": "force_sort_false",
+          "title": "Ignore sort=True",
+          "doc_anchor": "sort bool, default False",
+          "description": "Force first-occurrence order even when the caller requests sort=True."
+        },
+        {
+          "id": "force_use_na_sentinel_false",
+          "title": "Ignore use_na_sentinel=True",
+          "doc_anchor": "use_na_sentinel bool, default True",
+          "description": "Encode missing values as non-negative codes and include them in uniques even when the caller requests sentinel -1 behavior."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize/baseline_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "force_sort_false",
+            "title": "Ignore sort=True",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "ithub_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:344\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_testing/asserters.py:348\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/construction.py:478\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/dtypes/missing.py:197\nE               (and 16 more with settings.verbosity >= verbose)\n\nexperiments/oracle_generation/pandas/Series/factorize/baseline_test.py:203: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--3a79821e.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/factorize/baseline_test.py::test_sort_true_uniques_sorted_integers\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 10 passed in 1.00s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "force_use_na_sentinel_false",
+            "title": "Ignore use_na_sentinel=True",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "ize=2, max_size=12,\n        )\n    )\n    @settings(max_examples=100)\n    def test_nan_gets_sentinel_minus_one(values):\n        s = pd.Series(values, dtype=float)\n        codes, uniques = s.factorize(use_na_sentinel=True)\n        nan_mask = s.isna().values\n>       assert (codes[nan_mask] == -1).all()\nE       assert np.False_\nE        +  where np.False_ = <built-in method all of numpy.ndarray object at 0x10a6b3e70>()\nE        +    where <built-in method all of numpy.ndarray object at 0x10a6b3e70> = array([0, 0]) == -1.all\nE       Falsifying example: test_nan_gets_sentinel_minus_one(\nE           values=[nan, nan],\nE       )\n\nexperiments/oracle_generation/pandas/Series/factorize/baseline_test.py:104: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--a658c8c3.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/factorize/baseline_test.py::test_nan_gets_sentinel_minus_one\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed in 0.54s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "force_sort_false",
+            "title": "Ignore sort=True",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "          /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:1479\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/indexes/base.py:1496\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:292\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:468\n\nexperiments/oracle_generation/pandas/Series/factorize/ir_generated_test.py:63: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--d30f982f.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/factorize/ir_generated_test.py::test_factorize_sort_true_matches_sort_false_after_relabel\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 2 passed in 0.38s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "force_use_na_sentinel_false",
+            "title": "Ignore use_na_sentinel=True",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "rom_uniques(values):\n        s = pd.Series(values, dtype=object)\n    \n        codes, uniques = s.factorize(sort=False, use_na_sentinel=True)\n    \n        assert len(codes) == len(s)\n>       assert not any(pd.isna(value) for value in uniques.tolist())\nE       assert not True\nE        +  where True = any(<generator object test_factorize_use_na_sentinel_true_excludes_missing_from_uniques.<locals>.<genexpr> at 0x10c60bd80>)\nE       Falsifying example: test_factorize_use_na_sentinel_true_excludes_missing_from_uniques(\nE           values=[None],  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/Series/factorize/ir_generated_test.py:74: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--e42d509f.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/factorize/ir_generated_test.py::test_factorize_use_na_sentinel_true_excludes_missing_from_uniques\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed in 0.76s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "tie"
+    },
+    {
+      "case_dir": "Series/mean",
+      "function": "pandas.Series.mean",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.mean.md",
+      "mutants": [
+        {
+          "id": "force_skipna_false",
+          "title": "Ignore skipna=True",
+          "doc_anchor": "skipna bool, default True",
+          "description": "Treat the operation as skipna=False, so missing values poison the result."
+        },
+        {
+          "id": "bias_numeric_result",
+          "title": "Bias numeric result",
+          "doc_anchor": "Return the mean of the values",
+          "description": "Return a numerically biased mean while keeping the return type otherwise plausible."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/baseline_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "force_skipna_false",
+            "title": "Ignore skipna=True",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": ", abs_tol=1e-12), (\n            f\"pure mean={result_pure}, with-NaN mean={result_with_nan}\"\n        )\nE       AssertionError: pure mean=0.0, with-NaN mean=nan\nE       assert False\nE        +  where False = <built-in function isclose>(np.float64(0.0), np.float64(nan), rel_tol=1e-09, abs_tol=1e-12)\nE        +    where <built-in function isclose> = math.isclose\nE       Falsifying example: test_mean_skipna_true_ignores_nan(\nE           # The test always failed when commented parts were varied together.\nE           finite_vals=[0.0],  # or any other generated value\nE           nan_vals=[nan],  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/Series/mean/baseline_test.py:114: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--7fb93669.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mean/baseline_test.py::test_mean_skipna_true_ignores_nan\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed in 1.26s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "bias_numeric_result",
+            "title": "Bias numeric result",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": " abs_tol=1e-12), (\n            f\"mean={result}, numpy={expected}\"\n        )\nE       AssertionError: mean=1.0, numpy=0.0\nE       assert False\nE        +  where False = <built-in function isclose>(1.0, np.float64(0.0), rel_tol=1e-09, abs_tol=1e-12)\nE        +    where <built-in function isclose> = math.isclose\nE       Falsifying example: test_mean_matches_numpy_no_nan(\nE           s=Series([0.0]),\nE       )\nE       Explanation:\nE           These lines were always and only run by failing examples:\nE               /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/baseline_test.py:66\n\nexperiments/oracle_generation/pandas/Series/mean/baseline_test.py:64: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--928050f6.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mean/baseline_test.py::test_mean_matches_numpy_no_nan\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.24s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "force_skipna_false",
+            "title": "Ignore skipna=True",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": ", max_size=20))\n    def test_mean_skipna_true_matches_dropna_mean(values):\n        s = pd.Series(values, dtype=\"float64\")\n        non_null = [value for value in values if value is not None]\n    \n        result = s.mean(skipna=True)\n    \n        if non_null:\n>           assert result == pytest.approx(sum(non_null) / len(non_null))\nE           assert np.float64(nan) == 0.0 \u00b1 1.0e-12\nE             \nE             comparison failed\nE             Obtained: nan\nE             Expected: 0.0 \u00b1 1.0e-12\nE           Falsifying example: test_mean_skipna_true_matches_dropna_mean(\nE               values=[0.0, None],\nE           )\n\nexperiments/oracle_generation/pandas/Series/mean/ir_generated_test.py:44: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--8c1edec5.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mean/ir_generated_test.py::test_mean_skipna_true_matches_dropna_mean\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 2 passed in 0.37s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "bias_numeric_result",
+            "title": "Bias numeric result",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": " _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nvalues = [0]\n\n    @given(st.lists(SMALL_INTS, min_size=1, max_size=20))\n    def test_mean_matches_manual_average_for_integer_series(values):\n        s = pd.Series(values)\n    \n        result = s.mean()\n    \n>       assert result == pytest.approx(sum(values) / len(values))\nE       assert 1.0 == 0.0 \u00b1 1.0e-12\nE         \nE         comparison failed\nE         Obtained: 1.0\nE         Expected: 0.0 \u00b1 1.0e-12\nE       Falsifying example: test_mean_matches_manual_average_for_integer_series(\nE           values=[0],  # or any other generated value\nE       )\n\nexperiments/oracle_generation/pandas/Series/mean/ir_generated_test.py:23: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--4b94e66b.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mean/ir_generated_test.py::test_mean_matches_manual_average_for_integer_series\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.57s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "tie"
+    },
+    {
+      "case_dir": "Series/mul",
+      "function": "pandas.Series.mul",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.mul.md",
+      "mutants": [
+        {
+          "id": "swap_mul_for_add",
+          "title": "Use addition instead of multiplication",
+          "doc_anchor": "Return multiplication of series and other",
+          "description": "Delegate to addition semantics instead of multiplication semantics."
+        },
+        {
+          "id": "ignore_fill_value",
+          "title": "Ignore fill_value",
+          "doc_anchor": "fill_value float or None",
+          "description": "Drop fill_value handling so one-sided missing values remain missing."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul/baseline_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "swap_mul_for_add",
+            "title": "Use addition instead of multiplication",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "  /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:3579\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/_config/config.py:661\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:124\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/io/formats/printing.py:232\nE           /Users/xiaofanlu/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/enum.py:1260\n\npandas/_libs/testing.pyx:171: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--5d1b0c75.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mul/baseline_test.py::test_mul_equivalent_to_star_operator\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 0.33s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "ignore_fill_value",
+            "title": "Ignore fill_value",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": " before multiplying.\"\"\"\n        a = pd.Series([1.0, np.nan, 3.0], index=[\"x\", \"y\", \"z\"])\n        b = pd.Series([2.0, 4.0, 5.0], index=[\"x\", \"y\", \"z\"])\n        result = a.mul(b, fill_value=0.0)\n        expected = pd.Series([2.0, 0.0, 15.0], index=[\"x\", \"y\", \"z\"])\n>       assert_series_equal(result, expected)\n\nexperiments/oracle_generation/pandas/Series/mul/baseline_test.py:137: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \npandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n>   ???\nE   AssertionError: Series are different\nE   \nE   Series values are different (33.33333 %)\nE   [index]: [x, y, z]\nE   [left]:  [2.0, nan, 15.0]\nE   [right]: [2.0, 0.0, 15.0]\nE   At positional index 1, first diff: nan != 0.0\n\npandas/_libs/testing.pyx:171: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mul/baseline_test.py::test_fill_value_replaces_nan_in_a\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 6 passed in 0.78s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "swap_mul_for_add",
+            "title": "Use addition instead of multiplication",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "ration/pandas/Series/mul/ir_generated_test.py:57: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nexperiments/oracle_generation/pandas/Series/mul/ir_generated_test.py:61: in test_mul_scalar_matches_star_and_preserves_shape\n    assert_series_equal(result, expected)\npandas/_libs/testing.pyx:53: in pandas._libs.testing.assert_almost_equal\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n>   ???\nE   AssertionError: Series are different\nE   \nE   Series values are different (100.0 %)\nE   [index]: [0]\nE   [left]:  [1.0]\nE   [right]: [0.0]\nE   At positional index 0, first diff: 1.0 != 0.0\nE   Falsifying example: test_mul_scalar_matches_star_and_preserves_shape(\nE       series=0    0.0\nE       dtype: float64,  # or any other generated value\nE       scalar=float(1),\nE   )\n\npandas/_libs/testing.pyx:171: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mul/ir_generated_test.py::test_mul_scalar_matches_star_and_preserves_shape\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 1.12s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "ignore_fill_value",
+            "title": "Ignore fill_value",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "failing examples:\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/numpy/_core/fromnumeric.py:3579\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/dtypes/missing.py:194\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py:1227\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py:1232\nE           /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py:1233\nE           (and 4 more with settings.verbosity >= verbose)\n\npandas/_libs/testing.pyx:171: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series/mul/ir_generated_test.py::test_fill_value_replaces_existing_nan_before_scalar_multiplication\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 5 passed in 0.70s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "tie"
+    },
+    {
+      "case_dir": "Series.str/contains",
+      "function": "pandas.Series.str.contains",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.str.contains.md",
+      "mutants": [
+        {
+          "id": "regex_false_acts_like_regex_true",
+          "title": "Ignore regex=False",
+          "doc_anchor": "regex bool, default True",
+          "description": "Treat literal matching requests as regex matching."
+        },
+        {
+          "id": "case_false_acts_like_case_true",
+          "title": "Ignore case=False",
+          "doc_anchor": "case bool, default True",
+          "description": "Make case-insensitive searches behave as case-sensitive."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains/baseline_test.py",
+        "killed_mutants": 1,
+        "total_mutants": 2,
+        "kill_rate": 0.5,
+        "mutants": [
+          {
+            "mutant_id": "regex_false_acts_like_regex_true",
+            "title": "Ignore regex=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": ".py\", line 691, in _parse\n    |     raise source.error(\"nothing to repeat\",\n    | re.error: nothing to repeat at position 0\n    | Falsifying example: test_return_type_and_length(\n    |     s=Series([None]),\n    |     pat='?',\n    | )\n    | Explanation:\n    |     These lines were always and only run by failing examples:\n    |         /Users/xiaofanlu/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/re/_constants.py:38\n    |         /Users/xiaofanlu/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/re/_parser.py:689\n    |         /Users/xiaofanlu/.local/share/uv/python/cpython-3.11.14-macos-aarch64-none/lib/python3.11/re/_parser.py:691\n    +------------------------------------\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--ece15cef.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series.str/contains/baseline_test.py::test_return_type_and_length\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed in 10.51s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "case_false_acts_like_case_true",
+            "title": "Ignore case=False",
+            "killed": false,
+            "return_code": 0,
+            "stdout_tail": "...............                                                          [100%]\n15 passed in 0.86s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "regex_false_acts_like_regex_true",
+            "title": "Ignore regex=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "....F\n=================================== FAILURES ===================================\n_______________________ test_regex_false_dot_is_literal ________________________\n\n    def test_regex_false_dot_is_literal():\n        \"\"\"\n        Bug surface: if the impl calls re.search without re.escape(pat), '.'\n        acts as a wildcard and 'axb' would incorrectly match pattern 'a.b'.\n        \"\"\"\n        s = pd.Series([\"a.b\", \"axb\", \"ab\", \"a.bc\"])\n        result = s.str.contains(\"a.b\", regex=False)\n>       assert result.tolist() == [True, False, False, True]\nE       assert [True, True, False, True] == [True, False, False, True]\nE         \nE         At index 1 diff: True != False\nE         Use -v to get more diff\n\nexperiments/oracle_generation/pandas/Series.str/contains/ir_generated_test.py:85: AssertionError\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series.str/contains/ir_generated_test.py::test_regex_false_dot_is_literal\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 4 passed in 0.33s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "case_false_acts_like_case_true",
+            "title": "Ignore case=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "] == bool(re.search(pat, s.iloc[i], re.IGNORECASE))\nE           AssertionError: assert np.False_ == True\nE            +  where True = bool(<re.Match object; span=(0, 1), match='c'>)\nE            +    where <re.Match object; span=(0, 1), match='c'> = <function search at 0x104fd9b20>('C', 'c', re.IGNORECASE)\nE            +      where <function search at 0x104fd9b20> = re.search\nE            +      and   re.IGNORECASE = re.IGNORECASE\nE           Falsifying example: test_case_false_regex_true_agrees_with_re_ignorecase(\nE               s=Series(['c']),\nE               pat='C',\nE           )\n\nexperiments/oracle_generation/pandas/Series.str/contains/ir_generated_test.py:206: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--264343eb.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series.str/contains/ir_generated_test.py::test_case_false_regex_true_agrees_with_re_ignorecase\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 15 passed in 1.22s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "ir_generated"
+    },
+    {
+      "case_dir": "Series.str/match",
+      "function": "pandas.Series.str.match",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.str.match.md",
+      "mutants": [
+        {
+          "id": "match_acts_like_contains",
+          "title": "Use search semantics instead of match semantics",
+          "doc_anchor": "Determine if each string starts with a match",
+          "description": "Delegate to contains-style search behavior rather than start-anchored match behavior."
+        },
+        {
+          "id": "case_false_acts_like_case_true",
+          "title": "Ignore case=False",
+          "doc_anchor": "case bool, default True",
+          "description": "Make case-insensitive match requests behave as case-sensitive."
+        }
+      ],
+      "baseline": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/baseline_test.py",
+        "killed_mutants": 1,
+        "total_mutants": 2,
+        "kill_rate": 0.5,
+        "mutants": [
+          {
+            "mutant_id": "match_acts_like_contains",
+            "title": "Use search semantics instead of match semantics",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "egex_pat)\n    @settings(max_examples=100)\n    def test_match_correctness(s, pat):\n        \"\"\"result[i] matches re.match(pat, s[i]) is not None for non-null elements.\"\"\"\n        result = s.str.match(pat, na=False)\n        for val, res in zip(s, result):\n            if _is_null(val):\n                assert res is False or res == False\n            else:\n                expected = re.match(pat, str(val)) is not None\n>               assert res == expected\nE               assert True == False\nE               Falsifying example: test_match_correctness(\nE                   s=Series([':0']),\nE                   pat='\\\\d',\nE               )\n\nexperiments/oracle_generation/pandas/Series.str/match/baseline_test.py:88: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--a6fea821.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series.str/match/baseline_test.py::test_match_correctness\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 1 passed in 0.56s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "case_false_acts_like_case_true",
+            "title": "Ignore case=False",
+            "killed": false,
+            "return_code": 0,
+            "stdout_tail": "................                                                         [100%]\n16 passed in 0.78s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "ir_generated": {
+        "test_file": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py",
+        "killed_mutants": 2,
+        "total_mutants": 2,
+        "kill_rate": 1.0,
+        "mutants": [
+          {
+            "mutant_id": "match_acts_like_contains",
+            "title": "Use search semantics instead of match semantics",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "l='0a', pat='[a-z]'\nE           assert np.True_ == False\nE           Falsifying example: test_result_agrees_with_re_match(\nE               lst=['0a'],\nE               pat='[a-z]',\nE           )\nE           Explanation:\nE               These lines were always and only run by failing examples:\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py:97\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py:98\n\nexperiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py:95: AssertionError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--f4d26c4f.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py::test_result_agrees_with_re_match\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed in 0.46s\n",
+            "stderr_tail": ""
+          },
+          {
+            "mutant_id": "case_false_acts_like_case_true",
+            "title": "Ignore case=False",
+            "killed": true,
+            "return_code": 1,
+            "stdout_tail": "tring values, not floating\nE           Falsifying example: test_na_false_fills_null_positions_with_false(\nE               lst=[nan, nan],\nE               pat='0',  # or any other generated value\nE           )\nE           Explanation:\nE               These lines were always and only run by failing examples:\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/generic.py:6201\nE                   /Users/xiaofanlu/Documents/github_repos/property_based_test_agent/.venv/lib/python3.11/site-packages/pandas/core/strings/accessor.py:248\n\n.venv/lib/python3.11/site-packages/pandas/core/strings/accessor.py:248: AttributeError\n================================== Hypothesis ==================================\n`git apply .hypothesis/patches/2026-04-01--46a00604.patch` to add failing examples to your code.\n=========================== short test summary info ============================\nFAILED experiments/oracle_generation/pandas/Series.str/match/ir_generated_test.py::test_na_false_fills_null_positions_with_false\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 11 passed in 5.20s\n",
+            "stderr_tail": ""
+          }
+        ]
+      },
+      "higher_quality": "ir_generated"
+    }
+  ],
+  "overall": {
+    "baseline": {
+      "killed_mutants": 15,
+      "total_mutants": 20,
+      "kill_rate": 0.75
+    },
+    "ir_generated": {
+      "killed_mutants": 19,
+      "total_mutants": 20,
+      "kill_rate": 0.95
+    },
+    "higher_quality": "ir_generated"
+  }
+}

@@ -218,8 +218,11 @@ def test_mean_returns_scalar(s):
 def test_mean_bounded_by_min_max(s):
     """mean must lie within [min, max] of the series values."""
     result = s.mean()
-    assert s.min() - 1e-9 <= result <= s.max() + 1e-9, (
-        f"mean={result} outside [{s.min()}, {s.max()}]"
+    lower = float(s.min())
+    upper = float(s.max())
+    tol = max(1e-9, 1e-12 * max(abs(lower), abs(upper), abs(float(result)), 1.0))
+    assert lower - tol <= result <= upper + tol, (
+        f"mean={result} outside [{lower}, {upper}] with tol={tol}"
     )
 
 

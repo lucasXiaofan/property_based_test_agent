@@ -1,0 +1,226 @@
+{
+  "generated_at": "2026-04-01T09:34:38.773484-04:00",
+  "generator": "generate_doc_wrapper_mutants.py",
+  "apis": [
+    {
+      "case_dir": "DataFrame/groupby",
+      "function": "pandas.DataFrame.groupby",
+      "doc_label": "pandas.DataFrame.groupby",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.groupby.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/groupby/ir_v2.json",
+      "doc_excerpt": "# pandas.DataFrame.groupby\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.DataFrame.groupby.html\n\n# pandas.DataFrame.groupby#\n\nDataFrame.groupby(by=None, level=None, *, as_index=True, sort=True, group_keys=True, observed=True, dropna=True)[source]#\nGroup DataFrame using a mapper or by a Series of columns.\nA groupby operation involves some combination of split",
+      "mutants": [
+        {
+          "id": "force_sort_true",
+          "title": "Ignore sort=False",
+          "doc_anchor": "sortbool, default True",
+          "description": "Force group keys to be sorted even when the caller requests sort=False."
+        },
+        {
+          "id": "force_dropna_true",
+          "title": "Ignore dropna=False",
+          "doc_anchor": "dropnabool, default True",
+          "description": "Drop NA groups even when the caller requests dropna=False."
+        }
+      ]
+    },
+    {
+      "case_dir": "DataFrame/reindex",
+      "function": "pandas.DataFrame.reindex",
+      "doc_label": "pandas.DataFrame.reindex",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.reindex.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/reindex/ir_v2.json",
+      "doc_excerpt": "# pandas.DataFrame.reindex\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.DataFrame.reindex.html\n\n# pandas.DataFrame.reindex#\n\nDataFrame.reindex(labels=None, *, index=None, columns=None, axis=None, method=None, copy=<no_default>, level=None, fill_value=nan, limit=None, tolerance=None)[source]#\nConform DataFrame to new index with optional filling logic.\nPlaces",
+      "mutants": [
+        {
+          "id": "ignore_fill_value",
+          "title": "Ignore fill_value",
+          "doc_anchor": "fill_value scalar, default np.nan",
+          "description": "Remove caller-specified fill_value and fall back to NaN-filled entries."
+        },
+        {
+          "id": "raise_multi_column_string_fill",
+          "title": "Crash on multi-column string fill",
+          "doc_anchor": "Conform DataFrame to new index with optional filling logic",
+          "description": "Raise a TypeError when reindexing columns with a string fill_value and two or more missing output columns."
+        }
+      ]
+    },
+    {
+      "case_dir": "DataFrame/to_json",
+      "function": "pandas.DataFrame.to_json",
+      "doc_label": "pandas.DataFrame.to_json",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.DataFrame.to_json.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/DataFrame/to_json/ir_v2.json",
+      "doc_excerpt": "# pandas.DataFrame.to_json\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.DataFrame.to_json.html\n\n# pandas.DataFrame.to_json#\n\nDataFrame.to_json(path_or_buf=None, *, orient=None, date_format=None, double_precision=10, force_ascii=True, date_unit='ms', default_handler=None, lines=False, compression='infer', index=None, indent=None, storage_options=None, mode='",
+      "mutants": [
+        {
+          "id": "force_ascii_true",
+          "title": "Ignore force_ascii=False",
+          "doc_anchor": "force_ascii bool, default True",
+          "description": "Serialize with ASCII escaping even when the caller disables it."
+        },
+        {
+          "id": "corrupt_epoch_date_unit",
+          "title": "Break epoch unit scaling",
+          "doc_anchor": "date_unit controls timestamp unit",
+          "description": "Corrupt epoch-based datetime units by scaling numeric timestamps incorrectly."
+        }
+      ]
+    },
+    {
+      "case_dir": "Index/astype",
+      "function": "pandas.Index.astype",
+      "doc_label": "pandas.Index.astype",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Index.astype.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/astype/ir_v2.json",
+      "doc_excerpt": "# pandas.Index.astype\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Index.astype.html\n\n# pandas.Index.astype#\n\nIndex.astype(dtype, copy=True)[source]#\nCreate an Index with values cast to dtypes.\nThe class of a new Index is determined by dtype. When conversion is impossible, a TypeError exception is raised.\nParameters:\ndtypenumpy dtype or pandas type\nNote tha",
+      "mutants": [
+        {
+          "id": "ignore_dtype_change",
+          "title": "Ignore requested dtype",
+          "doc_anchor": "dtype str or dtype",
+          "description": "Return the original index unchanged when the caller asks for a different dtype."
+        },
+        {
+          "id": "copy_false_still_copies",
+          "title": "Ignore copy=False identity",
+          "doc_anchor": "copy bool, default True",
+          "description": "Return a distinct object even when astype is a no-op with copy=False."
+        }
+      ]
+    },
+    {
+      "case_dir": "Index/shift",
+      "function": "pandas.Index.shift",
+      "doc_label": "pandas.Index.shift",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Index.shift.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Index/shift/ir_v2.json",
+      "doc_excerpt": "# pandas.Index.shift\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Index.shift.html\n\n# pandas.Index.shift#\n\nIndex.shift(periods=1, freq=None)[source]#\nShift index by desired number of time frequency increments.\nThis method is for shifting the values of datetime-like indexes by a specified time increment a given number of times.\nParameters:\nperiodsint, defaul",
+      "mutants": [
+        {
+          "id": "negate_periods",
+          "title": "Reverse shift direction",
+          "doc_anchor": "periods int, can be positive or negative",
+          "description": "Apply the opposite shift direction from the caller-provided periods."
+        },
+        {
+          "id": "ignore_explicit_freq",
+          "title": "Ignore explicit freq",
+          "doc_anchor": "freq DateOffset, timedelta, or str, optional",
+          "description": "Discard an explicit freq argument and reuse implicit index frequency behavior instead."
+        }
+      ]
+    },
+    {
+      "case_dir": "Series/factorize",
+      "function": "pandas.Series.factorize",
+      "doc_label": "pandas.Series.factorize",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.factorize.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/factorize/ir_v2.json",
+      "doc_excerpt": "# pandas.Series.factorize\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.factorize.html\n\n# pandas.Series.factorize#\n\nSeries.factorize(sort=False, use_na_sentinel=True)[source]#\nEncode the object as an enumerated type or categorical variable.\nThis method is useful for obtaining a numeric representation of an array when all that matters is identifying di",
+      "mutants": [
+        {
+          "id": "force_sort_false",
+          "title": "Ignore sort=True",
+          "doc_anchor": "sort bool, default False",
+          "description": "Force first-occurrence order even when the caller requests sort=True."
+        },
+        {
+          "id": "force_use_na_sentinel_false",
+          "title": "Ignore use_na_sentinel=True",
+          "doc_anchor": "use_na_sentinel bool, default True",
+          "description": "Encode missing values as non-negative codes and include them in uniques even when the caller requests sentinel -1 behavior."
+        }
+      ]
+    },
+    {
+      "case_dir": "Series/mean",
+      "function": "pandas.Series.mean",
+      "doc_label": "pandas.Series.mean",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.mean.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mean/ir_v2.json",
+      "doc_excerpt": "# pandas.Series.mean\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.mean.html\n\n# pandas.Series.mean#\n\nSeries.mean(*, axis=0, skipna=True, numeric_only=False, **kwargs)[source]#\nReturn the mean of the values over the requested axis.\nParameters:\naxis{index (0)}\nAxis for the function to be applied on. For Series this parameter is unused and defaults to 0.",
+      "mutants": [
+        {
+          "id": "force_skipna_false",
+          "title": "Ignore skipna=True",
+          "doc_anchor": "skipna bool, default True",
+          "description": "Treat the operation as skipna=False, so missing values poison the result."
+        },
+        {
+          "id": "bias_numeric_result",
+          "title": "Bias numeric result",
+          "doc_anchor": "Return the mean of the values",
+          "description": "Return a numerically biased mean while keeping the return type otherwise plausible."
+        }
+      ]
+    },
+    {
+      "case_dir": "Series/mul",
+      "function": "pandas.Series.mul",
+      "doc_label": "pandas.Series.mul",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.mul.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series/mul/ir_v2.json",
+      "doc_excerpt": "# pandas.Series.mul\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.mul.html\n\n# pandas.Series.mul#\n\nSeries.mul(other, level=None, fill_value=None, axis=0)[source]#\nReturn Multiplication of series and other, element-wise (binary operator mul).\nEquivalent to `series*other`, but with support to substitute a fill_value for missing data in either one of the ",
+      "mutants": [
+        {
+          "id": "swap_mul_for_add",
+          "title": "Use addition instead of multiplication",
+          "doc_anchor": "Return multiplication of series and other",
+          "description": "Delegate to addition semantics instead of multiplication semantics."
+        },
+        {
+          "id": "ignore_fill_value",
+          "title": "Ignore fill_value",
+          "doc_anchor": "fill_value float or None",
+          "description": "Drop fill_value handling so one-sided missing values remain missing."
+        }
+      ]
+    },
+    {
+      "case_dir": "Series.str/contains",
+      "function": "pandas.Series.str.contains",
+      "doc_label": "pandas.Series.str.contains",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.str.contains.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/contains/ir_v2.json",
+      "doc_excerpt": "# pandas.Series.str.contains\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.str.contains.html\n\n# pandas.Series.str.contains#\n\nSeries.str.contains(pat, case=True, flags=0, na=<no_default>, regex=True)[source]#\nTest if pattern or regex is contained within a string of a Series or Index.\nReturn boolean Series or Index based on whether a given pattern or re",
+      "mutants": [
+        {
+          "id": "regex_false_acts_like_regex_true",
+          "title": "Ignore regex=False",
+          "doc_anchor": "regex bool, default True",
+          "description": "Treat literal matching requests as regex matching."
+        },
+        {
+          "id": "case_false_acts_like_case_true",
+          "title": "Ignore case=False",
+          "doc_anchor": "case bool, default True",
+          "description": "Make case-insensitive searches behave as case-sensitive."
+        }
+      ]
+    },
+    {
+      "case_dir": "Series.str/match",
+      "function": "pandas.Series.str.match",
+      "doc_label": "pandas.Series.str.match",
+      "doc_path": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/python_library_bug_analysis/downloaded_docs/pandas.Series.str.match.md",
+      "ir_json": "/Users/xiaofanlu/Documents/github_repos/property_based_test_agent/experiments/oracle_generation/pandas/Series.str/match/ir_v2.json",
+      "doc_excerpt": "# pandas.Series.str.match\n\n- Source URL: https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.Series.str.match.html\n\n# pandas.Series.str.match#\n\nSeries.str.match(pat, case=<no_default>, flags=<no_default>, na=<no_default>)[source]#\nDetermine if each string starts with a match of a regular expression.\nDetermines whether each string in the Series or Index starts with a match to a s",
+      "mutants": [
+        {
+          "id": "match_acts_like_contains",
+          "title": "Use search semantics instead of match semantics",
+          "doc_anchor": "Determine if each string starts with a match",
+          "description": "Delegate to contains-style search behavior rather than start-anchored match behavior."
+        },
+        {
+          "id": "case_false_acts_like_case_true",
+          "title": "Ignore case=False",
+          "doc_anchor": "case bool, default True",
+          "description": "Make case-insensitive match requests behave as case-sensitive."
+        }
+      ]
+    }
+  ]
+}
