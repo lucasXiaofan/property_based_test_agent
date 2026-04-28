@@ -11,7 +11,7 @@ Inputs:
 
 output location 
 ```text
-experiments/oracle_generation//
+experiments/oracle_generation/
   <library>/
     <module_or_class>/
       <function>/

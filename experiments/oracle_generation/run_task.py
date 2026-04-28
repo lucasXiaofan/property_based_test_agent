@@ -44,6 +44,7 @@ import json
 import subprocess
 import sys
 import threading
+from datetime import datetime, timezone
 from pathlib import Path
 
 MAX_PARALLEL = 5
@@ -63,6 +64,21 @@ def load_tasks(task_file: str) -> list[dict]:
     return tasks
 
 
+def task_is_completed(task: dict) -> bool:
+    return bool(task.get("completed"))
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
+
+
+def save_tasks(task_file: str, tasks: list[dict]) -> None:
+    Path(task_file).write_text(
+        json.dumps(tasks, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
 def build_prompt(task: dict) -> str:
     if "prompt" in task:
         return task["prompt"]
@@ -80,6 +96,8 @@ def run_one(
     extra_args: list[str],
     results: list,
     lock: threading.Lock,
+    task_file: str,
+    tasks: list[dict],
     model: str = None,
 ) -> None:
     prompt = build_prompt(task)
@@ -112,6 +130,10 @@ def run_one(
             print(proc.stdout.rstrip())
         if proc.returncode != 0 and proc.stderr:
             print(proc.stderr.rstrip(), file=sys.stderr)
+        if proc.returncode == 0:
+            task["completed"] = True
+            task["completed_at"] = now_iso()
+            save_tasks(task_file, tasks)
         results[idx] = proc.returncode
 
 
@@ -153,10 +175,12 @@ def main():
     args = parser.parse_args(argv)
 
     tasks = load_tasks(args.task_file)
+    runnable = [(idx, task) for idx, task in enumerate(tasks) if not task_is_completed(task)]
     cwd = args.cwd
 
     print(
-        f"[run_task] runner={args.runner}  model={args.model}  cwd={cwd}  tasks={len(tasks)}  "
+        f"[run_task] runner={args.runner}  model={args.model}  cwd={cwd}  "
+        f"tasks={len(tasks)}  runnable={len(runnable)}  "
         f"max_parallel={args.max_parallel}\n"
     )
 
@@ -174,20 +198,27 @@ def main():
                 extra,
                 results,
                 lock,
+                args.task_file,
+                tasks,
                 args.model,
             )
 
     threads = [
         threading.Thread(target=worker, args=(i, t), daemon=True)
-        for i, t in enumerate(tasks)
+        for i, t in runnable
     ]
     for t in threads:
         t.start()
     for t in threads:
         t.join()
 
-    failed = sum(1 for rc in results if rc != 0)
-    print(f"\n[run_task] done — {len(tasks) - failed}/{len(tasks)} succeeded")
+    failed = sum(1 for rc in results if rc not in (None, 0))
+    succeeded = sum(1 for rc in results if rc == 0)
+    skipped = len(tasks) - len(runnable)
+    print(
+        f"\n[run_task] done — {succeeded}/{len(runnable)} runnable succeeded, "
+        f"{skipped} already completed"
+    )
     sys.exit(1 if failed else 0)
 
 

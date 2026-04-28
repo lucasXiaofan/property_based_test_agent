@@ -1,4 +1,4 @@
-## Folder Structure Rule (Added)
+## Folder Structure Rule
 
 ```text
 experiments/oracle_generation/
